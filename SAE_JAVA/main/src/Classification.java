@@ -17,7 +17,10 @@ public class Classification {
   //
   // Constructors
   //
-  public Classification () { };
+  public Classification (int idclass,String nomclasse) {
+    this.idclass = idclass;
+    this.nomclasse = nomclasse;
+   };
   
   //
   // Methods

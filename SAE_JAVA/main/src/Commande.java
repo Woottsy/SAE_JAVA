@@ -16,12 +16,19 @@ public class Commande {
   private boolean enligne;
   private String typelivraison;
   private boolean estpayee;
-  private DetailCommande nouvel_attribut;
+  private DetailCommande leDetail;
   
   //
   // Constructors
   //
-  public Commande () { };
+  public Commande (int idcommande,String datecommande,boolean enligne,String typelivraison,boolean estpayee,DetailCommande leDetail) {
+    this.idcommande = idcommande;
+    this.datecommande = datecommande;
+    this.enligne = enligne;
+    this.typelivraison = typelivraison;
+    this.estpayee = estpayee;
+    this.leDetail = leDetail;
+    };
   
   //
   // Methods
@@ -117,7 +124,7 @@ public class Commande {
    * @param newVar the new value of nouvel_attribut
    */
   public void setNouvel_attribut (DetailCommande newVar) {
-    nouvel_attribut = newVar;
+    leDetail = newVar;
   }
 
   /**
@@ -125,7 +132,7 @@ public class Commande {
    * @return the value of nouvel_attribut
    */
   public DetailCommande getNouvel_attribut () {
-    return nouvel_attribut;
+    return leDetail;
   }
 
   //

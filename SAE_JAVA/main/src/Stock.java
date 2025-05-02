@@ -16,7 +16,9 @@ public class Stock {
   //
   // Constructors
   //
-  public Stock () { };
+  public Stock (int quantite) {
+    this.quantite = quantite;
+   };
   
   //
   // Methods

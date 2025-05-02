@@ -19,7 +19,12 @@ public class Auteur {
   //
   // Constructors
   //
-  public Auteur () { };
+  public Auteur (int idauteur,String nom,String prenom,String annee) {
+    this.idauteur = idauteur;
+    this.nom = nom;
+    this.prenom = prenom;
+    this.annee = annee;
+   };
   
   //
   // Methods

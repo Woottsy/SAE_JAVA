@@ -23,7 +23,16 @@ public class Client {
   //
   // Constructors
   //
-  public Client () { };
+  public Client (int idclient,String nom,String prenom,String adresse,String ville,String codepostal,String email,String mdp) {
+    this.idclient = idclient;
+    this.nom = nom;
+    this.prenom = prenom;
+    this.adresse = adresse;
+    this.ville = ville;
+    this.codepostal = codepostal;
+    this.email = email;
+    this.mdp = mdp;
+   };
   
   //
   // Methods
