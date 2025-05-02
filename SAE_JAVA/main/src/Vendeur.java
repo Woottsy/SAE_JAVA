@@ -20,7 +20,17 @@ public class Vendeur {
   //
   // Constructors
   //
-  public Vendeur () { };
+  public Vendeur (int idvendeur,
+   String nom,
+   String prenom,
+   String email,
+   String MDP) {
+    this.idvendeur = idvendeur;
+    this.nom = nom;
+    this.prenom = prenom;
+    this.email = email;
+    this.MDP = MDP;
+    };
   
   //
   // Methods

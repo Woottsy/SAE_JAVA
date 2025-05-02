@@ -20,7 +20,13 @@ public class Livre {
   //
   // Constructors
   //
-  public Livre () { };
+  public Livre (String isbn,String titre,int nbpages,String datedepublication,double prix) {
+    this.isbn = isbn;
+    this.titre = titre;
+    this.nbpages = nbpages;
+    this.datedepublication = datedepublication;
+    this.prix = prix;
+    };
   
   //
   // Methods

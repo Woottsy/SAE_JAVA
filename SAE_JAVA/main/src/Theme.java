@@ -17,7 +17,11 @@ public class Theme {
   //
   // Constructors
   //
-  public Theme () { };
+  public Theme (int idtheme,
+   String nom) {
+    this.idtheme = idtheme;
+    this.nom = nom;
+    };
   
   //
   // Methods

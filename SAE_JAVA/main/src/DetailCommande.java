@@ -17,7 +17,10 @@ public class DetailCommande {
   //
   // Constructors
   //
-  public DetailCommande () { };
+  public DetailCommande (int quantite , int prixunitaire) {
+    this.quantite = quantite;
+    this.prixunitaire = prixunitaire;
+    };
   
   //
   // Methods

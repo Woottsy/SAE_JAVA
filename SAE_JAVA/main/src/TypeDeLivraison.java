@@ -5,15 +5,18 @@
  */
 public class TypeDeLivraison {
 
-  //
-  // Fields
-  //
+  private int idlivraison;
+  private String type;
 
   
   //
   // Constructors
   //
-  public TypeDeLivraison () { };
+  public TypeDeLivraison (int idlivraison,
+   String type) {
+    this.idlivraison = idlivraison;
+    this.type = type;
+    };
   
   //
   // Methods

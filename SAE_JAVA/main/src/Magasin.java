@@ -15,12 +15,18 @@ public class Magasin {
   private String nom;
   private String ville;
   private String adresse;
-  private Stock nouvel_attribut;
+  private Stock leStock;
   
   //
   // Constructors
   //
-  public Magasin () { };
+  public Magasin (int idmagasin,String nom,String ville,String adresse,Stock leStock) {
+    this.idmagasin = idmagasin;
+    this.nom = nom;
+    this.ville = ville;
+    this.adresse = adresse;
+    this.leStock = leStock;
+   };
   
   //
   // Methods
@@ -100,7 +106,7 @@ public class Magasin {
    * @param newVar the new value of nouvel_attribut
    */
   public void setNouvel_attribut (Stock newVar) {
-    nouvel_attribut = newVar;
+    leStock = newVar;
   }
 
   /**
@@ -108,7 +114,7 @@ public class Magasin {
    * @return the value of nouvel_attribut
    */
   public Stock getNouvel_attribut () {
-    return nouvel_attribut;
+    return leStock;
   }
 
   //
