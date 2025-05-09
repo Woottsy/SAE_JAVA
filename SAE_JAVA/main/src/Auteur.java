@@ -37,10 +37,10 @@ public class Auteur {
 
   /**
    * Set the value of idauteur
-   * @param newVar the new value of idauteur
+   * @param newId the new value of idauteur
    */
-  public void setIdauteur (int newVar) {
-    idauteur = newVar;
+  public void setIdauteur (int newId) {
+    this.idauteur = newId;
   }
 
   /**
@@ -48,15 +48,15 @@ public class Auteur {
    * @return the value of idauteur
    */
   public int getIdauteur () {
-    return idauteur;
+    return this.idauteur;
   }
 
   /**
    * Set the value of nom
-   * @param newVar the new value of nom
+   * @param newNom the new value of nom
    */
-  public void setNom (String newVar) {
-    nom = newVar;
+  public void setNom (String newNom) {
+    this.nom = newNom;
   }
 
   /**
@@ -64,15 +64,15 @@ public class Auteur {
    * @return the value of nom
    */
   public String getNom () {
-    return nom;
+    return this.nom;
   }
 
   /**
    * Set the value of prenom
-   * @param newVar the new value of prenom
+   * @param newPrenom the new value of prenom
    */
-  public void setPrenom (String newVar) {
-    prenom = newVar;
+  public void setPrenom (String newPrenom) {
+    this.prenom = newPrenom;
   }
 
   /**
@@ -80,15 +80,15 @@ public class Auteur {
    * @return the value of prenom
    */
   public String getPrenom () {
-    return prenom;
+    return this.prenom;
   }
 
   /**
    * Set the value of annee
-   * @param newVar the new value of annee
+   * @param newAnnee the new value of annee
    */
-  public void setAnnee (String newVar) {
-    annee = newVar;
+  public void setAnnee (String newAnnee) {
+    this.annee = newAnnee;
   }
 
   /**
@@ -96,7 +96,7 @@ public class Auteur {
    * @return the value of annee
    */
   public String getAnnee () {
-    return annee;
+    return this.annee;
   }
 
   //

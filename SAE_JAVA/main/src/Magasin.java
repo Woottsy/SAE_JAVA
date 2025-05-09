@@ -39,10 +39,10 @@ public class Magasin {
 
   /**
    * Set the value of idmagasin
-   * @param newVar the new value of idmagasin
+   * @param newId the new value of idmagasin
    */
-  public void setIdmagasin (int newVar) {
-    idmagasin = newVar;
+  public void setIdmagasin (int newId) {
+    this.idmagasin = newId;
   }
 
   /**
@@ -50,15 +50,15 @@ public class Magasin {
    * @return the value of idmagasin
    */
   public int getIdmagasin () {
-    return idmagasin;
+    return this.idmagasin;
   }
 
   /**
    * Set the value of nom
-   * @param newVar the new value of nom
+   * @param newNom the new value of nom
    */
-  public void setNom (String newVar) {
-    nom = newVar;
+  public void setNom (String newNom) {
+    this.nom = newNom;
   }
 
   /**
@@ -66,15 +66,15 @@ public class Magasin {
    * @return the value of nom
    */
   public String getNom () {
-    return nom;
+    return this.nom;
   }
 
   /**
    * Set the value of ville
-   * @param newVar the new value of ville
+   * @param newVille the new value of ville
    */
-  public void setVille (String newVar) {
-    ville = newVar;
+  public void setVille (String newVille) {
+    this.ville = newVille;
   }
 
   /**
@@ -82,15 +82,15 @@ public class Magasin {
    * @return the value of ville
    */
   public String getVille () {
-    return ville;
+    return this.ville;
   }
 
   /**
    * Set the value of adresse
-   * @param newVar the new value of adresse
+   * @param newAdresse the new value of adresse
    */
-  public void setAdresse (String newVar) {
-    adresse = newVar;
+  public void setAdresse (String newAdresse) {
+    this.adresse = newAdresse;
   }
 
   /**
@@ -98,23 +98,23 @@ public class Magasin {
    * @return the value of adresse
    */
   public String getAdresse () {
-    return adresse;
+    return this.adresse;
   }
 
   /**
    * Set the value of nouvel_attribut
-   * @param newVar the new value of nouvel_attribut
+   * @param newStock the new value of nouvel_attribut
    */
-  public void setNouvel_attribut (Stock newVar) {
-    leStock = newVar;
+  public void setStock (Stock newStock) {
+    this.leStock =  newStock;
   }
 
   /**
    * Get the value of nouvel_attribut
    * @return the value of nouvel_attribut
    */
-  public Stock getNouvel_attribut () {
-    return leStock;
+  public Stock getStock () {
+    return this.leStock;
   }
 
   //

@@ -45,10 +45,10 @@ public class Client {
 
   /**
    * Set the value of idclient
-   * @param newVar the new value of idclient
+   * @param newId the new value of idclient
    */
-  public void setIdclient (int newVar) {
-    idclient = newVar;
+  public void setIdclient (int newId) {
+    idclient = newId;
   }
 
   /**
@@ -56,15 +56,15 @@ public class Client {
    * @return the value of idclient
    */
   public int getIdclient () {
-    return idclient;
+    return this.idclient;
   }
 
   /**
    * Set the value of nom
-   * @param newVar the new value of nom
+   * @param newNom the new value of nom
    */
-  public void setNom (String newVar) {
-    nom = newVar;
+  public void setNom (String newNom) {
+    this.nom = newNom;
   }
 
   /**
@@ -72,15 +72,15 @@ public class Client {
    * @return the value of nom
    */
   public String getNom () {
-    return nom;
+    return this.nom;
   }
 
   /**
    * Set the value of prenom
-   * @param newVar the new value of prenom
+   * @param newPrenom the new value of prenom
    */
-  public void setPrenom (String newVar) {
-    prenom = newVar;
+  public void setPrenom (String newPrenom) {
+    this.prenom = newPrenom;
   }
 
   /**
@@ -88,15 +88,15 @@ public class Client {
    * @return the value of prenom
    */
   public String getPrenom () {
-    return prenom;
+    return this.prenom;
   }
 
   /**
    * Set the value of adresse
-   * @param newVar the new value of adresse
+   * @param newAdresse the new value of adresse
    */
-  public void setAdresse (String newVar) {
-    adresse = newVar;
+  public void setAdresse (String newAdresse) {
+    adresse = newAdresse;
   }
 
   /**
@@ -104,15 +104,15 @@ public class Client {
    * @return the value of adresse
    */
   public String getAdresse () {
-    return adresse;
+    return this.adresse;
   }
 
   /**
    * Set the value of ville
-   * @param newVar the new value of ville
+   * @param newVille the new value of ville
    */
-  public void setVille (String newVar) {
-    ville = newVar;
+  public void setVille (String newVille) {
+    this.ville = newVille;
   }
 
   /**
@@ -120,15 +120,15 @@ public class Client {
    * @return the value of ville
    */
   public String getVille () {
-    return ville;
+    return this.ville;
   }
 
   /**
    * Set the value of codepostal
-   * @param newVar the new value of codepostal
+   * @param newCodePostal the new value of codepostal
    */
-  public void setCodepostal (String newVar) {
-    codepostal = newVar;
+  public void setCodepostal (String newCodePostal) {
+    this.codepostal = newCodePostal;
   }
 
   /**
@@ -136,15 +136,15 @@ public class Client {
    * @return the value of codepostal
    */
   public String getCodepostal () {
-    return codepostal;
+    return this.codepostal;
   }
 
   /**
    * Set the value of email
-   * @param newVar the new value of email
+   * @param newEmail the new value of email
    */
-  public void setEmail (String newVar) {
-    email = newVar;
+  public void setEmail (String newEmail) {
+    this.email = newEmail;
   }
 
   /**
@@ -152,15 +152,15 @@ public class Client {
    * @return the value of email
    */
   public String getEmail () {
-    return email;
+    return this.email;
   }
 
   /**
    * Set the value of mdp
-   * @param newVar the new value of mdp
+   * @param newMdp the new value of mdp
    */
-  public void setMdp (String newVar) {
-    mdp = newVar;
+  public void setMdp (String newMdp) {
+    this.mdp = newMdp;
   }
 
   /**
@@ -168,7 +168,7 @@ public class Client {
    * @return the value of mdp
    */
   public String getMdp () {
-    return mdp;
+    return this.mdp;
   }
 
   //
