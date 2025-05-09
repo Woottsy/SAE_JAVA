@@ -15,17 +15,17 @@ public class Magasin {
   private String nom;
   private String ville;
   private String adresse;
-  private Stock leStock;
+  private Map<Livre,Stock> stockMagasin;;
   
   //
   // Constructors
   //
-  public Magasin (int idmagasin,String nom,String ville,String adresse,Stock leStock) {
+  public Magasin (int idmagasin,String nom,String ville,String adresse) {
     this.idmagasin = idmagasin;
     this.nom = nom;
     this.ville = ville;
     this.adresse = adresse;
-    this.leStock = leStock;
+    this.stockMagasin = new HashMap<>();
    };
   
   //
@@ -105,20 +105,37 @@ public class Magasin {
    * Set the value of nouvel_attribut
    * @param newStock the new value of nouvel_attribut
    */
-  public void setStock (Stock newStock) {
-    this.leStock =  newStock;
-  }
+   public void ajouteStock (Livre newLivre,Stock newStock) {
+     this.stockMagasin.put(newLivre,newStock); ;
+   }
 
   /**
    * Get the value of nouvel_attribut
    * @return the value of nouvel_attribut
    */
-  public Stock getStock () {
-    return this.leStock;
+  public Map<Livre,Stock> getStock () {
+     return this.stockMagasin;
   }
 
-  //
-  // Other methods
-  //
-
+  @Override
+  public String toString() {
+    return "Magasin{" +
+            "idmagasin=" + this.idmagasin +
+            ", nom='" + this.nom + '\'' +
+            ", ville='" + this.ville + '\'' +
+            ", adresse='" + this.adresse + '\'' +
+            ", stockMagasin=" + this.stockMagasin +
+            '}';
+  }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof Magasin)) return false;
+    Magasin magasin = (Magasin) o;
+    return this.idmagasin == magasin.idmagasin && Objects.equals(this.nom, magasin.nom) && Objects.equals(this.ville, magasin.ville) && Objects.equals(this.adresse, magasin.adresse);
+  }
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.idmagasin, this.nom, this.ville, this.adresse);
+  }
 }

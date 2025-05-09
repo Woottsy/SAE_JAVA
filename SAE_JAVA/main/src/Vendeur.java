@@ -142,8 +142,8 @@ public class Vendeur {
 
   /**
    */
-  public void mettreAJourStock()
-  {
+  public void mettreAJourStock(int qte) {
+  
   }
 
 
