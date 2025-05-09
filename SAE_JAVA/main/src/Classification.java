@@ -33,10 +33,10 @@ public class Classification {
 
   /**
    * Set the value of idclass
-   * @param newVar the new value of idclass
+   * @param newId the new value of idclass
    */
-  public void setIdclass (int newVar) {
-    idclass = newVar;
+  public void setIdclass (int newId) {
+    this.idclass = newId;
   }
 
   /**
@@ -44,15 +44,15 @@ public class Classification {
    * @return the value of idclass
    */
   public int getIdclass () {
-    return idclass;
+    return this.idclass;
   }
 
   /**
    * Set the value of nomclasse
-   * @param newVar the new value of nomclasse
+   * @param newClasse the new value of nomclasse
    */
-  public void setNomclasse (String newVar) {
-    nomclasse = newVar;
+  public void setNomclasse (String newClasse) {
+    this.nomclasse = newClasse;
   }
 
   /**
@@ -60,7 +60,7 @@ public class Classification {
    * @return the value of nomclasse
    */
   public String getNomclasse () {
-    return nomclasse;
+    return this.nomclasse;
   }
 
   //

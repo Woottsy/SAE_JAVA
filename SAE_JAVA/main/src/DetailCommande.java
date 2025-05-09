@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Class DetailCommande
  */
-public class DetailCommande {
+public class DetailCommande{
 
   //
   // Fields
@@ -33,10 +33,10 @@ public class DetailCommande {
 
   /**
    * Set the value of quantite
-   * @param newVar the new value of quantite
+   * @param newQte the new value of quantite
    */
-  public void setQuantite (int newVar) {
-    quantite = newVar;
+  public void setQuantite (int newQte) {
+    this.quantite = newQte;
   }
 
   /**
@@ -44,15 +44,15 @@ public class DetailCommande {
    * @return the value of quantite
    */
   public int getQuantite () {
-    return quantite;
+    return this.quantite;
   }
 
   /**
    * Set the value of prixunitaire
-   * @param newVar the new value of prixunitaire
+   * @param newPrix the new value of prixunitaire
    */
-  public void setPrixunitaire (int newVar) {
-    prixunitaire = newVar;
+  public void setPrixunitaire (int newPrix) {
+    this.prixunitaire = newPrix;
   }
 
   /**
@@ -60,7 +60,7 @@ public class DetailCommande {
    * @return the value of prixunitaire
    */
   public int getPrixunitaire () {
-    return prixunitaire;
+    return this.prixunitaire;
   }
 
   //

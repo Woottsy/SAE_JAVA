@@ -43,10 +43,10 @@ public class Vendeur {
 
   /**
    * Set the value of idvendeur
-   * @param newVar the new value of idvendeur
+   * @param newId the new value of idvendeur
    */
-  public void setIdvendeur (int newVar) {
-    idvendeur = newVar;
+  public void setIdvendeur (int newId) {
+    this.idvendeur =  newId;
   }
 
   /**
@@ -54,15 +54,15 @@ public class Vendeur {
    * @return the value of idvendeur
    */
   public int getIdvendeur () {
-    return idvendeur;
+    return this.idvendeur;
   }
 
   /**
    * Set the value of nom
-   * @param newVar the new value of nom
+   * @param newNom the new value of nom
    */
-  public void setNom (String newVar) {
-    nom = newVar;
+  public void setNom (String newNom) {
+    this.nom = newNom;
   }
 
   /**
@@ -70,15 +70,15 @@ public class Vendeur {
    * @return the value of nom
    */
   public String getNom () {
-    return nom;
+    return this.nom;
   }
 
   /**
    * Set the value of prenom
-   * @param newVar the new value of prenom
+   * @param newPrenom the new value of prenom
    */
-  public void setPrenom (String newVar) {
-    prenom = newVar;
+  public void setPrenom (String newPrenom) {
+    this.prenom = newPrenom;
   }
 
   /**
@@ -86,15 +86,15 @@ public class Vendeur {
    * @return the value of prenom
    */
   public String getPrenom () {
-    return prenom;
+    return this.prenom;
   }
 
   /**
    * Set the value of email
-   * @param newVar the new value of email
+   * @param newEmail the new value of email
    */
   public void setEmail (String newVar) {
-    email = newVar;
+    this.email = newVar;
   }
 
   /**
@@ -102,15 +102,15 @@ public class Vendeur {
    * @return the value of email
    */
   public String getEmail () {
-    return email;
+    return this.email;
   }
 
   /**
    * Set the value of MDP
-   * @param newVar the new value of MDP
+   * @param newMdp the new value of MDP
    */
-  public void setMDP (String newVar) {
-    MDP = newVar;
+  public void setMDP (String newMdp) {
+    this.MDP = newMdp;
   }
 
   /**
@@ -118,7 +118,7 @@ public class Vendeur {
    * @return the value of MDP
    */
   public String getMDP () {
-    return MDP;
+    return this.MDP;
   }
 
   //
