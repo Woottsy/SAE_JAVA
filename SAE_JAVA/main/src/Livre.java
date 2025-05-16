@@ -123,49 +123,5 @@ public class Livre {
 
   /**
    */
-  public void onVousRecommande()
-  {
-  }
-  /**
-   * Une des fonction nécessaire pour onVousRecommande
-   * @param c1 un client
-   * @param c2 un client différent de c1
-   * @return int
-   */
-  private int livreEncommuns(Client c1,Client c2){
-    int nbLivreEnCommuns = 0;
-    for (int i = 0; i < c1.getNbLivres(); i++) {
-      for (int j = 0; j < c2.getNbLivres(); j++) {
-        if (c1.getLivre(i).getIdclass().equals(c2.getLivre(j).getIdclass())) {
-          nbLivreEnCommuns++;
-        }
-      }
-    }
-    return nbLivreEnCommuns;
-  }
-  private boolean compatible(Client c1,Client c2){
-    if (livreEncommuns(c1, c2)>=5){
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
-  private Set<Livre> lesLivresRecommandable(Client c1,Client c2){
-    Set<Livre> reco = new HashSet<Livre>();
-    if (compatible(c1, c2)){
-      
-      for(Livre l : c1.getLivre()){
-        if (!c2.getLivre().contains(l)){
-          reco.add(l);
-        }
-      }
-      for(Livre l : c2.getLivre()){
-        if (!c1.getLivre().contains(l)){
-          reco.add(l);
-        }
-      }
-    }
-    return reco; 
-  }
+ 
 }
