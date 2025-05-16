@@ -17,7 +17,11 @@ public class Theme {
   //
   // Constructors
   //
-  public Theme () { };
+  public Theme (int idtheme,
+   String nom) {
+    this.idtheme = idtheme;
+    this.nom = nom;
+    };
   
   //
   // Methods
@@ -30,10 +34,10 @@ public class Theme {
 
   /**
    * Set the value of idtheme
-   * @param newVar the new value of idtheme
+   * @param newId the new value of idtheme
    */
-  public void setIdtheme (int newVar) {
-    idtheme = newVar;
+  public void setIdtheme (int newId) {
+    this.idtheme = newId;
   }
 
   /**
@@ -41,15 +45,15 @@ public class Theme {
    * @return the value of idtheme
    */
   public int getIdtheme () {
-    return idtheme;
+    return this.idtheme;
   }
 
   /**
    * Set the value of nom
-   * @param newVar the new value of nom
+   * @param newNom the new value of nom
    */
-  public void setNom (String newVar) {
-    nom = newVar;
+  public void setNom (String newNom) {
+    this.nom = newNom;
   }
 
   /**
@@ -57,7 +61,7 @@ public class Theme {
    * @return the value of nom
    */
   public String getNom () {
-    return nom;
+    return this.nom;
   }
 
   //

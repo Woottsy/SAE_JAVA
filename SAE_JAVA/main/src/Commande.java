@@ -16,12 +16,22 @@ public class Commande {
   private boolean enligne;
   private String typelivraison;
   private boolean estpayee;
-  private DetailCommande nouvel_attribut;
+  private DetailCommande leDetail;
+  
   
   //
   // Constructors
   //
-  public Commande () { };
+  public Commande (int idcommande,String datecommande,boolean enligne,String typelivraison,boolean estpayee,DetailCommande leDetail) {
+    this.idcommande = idcommande;
+    this.datecommande = datecommande;
+    this.enligne = enligne;
+    this.typelivraison = typelivraison;
+    this.estpayee = estpayee;
+    this.leDetail = leDetail;
+    
+
+    };
   
   //
   // Methods
@@ -34,10 +44,10 @@ public class Commande {
 
   /**
    * Set the value of idcommande
-   * @param newVar the new value of idcommande
+   * @param newId the new value of idcommande
    */
-  public void setIdcommande (int newVar) {
-    idcommande = newVar;
+  public void setIdcommande (int newId) {
+    this.idcommande = newId;
   }
 
   /**
@@ -45,15 +55,15 @@ public class Commande {
    * @return the value of idcommande
    */
   public int getIdcommande () {
-    return idcommande;
+    return this.idcommande;
   }
 
   /**
    * Set the value of datecommande
-   * @param newVar the new value of datecommande
+   * @param newDate the new value of datecommande
    */
-  public void setDatecommande (String newVar) {
-    datecommande = newVar;
+  public void setDatecommande (String newDate) {
+    this.datecommande = newDate;
   }
 
   /**
@@ -61,15 +71,15 @@ public class Commande {
    * @return the value of datecommande
    */
   public String getDatecommande () {
-    return datecommande;
+    return this.datecommande;
   }
 
   /**
    * Set the value of enligne
-   * @param newVar the new value of enligne
+   * @param newEnligne the new value of enligne
    */
-  public void setEnligne (boolean newVar) {
-    enligne = newVar;
+  public void setEnligne (boolean newEnligne) {
+    this.enligne = newEnligne;
   }
 
   /**
@@ -77,15 +87,15 @@ public class Commande {
    * @return the value of enligne
    */
   public boolean getEnligne () {
-    return enligne;
+    return this.enligne;
   }
 
   /**
    * Set the value of typelivraison
-   * @param newVar the new value of typelivraison
+   * @param newLivraison the new value of typelivraison
    */
-  public void setTypelivraison (String newVar) {
-    typelivraison = newVar;
+  public void setTypelivraison (String newLivraison) {
+    this.typelivraison = newLivraison;
   }
 
   /**
@@ -93,15 +103,15 @@ public class Commande {
    * @return the value of typelivraison
    */
   public String getTypelivraison () {
-    return typelivraison;
+    return this.typelivraison;
   }
 
   /**
    * Set the value of estpayee
-   * @param newVar the new value of estpayee
+   * @param newEstpayee the new value of estpayee
    */
-  public void setEstpayee (boolean newVar) {
-    estpayee = newVar;
+  public void setEstpayee (boolean newEstpayee) {
+    this.estpayee = newEstpayee;
   }
 
   /**
@@ -109,23 +119,23 @@ public class Commande {
    * @return the value of estpayee
    */
   public boolean getEstpayee () {
-    return estpayee;
+    return this.estpayee;
   }
 
   /**
    * Set the value of nouvel_attribut
-   * @param newVar the new value of nouvel_attribut
+   * @param newDetail the new value of nouvel_attribut
    */
-  public void setNouvel_attribut (DetailCommande newVar) {
-    nouvel_attribut = newVar;
+  public void setNouveauDetail (DetailCommande newDetail) {
+    this.leDetail = newDetail;
   }
 
   /**
    * Get the value of nouvel_attribut
    * @return the value of nouvel_attribut
    */
-  public DetailCommande getNouvel_attribut () {
-    return nouvel_attribut;
+  public DetailCommande getDetailCommande () {
+    return this.leDetail;
   }
 
   //

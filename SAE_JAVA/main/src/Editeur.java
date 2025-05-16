@@ -17,7 +17,10 @@ public class Editeur {
   //
   // Constructors
   //
-  public Editeur () { };
+  public Editeur (int idediteur, String nom) {
+    this.idediteur = idediteur;
+    this.nom = nom;
+   };
   
   //
   // Methods

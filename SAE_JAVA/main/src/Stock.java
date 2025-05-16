@@ -1,4 +1,3 @@
-
 import java.util.*;
 
 
@@ -10,13 +9,15 @@ public class Stock {
   //
   // Fields
   //
-
   private int quantite;
+
   
   //
   // Constructors
   //
-  public Stock () { };
+  public Stock (int quantite) {
+    this.quantite = quantite;
+   };
   
   //
   // Methods
@@ -29,10 +30,10 @@ public class Stock {
 
   /**
    * Set the value of quantite
-   * @param newVar the new value of quantite
+   * @param newQte the new value of quantite
    */
-  public void setQuantite (int newVar) {
-    quantite = newVar;
+  public void setQuantite (int newQte) {
+    this.quantite = newQte;
   }
 
   /**
@@ -40,7 +41,7 @@ public class Stock {
    * @return the value of quantite
    */
   public int getQuantite () {
-    return quantite;
+    return this.quantite;
   }
 
   //

@@ -20,7 +20,13 @@ public class Livre {
   //
   // Constructors
   //
-  public Livre () { };
+  public Livre (String isbn,String titre,int nbpages,String datedepublication,double prix) {
+    this.isbn = isbn;
+    this.titre = titre;
+    this.nbpages = nbpages;
+    this.datedepublication = datedepublication;
+    this.prix = prix;
+    };
   
   //
   // Methods
@@ -33,10 +39,10 @@ public class Livre {
 
   /**
    * Set the value of isbn
-   * @param newVar the new value of isbn
+   * @param newIsbn the new value of isbn
    */
-  public void setIsbn (String newVar) {
-    isbn = newVar;
+  public void setIsbn (String newIsbn) {
+    this.isbn = newIsbn;
   }
 
   /**
@@ -49,10 +55,10 @@ public class Livre {
 
   /**
    * Set the value of titre
-   * @param newVar the new value of titre
+   * @param newTitre the new value of titre
    */
-  public void setTitre (String newVar) {
-    titre = newVar;
+  public void setTitre (String newTitre) {
+    this.titre = newTitre;
   }
 
   /**
@@ -60,15 +66,15 @@ public class Livre {
    * @return the value of titre
    */
   public String getTitre () {
-    return titre;
+    return this.titre;
   }
 
   /**
    * Set the value of nbpages
-   * @param newVar the new value of nbpages
+   * @param newNbpages the new value of nbpages
    */
-  public void setNbpages (int newVar) {
-    nbpages = newVar;
+  public void setNbpages (int newNbpages) {
+    this.nbpages = newNbpages;
   }
 
   /**
@@ -76,15 +82,15 @@ public class Livre {
    * @return the value of nbpages
    */
   public int getNbpages () {
-    return nbpages;
+    return this.nbpages;
   }
 
   /**
    * Set the value of datedepublication
-   * @param newVar the new value of datedepublication
+   * @param newDate the new value of datedepublication
    */
-  public void setDatedepublication (String newVar) {
-    datedepublication = newVar;
+  public void setDatedepublication (String newDate) {
+    this.datedepublication = newDate;
   }
 
   /**
@@ -92,15 +98,15 @@ public class Livre {
    * @return the value of datedepublication
    */
   public String getDatedepublication () {
-    return datedepublication;
+    return this.datedepublication;
   }
 
   /**
    * Set the value of prix
-   * @param newVar the new value of prix
+   * @param newPrix the new value of prix
    */
-  public void setPrix (double newVar) {
-    prix = newVar;
+  public void setPrix (double newPrix) {
+    this.prix = newPrix;
   }
 
   /**
@@ -108,7 +114,7 @@ public class Livre {
    * @return the value of prix
    */
   public double getPrix () {
-    return prix;
+    return this.prix;
   }
 
   //
@@ -117,9 +123,5 @@ public class Livre {
 
   /**
    */
-  public void onVousRecommande()
-  {
-  }
-
-
+ 
 }

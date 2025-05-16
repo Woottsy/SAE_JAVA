@@ -10,7 +10,7 @@ public class Vendeur {
   //
   // Fields
   //
-
+  private Magasin magasin;
   private int idvendeur;
   private String nom;
   private String prenom;
@@ -20,7 +20,19 @@ public class Vendeur {
   //
   // Constructors
   //
-  public Vendeur () { };
+  public Vendeur (int idvendeur,
+   String nom,
+   String prenom,
+   String email,
+   String MDP,
+   Magasin magasin) {
+    this.idvendeur = idvendeur;
+    this.nom = nom;
+    this.prenom = prenom;
+    this.email = email;
+    this.MDP = MDP;
+    this.magasin=magasin;
+    };
   
   //
   // Methods
@@ -33,10 +45,10 @@ public class Vendeur {
 
   /**
    * Set the value of idvendeur
-   * @param newVar the new value of idvendeur
+   * @param newId the new value of idvendeur
    */
-  public void setIdvendeur (int newVar) {
-    idvendeur = newVar;
+  public void setIdvendeur (int newId) {
+    this.idvendeur =  newId;
   }
 
   /**
@@ -44,15 +56,15 @@ public class Vendeur {
    * @return the value of idvendeur
    */
   public int getIdvendeur () {
-    return idvendeur;
+    return this.idvendeur;
   }
 
   /**
    * Set the value of nom
-   * @param newVar the new value of nom
+   * @param newNom the new value of nom
    */
-  public void setNom (String newVar) {
-    nom = newVar;
+  public void setNom (String newNom) {
+    this.nom = newNom;
   }
 
   /**
@@ -60,15 +72,15 @@ public class Vendeur {
    * @return the value of nom
    */
   public String getNom () {
-    return nom;
+    return this.nom;
   }
 
   /**
    * Set the value of prenom
-   * @param newVar the new value of prenom
+   * @param newPrenom the new value of prenom
    */
-  public void setPrenom (String newVar) {
-    prenom = newVar;
+  public void setPrenom (String newPrenom) {
+    this.prenom = newPrenom;
   }
 
   /**
@@ -76,15 +88,15 @@ public class Vendeur {
    * @return the value of prenom
    */
   public String getPrenom () {
-    return prenom;
+    return this.prenom;
   }
 
   /**
    * Set the value of email
-   * @param newVar the new value of email
+   * @param newEmail the new value of email
    */
   public void setEmail (String newVar) {
-    email = newVar;
+    this.email = newVar;
   }
 
   /**
@@ -92,15 +104,15 @@ public class Vendeur {
    * @return the value of email
    */
   public String getEmail () {
-    return email;
+    return this.email;
   }
 
   /**
    * Set the value of MDP
-   * @param newVar the new value of MDP
+   * @param newMdp the new value of MDP
    */
-  public void setMDP (String newVar) {
-    MDP = newVar;
+  public void setMDP (String newMdp) {
+    this.MDP = newMdp;
   }
 
   /**
@@ -108,7 +120,7 @@ public class Vendeur {
    * @return the value of MDP
    */
   public String getMDP () {
-    return MDP;
+    return this.MDP;
   }
 
   //
@@ -125,32 +137,52 @@ public class Vendeur {
 
   /**
    */
-  public void ajouterLivreStock()
-  {
+  public void ajouterLivreStock(Livre l,Stock i)  {
+    this.magasin.ajouteStock(l, i);
   }
 
 
   /**
    */
-  public void mettreAJourStock()
-  {
+  public void mettreAJourStock(HashMap<Livre,Stock> dicoMAJ) {
+    for(Livre l:dicoMAJ.keySet()){
+      for(Livre l2:this.magasin.getStock().keySet()){
+        if (l.equals(l2)) {
+          if (verifierDisponibilite(l, dicoMAJ.get(l))) {
+            this.magasin.getStock().put(l,new Stock(this.magasin.getStock().get(l2).getQuantite()+dicoMAJ.get(l).getQuantite()));
+          }
+        }
+      }
+    }
   }
 
 
   /**
    * @return       boolean
    */
-  public boolean verifierDisponibilite(){
-    return true;
+  public boolean verifierDisponibilite(Livre l, Stock i){
+    if (!this.magasin.getStock().containsKey(l)){
+      return false;
+    }
+    else if (this.magasin.getStock().get(l).getQuantite()+i.getQuantite()>0) {
+      return true;
+    }
+    return false;
   }
 
 
   /**
    * @return       boolean
    */
-  public boolean transfererLivre(){
-    return true;
-  }
+  public void transfereLivre(Set<Magasin> s,Livre l)throws LivreDansAucunMagasinException{
+      for (Magasin m : s) {
+        if (m.getStock().containsKey(l)) {
+          
+        }
+      }
+    
+      throw new LivreDansAucunMagasinException(); 
+      }
 
 
 }
