@@ -10,7 +10,7 @@ public class Vendeur {
   //
   // Fields
   //
-
+  private Magasin magasin;
   private int idvendeur;
   private String nom;
   private String prenom;
@@ -24,12 +24,14 @@ public class Vendeur {
    String nom,
    String prenom,
    String email,
-   String MDP) {
+   String MDP,
+   Magasin magasin) {
     this.idvendeur = idvendeur;
     this.nom = nom;
     this.prenom = prenom;
     this.email = email;
     this.MDP = MDP;
+    this.magasin=magasin;
     };
   
   //
@@ -135,32 +137,52 @@ public class Vendeur {
 
   /**
    */
-  public void ajouterLivreStock()
-  {
+  public void ajouterLivreStock(Livre l,Stock i)  {
+    this.magasin.ajouteStock(l, i);
   }
 
 
   /**
    */
-  public void mettreAJourStock(int qte) {
-  
+  public void mettreAJourStock(HashMap<Livre,Stock> dicoMAJ) {
+    for(Livre l:dicoMAJ.keySet()){
+      for(Livre l2:this.magasin.getStock().keySet()){
+        if (l.equals(l2)) {
+          if (verifierDisponibilite(l, dicoMAJ.get(l))) {
+            this.magasin.getStock().put(l,new Stock(this.magasin.getStock().get(l2).getQuantite()+dicoMAJ.get(l).getQuantite()));
+          }
+        }
+      }
+    }
   }
 
 
   /**
    * @return       boolean
    */
-  public boolean verifierDisponibilite(){
-    return true;
+  public boolean verifierDisponibilite(Livre l, Stock i){
+    if (!this.magasin.getStock().containsKey(l)){
+      return false;
+    }
+    else if (this.magasin.getStock().get(l).getQuantite()+i.getQuantite()>0) {
+      return true;
+    }
+    return false;
   }
 
 
   /**
    * @return       boolean
    */
-  public boolean transfererLivre(){
-    return true;
-  }
+  public void transfereLivre(Set<Magasin> s,Livre l)throws LivreDansAucunMagasinException{
+      for (Magasin m : s) {
+        if (m.getStock().containsKey(l)) {
+          
+        }
+      }
+    
+      throw new LivreDansAucunMagasinException(); 
+      }
 
 
 }
