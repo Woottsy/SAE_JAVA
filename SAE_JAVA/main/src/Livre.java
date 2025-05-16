@@ -151,4 +151,21 @@ public class Livre {
       return false;
     }
   }
+  private Set<Livre> lesLivresRecommandable(Client c1,Client c2){
+    Set<Livre> reco = new HashSet<Livre>();
+    if (compatible(c1, c2)){
+      
+      for(Livre l : c1.getLivre()){
+        if (!c2.getLivre().contains(l)){
+          reco.add(l);
+        }
+      }
+      for(Livre l : c2.getLivre()){
+        if (!c1.getLivre().contains(l)){
+          reco.add(l);
+        }
+      }
+    }
+    return reco; 
+  }
 }
