@@ -19,6 +19,8 @@ public class Client {
   private String codepostal;
   private String email;
   private String mdp;
+  private List<Livre> livres ;
+  private List<Commande> commandes;
   
   //
   // Constructors
@@ -32,6 +34,8 @@ public class Client {
     this.codepostal = codepostal;
     this.email = email;
     this.mdp = mdp;
+    this.livres = new ArrayList<Livre>();
+    this.commandes = new ArrayList<Commande>();
    };
   
   //
@@ -169,6 +173,21 @@ public class Client {
    */
   public String getMdp () {
     return this.mdp;
+  }
+  public void ajouteLivresClient (){
+    // TODO - il faut faire une boucle pour recuperer les livres des commande du client pour les ajouter dans la liste de ses livres
+    
+  } 
+
+  public List<Livre> getLivre() {
+    return this.livres;
+  }
+
+  public void ajouteCommande(Commande commande) {
+    this.commandes.add(commande);
+  }
+  public List<Commande> getCommandes() {
+    return this.commandes;
   }
 
   //

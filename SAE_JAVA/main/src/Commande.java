@@ -18,6 +18,7 @@ public class Commande {
   private boolean estpayee;
   private DetailCommande leDetail;
   
+  
   //
   // Constructors
   //
@@ -28,6 +29,8 @@ public class Commande {
     this.typelivraison = typelivraison;
     this.estpayee = estpayee;
     this.leDetail = leDetail;
+    
+
     };
   
   //
