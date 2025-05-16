@@ -174,9 +174,9 @@ public class Client {
   public String getMdp () {
     return this.mdp;
   }
+  
   public void ajouteLivresClient (){
-    // TODO - il faut faire une boucle pour recuperer les livres des commande du client pour les ajouter dans la liste de ses livres
-    
+    // TODO - il faut faire une boucle pour recuperer les livres des commande du client pour les ajouter dans la liste de ses livres  
   } 
 
   public List<Livre> getLivre() {
@@ -209,10 +209,53 @@ public class Client {
   }
 
 
+/**
+ * Permet au client de choisir un type de livraison.
+ * @return TypeDeLivraison
+ */
+public TypeDeLivraison.TypeLivraison choisirLivraison(){
+  Scanner scanner = new Scanner(System.in);
+  int choix = 0;
+  TypeDeLivraison.TypeLivraison typeLivraison = null;
+
+  while (choix != 1 && choix != 2){
+      System.out.println("Choisissez votre mode de livraison :");
+      System.out.println("1 - Retrait en magasin");
+      System.out.println("2 - Livraison à domicile");
+      System.out.print("Votre choix : ");
+      
+      try {
+          choix = scanner.nextInt();
+          if (choix == 1){
+              typeLivraison = TypeDeLivraison.TypeLivraison.MAGASIN;
+          }
+          else if (choix == 2){
+              typeLivraison = TypeDeLivraison.TypeLivraison.DOMICILE;
+          }
+          else{
+              System.out.println("Veuillez entrer 1 ou 2.");
+          }
+      } 
+      catch (Exception e){
+          System.out.println("Erreur de saisie. Veuillez entrer un nombre.");
+          scanner.nextLine();
+      }
+  }
+
+  return typeLivraison;
+}
+
   /**
-   * @return       TypeDeLivraison
+   * @return       String
    */
-  public TypeDeLivraison choisirLivraison(){
+  public String editerFacture(){
+    return null;
+  }
+
+  /**
+   * @return       String
+   */
+  public String consulterHistorique(){
     return null;
   }
    public void onVousRecommande()
@@ -264,5 +307,17 @@ public class Client {
     return reco; 
   }
 
+  /**
+   * @return       String
+   */
+  public String modifierProfil(){
+    return null;
+  }
 
+  /**
+   * @return       String
+   */
+  public String seDeconnecter(){
+    return null;
+  }
 }
