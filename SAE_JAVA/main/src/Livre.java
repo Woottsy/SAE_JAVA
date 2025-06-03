@@ -16,16 +16,18 @@ public class Livre {
   private int nbpages;
   private String datedepublication;
   private double prix;
+  private Classification classification;
   
   //
   // Constructors
   //
-  public Livre (String isbn,String titre,int nbpages,String datedepublication,double prix) {
+  public Livre (String isbn,String titre,int nbpages,String datedepublication,double prix, Classification classification) {
     this.isbn = isbn;
     this.titre = titre;
     this.nbpages = nbpages;
     this.datedepublication = datedepublication;
     this.prix = prix;
+    this.classification = classification;
     };
   
   //
@@ -117,15 +119,26 @@ public class Livre {
     return this.prix;
   }
 
+  /**
+   * Set the value of classification
+   * @param newClassification the new value of classification
+   */
+  public void setClassification (Classification newClassification) {
+    this.classification = newClassification;
+  }
+  /**
+   * Get the value of classification
+   * @return the value of classification
+   */
+  public Classification getClassification () {
+    return this.classification;
+  }
+
   //
   // Other methods
   //
 
   /**
    */
-  public void onVousRecommande()
-  {
-  }
-
-
+ 
 }

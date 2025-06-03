@@ -21,7 +21,22 @@ public class TypeDeLivraison {
   //
   // Methods
   //
+  public int getIdlivraison() {
+    return idlivraison;
+  }
+  public void setIdlivraison(int idlivraison) {
+      this.idlivraison = idlivraison;
+  }
+  public String getType() {
+      return type;
+  }
+  public void setType(String type) {
+      this.type = type;
+  }
 
+  public enum TypeLivraison {
+    MAGASIN, DOMICILE;
+  }
 
   //
   // Accessor methods
