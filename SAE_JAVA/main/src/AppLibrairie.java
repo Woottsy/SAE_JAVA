@@ -6,6 +6,22 @@ public class AppLibrairie {
         AppLibrairie app = new AppLibrairie();
         app.start();
     }
+
+	  private boolean quitter_admin;
+    private boolean quitter;
+    private Librairie librairie;
+    private ConnexionMySQL connexionMySQL;
+
+    public void init() {
+        try {
+            this.connexionMySQL = new ConnexionMySQL();
+        } catch (ClassNotFoundException e) {
+            System.out.println("Driver MySQL non trouvé!!!");
+            System.exit(1);
+        }
+
+    }
+
     public void start() {
         while(!quitter){
 			menu();
@@ -13,18 +29,16 @@ public class AppLibrairie {
     }
 
     public void menu() {
-
         boolean commande_faite = false;
         while (!commande_faite) {
             System.out.println("╭──────────────────────────────────────────╮");
             System.out.println("|              Menu princpal               |");
             System.out.println("|──────────────────────────────────────────|");
-            System.out.println("| Q: quitter                               |");
-            System.out.println("| D: Menu Administrateur                   |");
+            System.out.println("| A: Menu Administrateur                   |");
             System.out.println("| P: Menu Clients                          |");
             System.out.println("| T: Menu Vendeur                          |");
-            System.out.println("|                                          |");
-            System.out.println("╰──────────────────────────────────────────╯" + '\n');
+            System.out.println("| Q: Quitter                               |");
+			      System.out.println("╰──────────────────────────────────────────╯" + '\n');
             String commande_brute = System.console().readLine();
             String commande = commande_brute.strip().toLowerCase();
             if (commande.equals("q")) {
@@ -35,9 +49,11 @@ public class AppLibrairie {
                     menu_Admin();
                 }
                 commande_faite = true;
-            } else if (commande.equals("d")) {
+            } else if (commande.equals("a")) {
 				commande_faite = true;
-                System.out.println("uu");
+                while(!quitter_admin){
+					menu_Admin();
+				}
             } else if (commande.equals("t")) {
                 System.out.println("\n");
                 commande_faite = true;
@@ -56,21 +72,39 @@ public class AppLibrairie {
         boolean commande_faite = false;
         while (!commande_faite) {
             System.out.println("╭──────────────────────────────────────────╮");
-            System.out.println("|              Menu amis                   |");
+            System.out.println("|         Menu Administrateur              |");
             System.out.println("|──────────────────────────────────────────|");
-			System.out.println("| L : liste                                |");
-            System.out.println("| S : selection                            |");
-			System.out.println("| Q : quitter                              |");
+			      System.out.println("| A : Ajouter un magasin                   |");
+            System.out.println("| S : Supprimer une librairie              |");
+            System.out.println("| L : Liste des librairies                 |");
+            System.out.println("| V : Liste des vendeurs                   |");
+            System.out.println("| C : Créer un vendeur                     |");
+            System.out.println("| D : Supprimer un vendeur                 |");
+            System.out.println("| Q : retour en arrière                    |");
             System.out.println("╰──────────────────────────────────────────╯" + '\n');
             String commande_brute = System.console().readLine();
             String commande = commande_brute.strip().toLowerCase();
             if (commande.equals("q")) {
-                quitter = true;
+                quitter_admin = true;
                 commande_faite = true;
             }
-            else if (commande.equals("l")){
-                System.out.println("\n");
-                commande_faite = true;
+            else if (commande.equals("a")){
+                System.out.println("Pour ajouter une Librairie, écrivez les informations de celle-ci au format (idMag, NomMag, VilleMag)"); // mettre une requete sql pour l'id 
+				try {
+					String input = System.console().readLine();
+					String[] parts = input.split(",");
+					if (parts.length == 3) {
+						String idMag = parts[0].strip();
+						String nomMag = parts[1].strip();
+						String villeMag = parts[2].strip();
+						System.out.println("Librairie ajoutée : ID=" + idMag + ", Nom=" + nomMag + ", Ville=" + villeMag);
+						// Vous pouvez ajouter ici une requête SQL pour insérer ces informations dans la base de données
+					} else {
+						System.out.println("Format invalide. Veuillez entrer les informations au format (idMag, NomMag, VilleMag).");
+					}
+				} catch(NumberFormatException e) {System.out.println}
+				
+				commande_faite = true;
             }
             else if (commande.equals("s")){
               //a implémenter
