@@ -35,11 +35,11 @@ public class AppLibrairie {
         boolean commande_faite = false;
         while (!commande_faite) {
             System.out.println("╭──────────────────────────────────────────╮");
-            System.out.println("|              Menu princpal               |");
+            System.out.println("|              Menu principal              |");
             System.out.println("|──────────────────────────────────────────|");
             System.out.println("| A: Menu Administrateur                   |");
-            System.out.println("| P: Menu Clients                          |");
-            System.out.println("| T: Menu Vendeur                          |");
+            System.out.println("| C: Menu Clients                          |");
+            System.out.println("| V: Menu Vendeur                          |");
             System.out.println("| Q: Quitter                               |");
 			System.out.println("╰──────────────────────────────────────────╯" + '\n');
             String commande_brute = System.console().readLine();
@@ -47,7 +47,7 @@ public class AppLibrairie {
             if (commande.equals("q")) {
                 this.quitter = true;
                 commande_faite = true;
-            } else if (commande.equals("p")) {
+            } else if (commande.equals("c")) {
                 while (!quitter_Client) {
                     menu_Client();
                 }
@@ -59,8 +59,8 @@ public class AppLibrairie {
 					menu_Admin();
 				}
                 quitter_admin = false;
-            } else if (commande.equals("t")) {
-                System.out.println("\n");
+            } else if (commande.equals("v")) {
+                menu_vendeur();
                 commande_faite = true;
             } else if (commande.equals("m")) {
                 System.out.println("\n");
@@ -104,7 +104,7 @@ public class AppLibrairie {
 						String nomMag = parts[1].strip();
 						String villeMag = parts[2].strip();
 						System.out.println("Librairie ajoutée : ID=" + idMag + ", Nom=" + nomMag + ", Ville=" + villeMag);
-						// Vous pouvez ajouter ici une requête SQL pour insérer ces informations dans la base de données
+						// Ajouter ici une requête SQL
 					}
 				} catch(NumberFormatException e) {System.out.println("Format invalide. Veuillez entrer les informations au format (idMag, NomMag, VilleMag).");}
 				
@@ -121,7 +121,13 @@ public class AppLibrairie {
 
     }
 
+
+    // En attente il faut tester à la maison car pas possible de créer un compte depuis l'université
     public void menu_Client(){
+        String motDePasse = "";
+        String identifiant = "";
+        boolean id = false;
+        boolean mdp = false;
         boolean commande_faite = false;
         while (!commande_faite) {
             System.out.println("╭──────────────────────────────────────────╮");
@@ -129,7 +135,7 @@ public class AppLibrairie {
             System.out.println("|──────────────────────────────────────────|");
 			System.out.println("| S : Se connecter                         |");
             System.out.println("| C : Créer un compte                      |");
-            System.out.println("| Q : Retour en arrière                    |");
+            System.out.println("| Q : Appuyer pour revenir en arrière      |");
             System.out.println("╰──────────────────────────────────────────╯" + '\n');
             String commande_brute = System.console().readLine();
             String commande = commande_brute.strip().toLowerCase();
@@ -137,10 +143,33 @@ public class AppLibrairie {
                 quitter_Client = true;
                 commande_faite = true;
             }
-            else if (commande.equals("a")){
-                System.out.println("Pour ajouter une Librairie, écrivez les informations de celle-ci au format (idMag, NomMag, VilleMag)");
+            else if (commande.equals("s")){
+                System.out.println("Veuillez entrer votre Identifiant :");
+                while (!id) { 
+                    String input = System.console().readLine();
+                    if(!input.isEmpty()){
+                        id = true;
+                        identifiant = input;
+                        commande_faite = true;
+                    }
+                }
+                System.out.println("Veuillez entrer votre mot de passe :");
+                while (!mdp){
+                    String input = System.console().readLine();
+                    if(!input.isEmpty()){
+                        mdp = true;
+                        motDePasse = input;
+                        commande_faite = true;
+                    }
+                }
              }
+
         } // mettre une requete sql pour l'id
+    }
+
+    //à completer
+    public void menu_vendeur(){
+
     }
 
     public void quit() {
