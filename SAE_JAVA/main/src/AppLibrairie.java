@@ -7,7 +7,7 @@ public class AppLibrairie {
         app.start();
     }
 
-	private boolean quitter_admin;
+	  private boolean quitter_admin;
     private boolean quitter;
     private Librairie librairie;
     private ConnexionMySQL connexionMySQL;
@@ -38,7 +38,7 @@ public class AppLibrairie {
             System.out.println("| P: Menu Clients                          |");
             System.out.println("| T: Menu Vendeur                          |");
             System.out.println("| Q: Quitter                               |");
-			System.out.println("╰──────────────────────────────────────────╯" + '\n');
+			      System.out.println("╰──────────────────────────────────────────╯" + '\n');
             String commande_brute = System.console().readLine();
             String commande = commande_brute.strip().toLowerCase();
             if (commande.equals("q")) {
@@ -74,14 +74,14 @@ public class AppLibrairie {
             System.out.println("╭──────────────────────────────────────────╮");
             System.out.println("|         Menu Administrateur              |");
             System.out.println("|──────────────────────────────────────────|");
-			System.out.println("| A : Ajouter un magasin                   |");
+			      System.out.println("| A : Ajouter un magasin                   |");
             System.out.println("| S : Supprimer une librairie              |");
-			System.out.println("| L : Liste des librairies                 |");
-			System.out.println("| V : Liste des vendeurs                   |");
-			System.out.println("| C : Créer un vendeur                     |");
-			System.out.println("| D : Supprimer un vendeur                 |");
-			System.out.println("| Q : retour en arrière                    |");
-			System.out.println("╰──────────────────────────────────────────╯" + '\n');
+            System.out.println("| L : Liste des librairies                 |");
+            System.out.println("| V : Liste des vendeurs                   |");
+            System.out.println("| C : Créer un vendeur                     |");
+            System.out.println("| D : Supprimer un vendeur                 |");
+            System.out.println("| Q : retour en arrière                    |");
+            System.out.println("╰──────────────────────────────────────────╯" + '\n');
             String commande_brute = System.console().readLine();
             String commande = commande_brute.strip().toLowerCase();
             if (commande.equals("q")) {
