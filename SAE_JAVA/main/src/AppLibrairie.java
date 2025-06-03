@@ -7,7 +7,9 @@ public class AppLibrairie {
         app.start();
     }
 
-	  private boolean quitter_admin;
+
+	private boolean quitter_Client;
+	private boolean quitter_admin;
     private boolean quitter;
     private Librairie librairie;
     private ConnexionMySQL connexionMySQL;
@@ -45,8 +47,8 @@ public class AppLibrairie {
                 this.quitter = true;
                 commande_faite = true;
             } else if (commande.equals("p")) {
-                while (!quitter) {
-                    menu_Admin();
+                while (!quitter_Client) {
+                    menu_Client();
                 }
                 commande_faite = true;
             } else if (commande.equals("a")) {
@@ -102,7 +104,7 @@ public class AppLibrairie {
 					} else {
 						System.out.println("Format invalide. Veuillez entrer les informations au format (idMag, NomMag, VilleMag).");
 					}
-				} catch(NumberFormatException e) {System.out.println}
+				} catch(NumberFormatException e) {System.out.println();}
 				
 				commande_faite = true;
             }
