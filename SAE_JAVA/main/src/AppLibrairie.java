@@ -6,21 +6,6 @@ public class AppLibrairie {
         AppLibrairie app = new AppLibrairie();
         app.start();
     }
-
-    private boolean quitter;
-    private Librairie librairie;
-    private ConnexionMySQL connexionMySQL;
-
-    public void init() {
-        try {
-            this.connexionMySQL = new ConnexionMySQL();
-        } catch (ClassNotFoundException e) {
-            System.out.println("Driver MySQL non trouvé!!!");
-            System.exit(1);
-        }
-
-    }
-
     public void start() {
         while(!quitter){
 			menu();
