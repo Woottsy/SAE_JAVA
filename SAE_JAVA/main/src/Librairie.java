@@ -8,5 +8,12 @@ public class Librairie {
     public void ajouteMagasins(Magasin magasin){
         this.magasins.add(magasin);
     }
+    public String toString(){
+        String res="";
+        for (Magasin magasin : magasins) {
+            res+=magasin.toString();
+        }
+        return res;
+    }
     
 }
