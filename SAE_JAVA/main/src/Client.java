@@ -269,8 +269,23 @@ public TypeDeLivraison.TypeLivraison choisirLivraison(){
 
 
 
-   public void onVousRecommande()
-  {
+   public void onVousRecommande(){
+    Set<Livre> livresReco = new HashSet<Livre>();
+    // for (Client c : ) {
+    //   if (c.getIdclient() != this.idclient) {
+    //     livresReco.addAll(lesLivresRecommandable(this, c));
+    //   }
+    // }
+    
+    
+    if (livresReco.isEmpty()) {
+      System.out.println("Aucune recommandation disponible pour le moment.");
+    } else {
+      System.out.println("Livres recommandés pour vous :");
+      for (Livre l : livresReco) {
+        System.out.println("- " + l.getTitre());
+      }
+    }
   }
 
   //les methode en dessous seront utile pour la fonction onVousRecommande
@@ -304,16 +319,12 @@ public TypeDeLivraison.TypeLivraison choisirLivraison(){
     Set<Livre> reco = new HashSet<Livre>();
     if (compatible(c1, c2)){
       
-      for(Livre l : c1.getLivre()){
-        if (!c2.getLivre().contains(l)){
+      for(Livre l : c1.livres){
+        if (!c2.livres.contains(l)){
           reco.add(l);
         }
       }
-      for(Livre l : c2.getLivre()){
-        if (!c1.getLivre().contains(l)){
-          reco.add(l);
-        }
-      }
+      
     }
     return reco; 
   }
