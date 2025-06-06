@@ -67,10 +67,10 @@ public class AppLibrairie {
                 quitter_Client = false;
                 commande_faite = true;
             } else if (commande.equals("a")) {
-                commande_faite = true;
                 while (!quitter_admin) {
-                    menu_Admin();
+                    connexion_admin();
                 }
+                commande_faite = true;
                 quitter_admin = false;
             } else if (commande.equals("v")) {
                 menu_vendeur();
@@ -83,6 +83,30 @@ public class AppLibrairie {
                 System.out.println("Commande '" + commande_brute + "' invalide.");
             }
 
+        }
+    }
+
+    public void connexion_admin() {
+        boolean commande_faite = false;
+        AdministrateurBD administrateurBD = new AdministrateurBD(this.connexionMySQL);
+        while (!commande_faite) {
+            System.out.println("╭──────────────────────────────────────────╮");
+            System.out.println("|            Menu Administrateur           |");
+            System.out.println("|──────────────────────────────────────────|");
+            System.out.println("| S : Se connecter                         |");
+            System.out.println("| Q : Appuyer pour revenir en arrière      |");
+            System.out.println("╰──────────────────────────────────────────╯" + '\n');
+            String commande_brute = System.console().readLine();
+            String commande = commande_brute.strip().toLowerCase();
+            if (commande.equals("q")) {
+                quitter_admin = true;
+                commande_faite = true;
+            } else if (commande.equals("s")) {
+                if (administrateurBD.seConnecter()) {
+                    menu_Admin();
+                    commande_faite = true;
+                }
+            }
         }
     }
 
@@ -110,20 +134,20 @@ public class AppLibrairie {
                 quitter_admin = true;
                 commande_faite = true;
             } else if (commande.equals("a")) {
-                commande_faite = true;
                 administrateurBD.ajouterLibrairie(idMag, nomMag, villeMag);
             } else if (commande.equals("s")) {
                 System.out.println("Pour supprimer une Librairie, entrez son Identifiant : ");
                 try {
                     String input = System.console().readLine();
                     idMag = input;
-                    
 
                 } catch (NumberFormatException e) {
                     System.out.println("Format invalide. Veuillez entrer les informations au format (idMag, NomMag, VilleMag).");
                 }
                 administrateurBD.supprimerLibrairie(idMag);
 
+            } else if (commande.equals("l")) {
+                administrateurBD.listeMagasins();
             } else {
                 System.out.println("Commande '" + commande_brute + "' invalide.");
             }
