@@ -107,12 +107,7 @@ public class Magasin {
 
   @Override
   public String toString() {
-    return "Magasin{" +
-            "idmagasin=" + this.idmagasin +
-            ", nom='" + this.nom + '\'' +
-            ", ville='" + this.ville + '\'' +
-            ", stockMagasin=" + this.stockMagasin +
-            '}';
+    return "Le magasin " + this.nom + " qui a pour identifiant : " + this.idmagasin + " est situé dans la ville : " + this.ville;
   }
   @Override
   public boolean equals(Object o) {
