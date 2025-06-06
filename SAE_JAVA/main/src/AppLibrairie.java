@@ -121,8 +121,8 @@ public class AppLibrairie {
             System.out.println("|         Menu Administrateur              |");
             System.out.println("|──────────────────────────────────────────|");
             System.out.println("| A : Ajouter un magasin                   |");
-            System.out.println("| S : Supprimer une librairie              |"); // ajouter une partie gerer les stock (lire le sujet)
-            System.out.println("| L : Liste des librairies                 |");
+            System.out.println("| S : Supprimer un magasin                 |"); // ajouter une partie gerer les stock (lire le sujet)
+            System.out.println("| L : Liste des magasins                   |");
             System.out.println("| V : Liste des vendeurs                   |");
             System.out.println("| C : Créer un vendeur                     |");
             System.out.println("| D : Supprimer un vendeur                 |");
