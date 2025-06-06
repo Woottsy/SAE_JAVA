@@ -3,6 +3,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AdministrateurBD {
 
@@ -74,10 +76,10 @@ public class AdministrateurBD {
             System.out.println("Entrez votre mot de passe");
             String mdp = System.console().readLine();
             //Pour afficher le magasin supprimée
-            ResultSet magasin = st.executeQuery("select * from ADMINISTRATEUR");
-            if (magasin.next()) {
-                if (id.equals(magasin.getString("identAdmin"))) {
-                    if (mdp.equals(magasin.getString("motdepasseAdmin"))) {
+            ResultSet admins = st.executeQuery("select * from ADMINISTRATEUR");
+            if (admins.next()) {
+                if (id.equals(admins.getString("identAdmin"))) {
+                    if (mdp.equals(admins.getString("motdepasseAdmin"))) {
                         return true;
                     }
                 } else {
@@ -90,6 +92,17 @@ public class AdministrateurBD {
         return false;
     }
 
-
+    public void listeMagasins() {
+        try {
+            Statement st = this.laConnexion.createStatement();
+            List<Magasin> lmag = new ArrayList<>();
+            ResultSet magasin = st.executeQuery("select * from MAGASIN");
+            if(magasin.next()){
+                Magasin mag = new Magasin(magasin.getString("idmag"), magasin.getString("nommag"), magasin.getString("villemag"));
+                lmag.add(mag);
+            }
+            System.out.println(lmag);
+        } catch (SQLException e) {}
+    }
 
 }
