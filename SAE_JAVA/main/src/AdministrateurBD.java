@@ -94,15 +94,20 @@ public class AdministrateurBD {
 
     public void listeMagasins() {
         try {
-            Statement st = this.laConnexion.createStatement();
+            Statement localStatement = this.laConnexion.createStatement();
             List<Magasin> lmag = new ArrayList<>();
-            ResultSet magasin = st.executeQuery("select * from MAGASIN");
-            if(magasin.next()){
-                Magasin mag = new Magasin(magasin.getString("idmag"), magasin.getString("nommag"), magasin.getString("villemag"));
-                lmag.add(mag);
+            String res = "";
+            ResultSet magasin = localStatement.executeQuery("select * from MAGASIN");
+            while (magasin.next()) {
+                lmag.add(new Magasin(magasin.getString("idmag"), magasin.getString("nommag"), magasin.getString("villemag")));
             }
-            System.out.println(lmag);
-        } catch (SQLException e) {}
+            for (Magasin m : lmag){
+                res += m + "\n";
+            }
+            System.out.println(res);
+        } catch (SQLException e) {
+            System.out.println("Error retrieving magasins: " + e.getMessage());
+        }
     }
 
 }
