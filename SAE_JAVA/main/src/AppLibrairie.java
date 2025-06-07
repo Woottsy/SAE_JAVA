@@ -126,7 +126,7 @@ public class AppLibrairie {
             System.out.println("| V : Liste des vendeurs                   |");
             System.out.println("| C : Créer un vendeur                     |");
             System.out.println("| D : Supprimer un vendeur                 |");
-            System.out.println("| Q : retour en arrière                    |");
+            System.out.println("| Q : Se déconnecter                       |");
             System.out.println("╰──────────────────────────────────────────╯" + '\n');
             String commande_brute = System.console().readLine();
             String commande = commande_brute.strip().toLowerCase();
@@ -148,6 +148,8 @@ public class AppLibrairie {
 
             } else if (commande.equals("l")) {
                 administrateurBD.listeMagasins();
+            } else if (commande.equals("c")) {
+                administrateurBD.creerVendeur();
             } else {
                 System.out.println("Commande '" + commande_brute + "' invalide.");
             }

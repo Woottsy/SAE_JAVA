@@ -16,8 +16,8 @@ public class AdministrateurBD {
     }
 
     public void ajouterLibrairie(String idMag, String NomMag, String VilleMag) {
-        System.out.println("Pour ajouter une Librairie, écrivez les informations de celle-ci au format (idMag, NomMag, VilleMag)"); // mettre une requete sql pour l'id 
         try {
+            System.out.println("Pour ajouter une Librairie, écrivez les informations de celle-ci au format (idMag, NomMag, VilleMag)"); // mettre une requete sql pour l'id 
             String input = System.console().readLine();
             String[] parts = input.split(",");
             if (parts.length == 3) {
@@ -49,7 +49,7 @@ public class AdministrateurBD {
             Statement af = this.laConnexion.createStatement();
             String magasinSelect = "Vous avez supprimer le magasin qui a pour identifiant : ";
             //Pour afficher le magasin supprimée
-            ResultSet magasin = af.executeQuery("select * from MAGASIN where idmag = " + idMag);
+            ResultSet magasin = af.executeQuery("select * from MAGASIN where idmag = " + "'" + idMag + "'");
             if (magasin.next()) {
                 magasinSelect += magasin.getString("idmag") + ", ";
                 magasinSelect += " le nom du magasin est " + magasin.getString("nommag") + ", ";
@@ -58,8 +58,7 @@ public class AdministrateurBD {
 
             System.out.println(magasinSelect);
             // Pour supprimer
-            PreparedStatement resultat = this.laConnexion.prepareStatement("DELETE from MAGASIN where idmag = ?");
-            resultat.setString(1, idMag);
+            PreparedStatement resultat = this.laConnexion.prepareStatement("DELETE from MAGASIN where idmag = " + "'" + idMag +"'");
             resultat.executeUpdate();
 
         } catch (SQLException e) {
@@ -94,19 +93,39 @@ public class AdministrateurBD {
 
     public void listeMagasins() {
         try {
-            Statement localStatement = this.laConnexion.createStatement();
+            Statement st = this.laConnexion.createStatement();
             List<Magasin> lmag = new ArrayList<>();
             String res = "";
-            ResultSet magasin = localStatement.executeQuery("select * from MAGASIN");
+            ResultSet magasin = st.executeQuery("select * from MAGASIN");
             while (magasin.next()) {
                 lmag.add(new Magasin(magasin.getString("idmag"), magasin.getString("nommag"), magasin.getString("villemag")));
             }
-            for (Magasin m : lmag){
+            for (Magasin m : lmag) {
                 res += m + "\n";
             }
             System.out.println(res);
         } catch (SQLException e) {
             System.out.println("Error retrieving magasins: " + e.getMessage());
+        }
+    }
+
+    public void creerVendeur() {
+        try {
+            VendeurBD vendeur = new VendeurBD(this.laConnexion);
+            System.out.println("Quel est l'identifiant du vendeur que vous voulez créer?");
+            String id = System.console().readLine();
+            System.out.println("Quel est sont mot de passe ?");
+            String mdp = System.console().readLine();
+            System.out.println("Quelle est son adresse email ?");
+            String email = System.console().readLine();
+            Statement st = this.laConnexion.createStatement();
+            PreparedStatement resultat = this.laConnexion.prepareStatement("INSERT INTO VENDEUR(keyVendeur, identVendeur, motdepasseVendeur, email) values (" + vendeur.maxnumVendeur( ) +","+ "'" +id+"'"+","+"'"+ mdp +"'"+","+"'"+email+"'");
+            resultat.setInt(1, vendeur.maxnumVendeur());
+            resultat.setString(2, "'" + id + "'");
+            resultat.setString(3, "'" + mdp + "'");
+            resultat.setString(4, "'" + email + "'");
+
+        } catch (SQLException e) {
         }
     }
 
