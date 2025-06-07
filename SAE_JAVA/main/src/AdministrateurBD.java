@@ -58,7 +58,7 @@ public class AdministrateurBD {
 
             System.out.println(magasinSelect);
             // Pour supprimer
-            PreparedStatement resultat = this.laConnexion.prepareStatement("DELETE from MAGASIN where idmag = " + "'" + idMag +"'");
+            PreparedStatement resultat = this.laConnexion.prepareStatement("DELETE from MAGASIN where idmag = " + "'" + idMag + "'");
             resultat.executeUpdate();
 
         } catch (SQLException e) {
@@ -114,16 +114,19 @@ public class AdministrateurBD {
             VendeurBD vendeur = new VendeurBD(this.laConnexion);
             System.out.println("Quel est l'identifiant du vendeur que vous voulez créer?");
             String id = System.console().readLine();
-            System.out.println("Quel est sont mot de passe ?");
+            System.out.println("Quel est son mot de passe ?");
             String mdp = System.console().readLine();
             System.out.println("Quelle est son adresse email ?");
             String email = System.console().readLine();
-            Statement st = this.laConnexion.createStatement();
-            PreparedStatement resultat = this.laConnexion.prepareStatement("INSERT INTO VENDEUR(keyVendeur, identVendeur, motdepasseVendeur, email) values (" + vendeur.maxnumVendeur( ) +","+ "'" +id+"'"+","+"'"+ mdp +"'"+","+"'"+email+"'");
-            resultat.setInt(1, vendeur.maxnumVendeur());
-            resultat.setString(2, "'" + id + "'");
-            resultat.setString(3, "'" + mdp + "'");
-            resultat.setString(4, "'" + email + "'");
+            PreparedStatement ps = this.laConnexion.prepareStatement(
+                    "INSERT INTO VENDEUR(keyVendeur, identVendeur, motdepasseVendeur, email) VALUES (?, ?, ?, ?)"
+            );
+            ps.setInt(1, vendeur.maxnumVendeur());
+            ps.setString(2, id);
+            ps.setString(3, mdp);
+            ps.setString(4, email);
+            ps.executeUpdate();
+            System.out.println("Vous avez créer le compte vendeur " + id);
 
         } catch (SQLException e) {
         }
