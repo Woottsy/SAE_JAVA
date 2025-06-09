@@ -10,8 +10,8 @@ public class ConnexionMySQL {
 
 	public void connecter(String nomServeur, String nomBase, String nomLogin, String motDePasse) throws SQLException {
 		this.mysql=DriverManager.getConnection(
-			"jdbc:mysql://CHANGE/CHANGE",
-			"CHANGE","CHANGE");
+			"jdbc:mysql://localhost:3306/Librairie",
+			"wyatt","groot");
 		// si tout s'est bien passé la connexion n'est plus nulle
 		this.connecte=this.mysql!=null;
 	}

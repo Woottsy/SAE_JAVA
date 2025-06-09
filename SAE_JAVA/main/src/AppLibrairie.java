@@ -150,14 +150,18 @@ public class AppLibrairie {
                 administrateurBD.listeMagasins();
             } else if (commande.equals("c")) {
                 administrateurBD.creerVendeur();
+            } else if (commande.equals("v")) {
+                administrateurBD.listeVendeurs();
+            } else if(commande.equals("d")){
+                administrateurBD.supprimerVendeur();
             } else {
                 System.out.println("Commande '" + commande_brute + "' invalide.");
             }
         }
 
     }
-
     // En attente il faut faire des INSERT ET POUR SE CONNECTER IL FAUT JUSTE FAIRE UN SELECT TO AVEC UN WHERE ET LE MDP ET ID = A CELUI ENTREE
+
     public void menu_Client() {
         String motDePasse = "";
         String identifiant = "";
