@@ -1,4 +1,5 @@
 import java.sql.SQLException;
+import java.util.List;
 
 public class AppLibrairie {
 
@@ -167,21 +168,47 @@ public class AppLibrairie {
     }
 
     public void menu_choisirMagasin() {
+        boolean commande_faite = false;
         try {
             MagasinBD magasinBD = new MagasinBD(this.connexionMySQL);
             List<Magasin> magasins = magasinBD.getAllMagasins();
-            int maxLen = magasins.stream().mapToInt(m -> m.getNomMag().length()).max().orElse(10);
-            System.out.println("╭" + "─".repeat(maxLen + 8) + "╮");
-            System.out.println("|  Choisissez un magasin  |");
-            System.out.println("|" + "─".repeat(maxLen + 8) + "|");
-            for (int i = 0; i < magasins.size(); i++) {
-                String nom = magasins.get(i).getNomMag();
-                System.out.printf("| %d : %-"+maxLen+"s |\n", i+1, nom);
+            if (magasins.isEmpty()) {
+                System.out.println("Aucun magasin existant.");
             }
-            System.out.println("╰" + "─".repeat(maxLen + 8) + "╯");
-            System.out.print("Votre choix : ");
-            String choix = System.console().readLine();
-            // À compléter : utiliser le magasin choisi
+            StringBuilder res = new StringBuilder();
+            res.append("╭──────────────────────────────────────────╮\n");
+            res.append("|         Choisissez un magasin            |\n");
+            res.append("|──────────────────────────────────────────|\n");
+            for (int i = 1; i < magasins.size(); i++) {
+                int longeurNom = magasins.get(i).getNom().length();
+                int espaces = 37 - longeurNom; // Calculer le nombre d'espaces à ajouter
+                res.append("| ").append(i).append(" : ").append(magasins.get(i).getNom());
+                for (int j = 0; j < espaces; j++) {
+                    res.append(" "); // Ajouter les espaces
+                }
+                res.append("|\n");
+            }
+            res.append("| Q : Revenir au menu précédent            |\n");
+            res.append("╰──────────────────────────────────────────╯\n");
+            System.out.println(res.toString());
+            String commande_brute = System.console().readLine();
+            String commande = commande_brute.strip().toLowerCase();
+            if (commande.equals("q")) {
+                commande_faite = true;
+            } else {
+                try {
+                    int choix = Integer.parseInt(commande);
+                    if (choix > 0 && choix <= magasins.size()) {
+                        Magasin magasinChoisi = magasins.get(choix - 1);
+                        System.out.println("Vous avez choisi le magasin : " + magasinChoisi.getNom() + " (" + magasinChoisi.getVille() + ")");
+                        menu_gererStock(); // Appeler le menu de gestion des stocks pour ce magasin
+                    } else {
+                        System.out.println("Choix invalide. Veuillez réessayer.");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Format invalide. Veuillez entrer un numéro valide.");
+                }
+            }
         } catch (SQLException e) {
             System.out.println("Erreur lors de la récupération des magasins.");
         }
