@@ -1,4 +1,3 @@
-
 import java.sql.SQLException;
 
 public class AppLibrairie {
@@ -158,13 +157,65 @@ public class AppLibrairie {
                 administrateurBD.supprimerVendeur();
             } else if (commande.equals("g")){
                 administrateurBD.affilierVendeur();
+            } else if (commande.equals("m")){
+                menu_choisirMagasin();
             } else {
                 System.out.println("Commande '" + commande_brute + "' invalide.");
             }
         }
 
     }
-    // En attente il faut faire des INSERT ET POUR SE CONNECTER IL FAUT JUSTE FAIRE UN SELECT TO AVEC UN WHERE ET LE MDP ET ID = A CELUI ENTREE
+
+    public void menu_choisirMagasin() {
+        try {
+            MagasinBD magasinBD = new MagasinBD(this.connexionMySQL);
+            List<Magasin> magasins = magasinBD.getAllMagasins();
+            int maxLen = magasins.stream().mapToInt(m -> m.getNomMag().length()).max().orElse(10);
+            System.out.println("╭" + "─".repeat(maxLen + 8) + "╮");
+            System.out.println("|  Choisissez un magasin  |");
+            System.out.println("|" + "─".repeat(maxLen + 8) + "|");
+            for (int i = 0; i < magasins.size(); i++) {
+                String nom = magasins.get(i).getNomMag();
+                System.out.printf("| %d : %-"+maxLen+"s |\n", i+1, nom);
+            }
+            System.out.println("╰" + "─".repeat(maxLen + 8) + "╯");
+            System.out.print("Votre choix : ");
+            String choix = System.console().readLine();
+            // À compléter : utiliser le magasin choisi
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la récupération des magasins.");
+        }
+    }
+
+    public void menu_gererStock() {
+        boolean commande_faite = false;
+        while (!commande_faite) {
+            System.out.println("╭──────────────────────────────────────────╮");
+            System.out.println("|         Menu Gérer les stocks            |");
+            System.out.println("|──────────────────────────────────────────|");
+            System.out.println("| A : Ajouter un livre                     |");
+            System.out.println("| S : Supprimer un livre                   |");
+            System.out.println("| L : Liste des livres                     |");
+            System.out.println("| M : Modifier la quantité d'un livre      |");
+            System.out.println("| Q : Revenir au menu précédent            |");
+            System.out.println("╰──────────────────────────────────────────╯" + '\n');
+            String commande_brute = System.console().readLine();
+            String commande = commande_brute.strip().toLowerCase();
+            if (commande.equals("q")) {
+                commande_faite = true;
+            } else if (commande.equals("a")) {
+                // ajouter un livre
+            } else if (commande.equals("s")) {
+                // supprimer un livre
+            } else if (commande.equals("l")) {
+                // liste des livres
+            } else if (commande.equals("m")){
+                // modifier la quantité d'un livre
+            } else {
+                System.out.println("Commande '" + commande_brute + "' invalide.");
+            }
+        }
+    }
 
     public void menu_Client() {
         String motDePasse = "";
