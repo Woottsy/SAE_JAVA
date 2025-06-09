@@ -129,6 +129,43 @@ public class AdministrateurBD {
             System.out.println("Vous avez créer le compte vendeur " + id);
 
         } catch (SQLException e) {
+            System.out.println("Erreur lors de la création du vendeur : " + e.getMessage());
+        }
+    }
+
+    public void listeVendeurs() {
+        try {
+            Statement st = this.laConnexion.createStatement();
+
+            List<Vendeur> lvendeur = new ArrayList<>();
+            String res = "";
+            ResultSet vendeur = st.executeQuery("select * from VENDEUR");
+            while (vendeur.next()) {
+                lvendeur.add(new Vendeur(vendeur.getInt("keyVendeur"),
+                        vendeur.getString("identVendeur"),
+                        vendeur.getString("motdepasseVendeur"),
+                        vendeur.getString("email")));
+                        }
+            for (Vendeur v : lvendeur) {
+                res += v + "\n";
+            }
+            System.out.println(res);
+        } catch (SQLException e) {
+            System.out.println("Erreur pour retrouver les vendeurs: " + e.getMessage());
+        }
+    }
+
+    public void supprimerVendeur() {
+        try {
+            Statement st = this.laConnexion.createStatement();
+            System.out.println("Pour supprimer un vendeur, entrez sa clé unique vendeur : ");
+            String key = System.console().readLine();
+            PreparedStatement resultat = this.laConnexion.prepareStatement("DELETE from VENDEUR where keyVendeur = ?");
+            resultat.setString(1, key);
+            resultat.executeUpdate();
+            System.out.println("Le vendeur avec l'identifiant " + key + " a été supprimé.");
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la suppression du vendeur: " + e.getMessage());
         }
     }
 
