@@ -123,6 +123,8 @@ public class AppLibrairie {
             System.out.println("| A : Ajouter un magasin                   |");
             System.out.println("| S : Supprimer un magasin                 |"); // ajouter une partie gerer les stock (lire le sujet)
             System.out.println("| L : Liste des magasins                   |");
+            System.out.println("| M : Gérer les stocks                     |");
+            System.out.println("| G : Affilier un vendeur                  |");
             System.out.println("| V : Liste des vendeurs                   |");
             System.out.println("| C : Créer un vendeur                     |");
             System.out.println("| D : Supprimer un vendeur                 |");
@@ -154,6 +156,8 @@ public class AppLibrairie {
                 administrateurBD.listeVendeurs();
             } else if(commande.equals("d")){
                 administrateurBD.supprimerVendeur();
+            } else if (commande.equals("g"){
+                administrateurBD.affilierVendeur();
             } else {
                 System.out.println("Commande '" + commande_brute + "' invalide.");
             }

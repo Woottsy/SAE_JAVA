@@ -169,4 +169,21 @@ public class AdministrateurBD {
         }
     }
 
+    public void affilierVendeur() {
+        try {
+            Statement st = this.laConnexion.createStatement();
+            System.out.println("Pour affilier un vendeur, entrez son identifiant : ");
+            String idVendeur = System.console().readLine();
+            System.out.println("Pour affilier un magasin, entrez son identifiant : ");
+            String idMagasin = System.console().readLine();
+            PreparedStatement resultat = this.laConnexion.prepareStatement("INSERT INTO AFFILIATION(idVendeur, idMagasin) VALUES (?, ?)");
+            resultat.setString(1, idVendeur);
+            resultat.setString(2, idMagasin);
+            resultat.executeUpdate();
+            System.out.println("Le vendeur " + idVendeur + " a été affilié au magasin " + idMagasin + ".");
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de l'affiliation du vendeur: " + e.getMessage());
+        }
+    }
+
 }
