@@ -172,15 +172,15 @@ public class AdministrateurBD {
     public void affilierVendeur() {
         try {
             Statement st = this.laConnexion.createStatement();
-            System.out.println("Pour affilier un vendeur, entrez son identifiant : ");
-            String idVendeur = System.console().readLine();
+            System.out.println("Pour affilier un vendeur, entrez sa clé vendeur : ");
+            String keyVendeur = System.console().readLine();
             System.out.println("Pour affilier un magasin, entrez son identifiant : ");
-            String idMagasin = System.console().readLine();
-            PreparedStatement resultat = this.laConnexion.prepareStatement("INSERT INTO AFFILIATION(idVendeur, idMagasin) VALUES (?, ?)");
-            resultat.setString(1, idVendeur);
-            resultat.setString(2, idMagasin);
+            String idmag = System.console().readLine();
+            PreparedStatement resultat = this.laConnexion.prepareStatement("INSERT INTO AFFILIATION(keyVendeur, idmag) VALUES (?, ?)");
+            resultat.setString(1, keyVendeur);
+            resultat.setString(2, idmag);
             resultat.executeUpdate();
-            System.out.println("Le vendeur " + idVendeur + " a été affilié au magasin " + idMagasin + ".");
+            System.out.println("Le vendeur " + keyVendeur + " a été affilié au magasin " + idmag + ".");
         } catch (SQLException e) {
             System.out.println("Erreur lors de l'affiliation du vendeur: " + e.getMessage());
         }

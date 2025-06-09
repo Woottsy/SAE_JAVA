@@ -156,7 +156,7 @@ public class AppLibrairie {
                 administrateurBD.listeVendeurs();
             } else if(commande.equals("d")){
                 administrateurBD.supprimerVendeur();
-            } else if (commande.equals("g"){
+            } else if (commande.equals("g")){
                 administrateurBD.affilierVendeur();
             } else {
                 System.out.println("Commande '" + commande_brute + "' invalide.");
