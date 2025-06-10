@@ -29,6 +29,8 @@ public class MagasinBD {
         try {
             LivreBD livreBD = new LivreBD(this.laConnexion);
             Statement st = this.laConnexion.createStatement();
+            System.out.println("Veuillez entrer l'isbn du livre");
+            String isbn = System.console().readLine();
             System.out.println("Entrez le titre du livre");
             String titre = System.console().readLine();
             System.out.println("Entrez son nombre de pages");
@@ -41,7 +43,7 @@ public class MagasinBD {
             String prix = System.console().readLine();
             PreparedStatement res = this.laConnexion.prepareStatement("INSERT IGNORE INTO LIVRE(isbn, titre, nbpages,datepubli, prix) values(?,?,?,?,?)");
             PreparedStatement poss = this.laConnexion.prepareStatement("INSERT IGNORE INTO POSSEDER(idmag, isbn, qte) values(?,?,?)");
-            String maxnum = livreBD.maxnumLivre().toString();
+            String maxnum = isbn;
             res.setString(1, maxnum);
             res.setString(2, titre);
             res.setInt(3, Integer.parseInt(nbpages));
@@ -73,6 +75,37 @@ public class MagasinBD {
             System.out.println("Vous avez supprimé le livre avec l'ISBN : " + isbn + " du magasin " + magChoisi.getNom());
         } catch (SQLException e) {
             System.out.println("Erreur lors de la suppression du livre : " + e.getMessage());
+        }
+    }
+
+    public void listeLivres(Magasin magChoisi) {
+        try {
+            Statement st = this.laConnexion.createStatement();
+            ResultSet res = st.executeQuery("SELECT * FROM LIVRE INNER JOIN POSSEDER ON LIVRE.isbn = POSSEDER.isbn WHERE POSSEDER.idmag = '" + magChoisi.getIdmagasin() + "'");
+            System.out.println("Liste des livres dans le magasin " + magChoisi.getNom() + ":");
+            while (res.next()) {
+                System.out.println("ISBN: " + res.getString("isbn") + ", Titre: " + res.getString("titre") + ", Quantité: " + res.getInt("qte"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la récupération des livres : " + e.getMessage());
+        }
+    }
+
+    public void modifierQuantiteLivre(Magasin magChoisi) {
+        try {
+            Statement st = this.laConnexion.createStatement();
+            System.out.println("Entrez l'ISBN du livre dont vous voulez modifier la quantité");
+            String isbn = System.console().readLine();
+            System.out.println("Entrez la nouvelle quantité");
+            String quantite = System.console().readLine();
+            PreparedStatement res = this.laConnexion.prepareStatement("UPDATE POSSEDER SET qte = ? WHERE idmag = ? AND isbn = ?");
+            res.setInt(1, Integer.parseInt(quantite));
+            res.setString(2, magChoisi.getIdmagasin());
+            res.setString(3, isbn);
+            res.executeUpdate();
+            System.out.println("La quantité du livre avec l'ISBN " + isbn + " a été mise à jour à " + quantite + " dans le magasin " + magChoisi.getNom());
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la modification de la quantité : " + e.getMessage());
         }
     }
 

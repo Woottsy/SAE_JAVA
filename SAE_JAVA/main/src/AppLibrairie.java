@@ -240,9 +240,9 @@ public class AppLibrairie {
             } else if (commande.equals("s")) {
                 magBD.supprimerLivre(this.magChoisi);
             } else if (commande.equals("l")) {
-                // liste des livres
+                magBD.listeLivres(this.magChoisi);
             } else if (commande.equals("m")) {
-                // modifier la quantité d'un livre
+                magBD.modifierQuantiteLivre(this.magChoisi);
             } else {
                 System.out.println("Commande '" + commande_brute + "' invalide.");
             }
