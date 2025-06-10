@@ -136,7 +136,6 @@ public class AdministrateurBD {
     public void listeVendeurs() {
         try {
             Statement st = this.laConnexion.createStatement();
-
             List<Vendeur> lvendeur = new ArrayList<>();
             String res = "";
             ResultSet vendeur = st.executeQuery("select * from VENDEUR");

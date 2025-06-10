@@ -8,6 +8,7 @@ public class AppLibrairie {
     private boolean quitter;
     private Librairie librairie;
     private ConnexionMySQL connexionMySQL;
+    private Magasin magChoisi;
 
 // séparer en Personne/PersonneBD
     public static void main(String[] args) {
@@ -179,16 +180,16 @@ public class AppLibrairie {
             res.append("╭──────────────────────────────────────────╮\n");
             res.append("|         Choisissez un magasin            |\n");
             res.append("|──────────────────────────────────────────|\n");
-            for (int i = 1; i < magasins.size(); i++) {
+            for (int i = 0; i < magasins.size(); i++) {
                 int longeurNom = magasins.get(i).getNom().length();
                 int espaces = 37 - longeurNom; // Calculer le nombre d'espaces à ajouter
-                res.append("| ").append(i).append(" : ").append(magasins.get(i).getNom());
+                res.append("| ").append(i+1).append(" : ").append(magasins.get(i).getNom());
                 for (int j = 0; j < espaces; j++) {
                     res.append(" "); // Ajouter les espaces
                 }
                 res.append("|\n");
             }
-            res.append("| Q : Revenir au menu précédent            |\n");
+            res.append("| Q : Retour                               |\n");
             res.append("╰──────────────────────────────────────────╯\n");
             System.out.println(res.toString());
             String commande_brute = System.console().readLine();
@@ -200,6 +201,7 @@ public class AppLibrairie {
                     int choix = Integer.parseInt(commande);
                     if (choix > 0 && choix <= magasins.size()) {
                         Magasin magasinChoisi = magasins.get(choix - 1);
+                        this.magChoisi = magasinChoisi;
                         System.out.println("Vous avez choisi le magasin : " + magasinChoisi.getNom() + " (" + magasinChoisi.getVille() + ")");
                         menu_gererStock(); // Appeler le menu de gestion des stocks pour ce magasin
                     } else {
@@ -216,6 +218,7 @@ public class AppLibrairie {
 
     public void menu_gererStock() {
         boolean commande_faite = false;
+        MagasinBD magBD = new MagasinBD(this.connexionMySQL);
         while (!commande_faite) {
             System.out.println("╭──────────────────────────────────────────╮");
             System.out.println("|         Menu Gérer les stocks            |");
@@ -231,7 +234,7 @@ public class AppLibrairie {
             if (commande.equals("q")) {
                 commande_faite = true;
             } else if (commande.equals("a")) {
-                // ajouter un livre
+                magBD.ajouterLivre(this.magChoisi);
             } else if (commande.equals("s")) {
                 // supprimer un livre
             } else if (commande.equals("l")) {
