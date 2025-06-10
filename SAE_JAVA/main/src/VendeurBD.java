@@ -51,10 +51,23 @@ public class VendeurBD {
         try {
             ResultSet resultat=st.executeQuery("select idmag from  AFFLIATION where idVendeur="+v);
             String magasin=resultat.getString("idmag");
-            PreparedStatement ps= this.laConnexion.prepareStatement("insert into POSSEDER "+l +"where idmag="+magasin);
+            ResultSet verif=st.executeQuery("select idLivre,qte from  AFFLIATION where idmag="+magasin);
+            if(verif.getString("idLivre")==null){
+                PreparedStatement ps= this.laConnexion.prepareStatement("insert into POSSEDER "+idmag+l.getIsbn()+1);
+                ps.executeQuery;
+            }
+
         } catch (SQLException e) {
-            System.out.println("ne travaille pas en tant que vendeur ou magasins inexistant");
+            System.out.println("livre déjà éxistant");
         }
+
+    }
+    public void majQTELivre(Livre l ,int qte){
+            ResultSet resultat=st.executeQuery("select idmag from  AFFLIATION where idVendeur="+v);
+            String magasin=resultat.getString("idmag");
+            PreparedStatement ps= this.laConnexion.prepareStatement("update qte="+qte+" where isbn="+l.getIsbn());
+            ps.executeQuery;
+
 
     }
 
