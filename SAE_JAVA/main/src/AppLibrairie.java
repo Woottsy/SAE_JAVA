@@ -238,7 +238,7 @@ public class AppLibrairie {
             } else if (commande.equals("a")) {
                 magBD.ajouterLivre(this.magChoisi);
             } else if (commande.equals("s")) {
-                // supprimer un livre
+                magBD.supprimerLivre(this.magChoisi);
             } else if (commande.equals("l")) {
                 // liste des livres
             } else if (commande.equals("m")) {

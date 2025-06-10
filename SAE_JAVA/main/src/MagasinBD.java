@@ -59,5 +59,23 @@ public class MagasinBD {
         }
     }
 
-    //À implémenter : Supprimer Livre ListeLivres et Modifier la quantité d'un livre
+
+    public void supprimerLivre(Magasin magChoisi) {
+        try {
+            LivreBD livreBD = new LivreBD(this.laConnexion);
+            Statement st = this.laConnexion.createStatement();
+            System.out.println("Entrez l'ISBN du livre à supprimer");
+            String isbn = System.console().readLine();
+            PreparedStatement res = this.laConnexion.prepareStatement("DELETE FROM POSSEDER WHERE idmag = ? AND isbn = ?");
+            res.setString(1, magChoisi.getIdmagasin());
+            res.setString(2, isbn);
+            res.executeUpdate();
+            System.out.println("Vous avez supprimé le livre avec l'ISBN : " + isbn + " du magasin " + magChoisi.getNom());
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la suppression du livre : " + e.getMessage());
+        }
+    }
+
+
+    //À implémenter : ListeLivres et Modifier la quantité d'un livre
 }
