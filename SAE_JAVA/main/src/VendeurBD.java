@@ -1,4 +1,5 @@
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -22,7 +23,7 @@ public class VendeurBD {
 		}
 		return maxNum + 1 ;
 	}
-		  public boolean seConnecter() {
+	public boolean seConnecter() {
         try {
             // Initialisation et récupération de l'id et du mdp
             Statement st = this.laConnexion.createStatement();
@@ -45,6 +46,16 @@ public class VendeurBD {
             System.out.println("Votre Identifiant ou mot de passe est incorrecte");
         }
         return false;
+    }
+    public void insererLivre(Livre l,Vendeur v){
+        try {
+            ResultSet resultat=st.executeQuery("select idmag from  AFFLIATION where idVendeur="+v);
+            String magasin=resultat.getString("idmag");
+            PreparedStatement ps= this.laConnexion.prepareStatement("insert into POSSEDER "+l +"where idmag="+magasin);
+        } catch (SQLException e) {
+            System.out.println("ne travaille pas en tant que vendeur ou magasins inexistant");
+        }
+
     }
 
 
