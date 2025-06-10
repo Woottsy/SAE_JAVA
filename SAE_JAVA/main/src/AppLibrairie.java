@@ -1,8 +1,10 @@
+
 import java.sql.SQLException;
 import java.util.List;
 
 public class AppLibrairie {
 
+    private boolean quitter_vendeur;
     private boolean quitter_Client;
     private boolean quitter_admin;
     private boolean quitter;
@@ -74,7 +76,7 @@ public class AppLibrairie {
                 commande_faite = true;
                 quitter_admin = false;
             } else if (commande.equals("v")) {
-                menu_vendeur();
+                connexion_vendeur();
                 commande_faite = true;
             } else if (commande.equals("m")) {
                 System.out.println("\n");
@@ -155,11 +157,11 @@ public class AppLibrairie {
                 administrateurBD.creerVendeur();
             } else if (commande.equals("v")) {
                 administrateurBD.listeVendeurs();
-            } else if(commande.equals("d")){
+            } else if (commande.equals("d")) {
                 administrateurBD.supprimerVendeur();
-            } else if (commande.equals("g")){
+            } else if (commande.equals("g")) {
                 administrateurBD.affilierVendeur();
-            } else if (commande.equals("m")){
+            } else if (commande.equals("m")) {
                 menu_choisirMagasin();
             } else {
                 System.out.println("Commande '" + commande_brute + "' invalide.");
@@ -183,7 +185,7 @@ public class AppLibrairie {
             for (int i = 0; i < magasins.size(); i++) {
                 int longeurNom = magasins.get(i).getNom().length();
                 int espaces = 37 - longeurNom; // Calculer le nombre d'espaces à ajouter
-                res.append("| ").append(i+1).append(" : ").append(magasins.get(i).getNom());
+                res.append("| ").append(i + 1).append(" : ").append(magasins.get(i).getNom());
                 for (int j = 0; j < espaces; j++) {
                     res.append(" "); // Ajouter les espaces
                 }
@@ -239,7 +241,7 @@ public class AppLibrairie {
                 // supprimer un livre
             } else if (commande.equals("l")) {
                 // liste des livres
-            } else if (commande.equals("m")){
+            } else if (commande.equals("m")) {
                 // modifier la quantité d'un livre
             } else {
                 System.out.println("Commande '" + commande_brute + "' invalide.");
@@ -290,9 +292,44 @@ public class AppLibrairie {
         } // mettre une requete sql pour l'id
     }
 
-    //à completer
-    public void menu_vendeur() {
+    public void connexion_vendeur() {
+        VendeurBD vendeurBD = new VendeurBD(this.connexionMySQL);
+        boolean commande_faite = false;
+        System.out.println("╭──────────────────────────────────────────╮");
+        System.out.println("|               Menu Vendeur               |");
+        System.out.println("|──────────────────────────────────────────|");
+        System.out.println("| S : Se connecter                         |");
+        System.out.println("| Q : Revenir au menu précédent            |");
+        System.out.println("╰──────────────────────────────────────────╯" + '\n');
+        String commande_brute = System.console().readLine();
+        String commande = commande_brute.strip().toLowerCase();
+        if (commande.equals("q")) {
+            quitter_vendeur = true;
+            commande_faite = true;
+        } else if (commande.equals("s")) {
+            menu_vendeur();
+        }
+    }
 
+    public void menu_vendeur() {
+        VendeurBD vendeurBD = new VendeurBD(this.connexionMySQL);
+        boolean commande_faite = false;
+        System.out.println("╭──────────────────────────────────────────╮");
+        System.out.println("|               Menu Vendeur               |");
+        System.out.println("|──────────────────────────────────────────|");
+        System.out.println("| A : Ajouter un livre au stock            |");
+        System.out.println("| M : Mettre à jour le stock               |");
+        System.out.println("| V : Vérifier la disponibilité            |");
+        System.out.println("| P : Passer une commande pour un client   |");
+        System.out.println("| Q : Revenir au menu précédent            |");
+        System.out.println("╰──────────────────────────────────────────╯" + '\n');
+        String commande_brute = System.console().readLine();
+        String commande = commande_brute.strip().toLowerCase();
+        if (commande.equals("q")) {
+            quitter_vendeur = true;
+            commande_faite = true;
+        } else if (commande.equals("s")) {
+        }
     }
 
     public void quit() {
