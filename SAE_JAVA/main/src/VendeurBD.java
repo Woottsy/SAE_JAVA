@@ -22,7 +22,7 @@ public class VendeurBD {
 		}
 		return maxNum + 1 ;
 	}
-		    public boolean seConnecter() {
+		  public boolean seConnecter() {
         try {
             // Initialisation et récupération de l'id et du mdp
             Statement st = this.laConnexion.createStatement();
@@ -46,5 +46,6 @@ public class VendeurBD {
         }
         return false;
     }
+
 
 }

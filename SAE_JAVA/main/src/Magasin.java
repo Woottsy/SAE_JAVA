@@ -11,20 +11,19 @@ public class Magasin {
   // Fields
   //
 
-  private int idmagasin;
+  private String idmagasin;
   private String nom;
   private String ville;
-  private String adresse;
   private Map<Livre,Stock> stockMagasin;;
   
   //
   // Constructors
   //
-  public Magasin (int idmagasin,String nom,String ville,String adresse) {
+  public Magasin (String idmagasin,String nom,String ville) {
     this.idmagasin = idmagasin;
     this.nom = nom;
     this.ville = ville;
-    this.adresse = adresse;
+
     this.stockMagasin = new HashMap<>();
    };
   
@@ -41,7 +40,7 @@ public class Magasin {
    * Set the value of idmagasin
    * @param newId the new value of idmagasin
    */
-  public void setIdmagasin (int newId) {
+  public void setIdmagasin (String newId) {
     this.idmagasin = newId;
   }
 
@@ -49,7 +48,7 @@ public class Magasin {
    * Get the value of idmagasin
    * @return the value of idmagasin
    */
-  public int getIdmagasin () {
+  public String getIdmagasin () {
     return this.idmagasin;
   }
 
@@ -85,21 +84,10 @@ public class Magasin {
     return this.ville;
   }
 
-  /**
-   * Set the value of adresse
-   * @param newAdresse the new value of adresse
-   */
-  public void setAdresse (String newAdresse) {
-    this.adresse = newAdresse;
-  }
 
-  /**
-   * Get the value of adresse
-   * @return the value of adresse
-   */
-  public String getAdresse () {
-    return this.adresse;
-  }
+
+
+
 
   /**
    * Set the value of nouvel_attribut
@@ -119,23 +107,17 @@ public class Magasin {
 
   @Override
   public String toString() {
-    return "Magasin{" +
-            "idmagasin=" + this.idmagasin +
-            ", nom='" + this.nom + '\'' +
-            ", ville='" + this.ville + '\'' +
-            ", adresse='" + this.adresse + '\'' +
-            ", stockMagasin=" + this.stockMagasin +
-            '}';
+    return "Le magasin " + this.nom + " qui a pour identifiant : " + this.idmagasin + " est situé dans la ville : " + this.ville;
   }
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (!(o instanceof Magasin)) return false;
     Magasin magasin = (Magasin) o;
-    return this.idmagasin == magasin.idmagasin && Objects.equals(this.nom, magasin.nom) && Objects.equals(this.ville, magasin.ville) && Objects.equals(this.adresse, magasin.adresse);
+    return this.idmagasin == magasin.idmagasin && Objects.equals(this.nom, magasin.nom) && Objects.equals(this.ville, magasin.ville);
   }
   @Override
   public int hashCode() {
-    return Objects.hash(this.idmagasin, this.nom, this.ville, this.adresse);
+    return Objects.hash(this.idmagasin, this.nom, this.ville);
   }
 }

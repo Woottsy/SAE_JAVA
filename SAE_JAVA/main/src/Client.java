@@ -19,6 +19,8 @@ public class Client {
   private String codepostal;
   private String email;
   private String mdp;
+  private List<Livre> livres ;
+  private List<Commande> commandes;
   
   //
   // Constructors
@@ -32,6 +34,8 @@ public class Client {
     this.codepostal = codepostal;
     this.email = email;
     this.mdp = mdp;
+    this.livres = new ArrayList<Livre>();
+    this.commandes = new ArrayList<Commande>();
    };
   
   //
@@ -170,6 +174,21 @@ public class Client {
   public String getMdp () {
     return this.mdp;
   }
+  
+  public void ajouteLivresClient (){
+    // TODO - il faut faire une boucle pour recuperer les livres des commande du client pour les ajouter dans la liste de ses livres  
+  } 
+
+  public List<Livre> getLivre() {
+    return this.livres;
+  }
+
+  public void ajouteCommande(Commande commande) {
+    this.commandes.add(commande);
+  }
+  public List<Commande> getCommandes() {
+    return this.commandes;
+  }
 
   //
   // Other methods
@@ -190,12 +209,137 @@ public class Client {
   }
 
 
+/**
+ * Permet au client de choisir un type de livraison.
+ * @return TypeDeLivraison
+ */
+public TypeDeLivraison.TypeLivraison choisirLivraison(){
+  Scanner scanner = new Scanner(System.in);
+  int choix = 0;
+  TypeDeLivraison.TypeLivraison typeLivraison = null;
+
+  while (choix != 1 && choix != 2){
+      System.out.println("Choisissez votre mode de livraison :");
+      System.out.println("1 - Retrait en magasin");
+      System.out.println("2 - Livraison à domicile");
+      System.out.print("Votre choix : ");
+      
+      try {
+          choix = scanner.nextInt();
+          if (choix == 1){
+              typeLivraison = TypeDeLivraison.TypeLivraison.MAGASIN;
+          }
+          else if (choix == 2){
+              typeLivraison = TypeDeLivraison.TypeLivraison.DOMICILE;
+          }
+          else{
+              System.out.println("Veuillez entrer 1 ou 2.");
+          }
+      } 
+      catch (Exception e){
+          System.out.println("Erreur de saisie. Veuillez entrer un nombre.");
+          scanner.nextLine();
+      }
+  }
+
+  return typeLivraison;
+}
+
   /**
-   * @return       TypeDeLivraison
+   * @return       String
    */
-  public TypeDeLivraison choisirLivraison(){
+  public String editerFacture(){
     return null;
   }
 
+  /**
+   * @return       String
+   */
+  public String consulterHistorique(){
+    return null;
+  }
 
+  private int getNbLivresCommander() {
+    return this.livres.size();
+  }
+
+  private Livre getLivre(int i) {
+    return this.livres.get(i);
+  }
+
+
+
+   public void onVousRecommande(){
+    Set<Livre> livresReco = new HashSet<Livre>();
+    // for (Client c : ) {
+    //   if (c.getIdclient() != this.idclient) {
+    //     livresReco.addAll(lesLivresRecommandable(this, c));
+    //   }
+    // }
+    
+    
+    if (livresReco.isEmpty()) {
+      System.out.println("Aucune recommandation disponible pour le moment.");
+    } else {
+      System.out.println("Livres recommandés pour vous :");
+      for (Livre l : livresReco) {
+        System.out.println("- " + l.getTitre());
+      }
+    }
+  }
+
+  //les methode en dessous seront utile pour la fonction onVousRecommande
+
+  /**
+   * Une des fonction nécessaire pour onVousRecommande
+   * @param c1 un client
+   * @param c2 un client différent de c1
+   * @return int
+   */
+  private int livreEncommuns(Client c1,Client c2){
+    int nbLivreEnCommuns = 0;
+    for (int i = 0; i < c1.getNbLivresCommander(); i++) {
+      for (int j = 0; j < c2.getNbLivresCommander(); j++) {
+        if (c1.getLivre(i).getClassification().getIdclass()==(c2.getLivre(j).getClassification().getIdclass())) {
+          nbLivreEnCommuns++;
+        }
+      }
+    }
+    return nbLivreEnCommuns;
+  }
+  private boolean compatible(Client c1,Client c2){
+    if (livreEncommuns(c1, c2)>=5){
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+  private Set<Livre> lesLivresRecommandable(Client c1,Client c2){
+    Set<Livre> reco = new HashSet<Livre>();
+    if (compatible(c1, c2)){
+      
+      for(Livre l : c1.livres){
+        if (!c2.livres.contains(l)){
+          reco.add(l);
+        }
+      }
+      
+    }
+    return reco; 
+  }
+
+  /**
+   * @return       String
+   */
+  public String modifierProfil(){
+    return null;
+  }
+
+  /**
+   * @return       String
+   */
+  public String seDeconnecter(){
+    return null;
+  }
 }
