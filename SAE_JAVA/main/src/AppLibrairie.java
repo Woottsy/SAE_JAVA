@@ -4,6 +4,7 @@ import java.util.List;
 
 public class AppLibrairie {
 
+    private boolean quitter_stat;
     private boolean quitter_vendeur;
     private boolean quitter_Client;
     private boolean quitter_admin;
@@ -125,6 +126,7 @@ public class AppLibrairie {
             System.out.println("|──────────────────────────────────────────|");
             System.out.println("| A : Ajouter un magasin                   |");
             System.out.println("| S : Supprimer un magasin                 |"); // ajouter une partie gerer les stock (lire le sujet)
+            System.out.println("| Z : Accéder au menu statistique          |");
             System.out.println("| L : Liste des magasins                   |");
             System.out.println("| M : Gérer les stocks                     |");
             System.out.println("| G : Affilier un vendeur                  |");
@@ -163,11 +165,43 @@ public class AppLibrairie {
                 administrateurBD.affilierVendeur();
             } else if (commande.equals("m")) {
                 menu_choisirMagasin();
+            } else if (commande.equals("z")) {
+                while(!quitter_stat){
+                    menu_stat();
+                }
+                
             } else {
                 System.out.println("Commande '" + commande_brute + "' invalide.");
             }
         }
 
+    }
+
+    public void menu_stat() {
+        boolean commande_faite = false;
+        AdministrateurBD adminBD = new AdministrateurBD(this.connexionMySQL);
+        while (!commande_faite) {
+            System.out.println("╭──────────────────────────────────────────╮");
+            System.out.println("|             Menu Statistique             |");
+            System.out.println("|──────────────────────────────────────────|");
+            System.out.println("| V : Voir les ventes globales             |");
+            System.out.println("| C : Voir le CA par Clients               |");
+            System.out.println("| L : Voir le livre le plus vendu          |");
+            System.out.println("| Q : Se déconnecter                       |");
+            System.out.println("╰──────────────────────────────────────────╯" + '\n');
+            String commande_brute = System.console().readLine();
+            String commande = commande_brute.strip().toLowerCase();
+            if (commande.equals("q")) {
+                quitter_stat = true;
+                commande_faite = true;
+            } else if (commande.equals("v")){
+                adminBD.ventesGlobales();
+            } else if (commande.equals("c")){
+                //à implementer
+            } else if (commande.equals("l")){
+                //à implementer
+            }
+        }
     }
 
     public void menu_choisirMagasin() {
