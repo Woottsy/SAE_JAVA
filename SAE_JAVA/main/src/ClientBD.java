@@ -2,6 +2,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ClientBD{
     ConnexionMySQL co;
@@ -37,6 +39,80 @@ public class ClientBD{
         }
         return false;
     }
-    
+    public void creerCompte(String id, String mdp, String nom, String prenom, String adresse, String email) {
+        try {
+            PreparedStatement ps = this.co.prepareStatement("INSERT INTO Client (idCli, motdepasse, nom, prenom, adresse, email) VALUES (?, ?, ?, ?, ?, ?)");
+            ps.setString(1, id);
+            ps.setString(2, mdp);
+            ps.setString(3, nom);
+            ps.setString(4, prenom);
+            ps.setString(5, adresse);
+            ps.setString(6, email);
+            ps.executeUpdate();
+            System.out.println("Compte créé avec succès !");
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la création du compte : " + e.getMessage());
+        }
+    }
+
+
+
+
+    public void onVousRecommande(Client C){
+        try {
+            Statement st = this.co.createStatement();
+            ResultSet rs = st.executeQuery("select isbn fron DetailCommande natural join Commande where idCli in (select idcli from Client limit 10)");
+            ResultSet rs2= st.executeQuery("select isbn fron DetailCommande natural join Commande where idCli ="+ C.getIdclient());
+            Set<Integer> LivrePasLu = new HashSet<>();
+            while (rs.next()) {
+                String isbn = rs.getString("isbn");
+                rs2.beforeFirst();
+                while (rs2.next()) {
+                    if (!rs2.getString("isbn").equals(isbn)) {
+                       LivrePasLu.add(Integer.parseInt(isbn));
+                        
+                        
+                    }
+                }
+                
+            }
+            if (LivrePasLu.isEmpty()) {
+                System.out.println("Aucune recommandation disponible pour le moment.");
+            } else {
+                System.out.println("Livres recommandés : " + LivrePasLu);
+            }
+    }
+    catch (SQLException e) {
+            System.out.println("Erreur lors de la récupération des recommandations : " + e.getMessage());
+        }
+
+    }
+
+
+    public void passerCommande() {
+       
+        
+    }
+    public void VoirlesStock(){
+       
+
+    }
+
+    }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
