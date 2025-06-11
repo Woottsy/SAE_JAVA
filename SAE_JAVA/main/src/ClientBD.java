@@ -90,17 +90,38 @@ public class ClientBD{
 
 
     public void passerCommande() {
-       
+       try{
+            Statement st = this.co.createStatement();
+            System.out.println("Dans quel magasin souhaitez-vous passer la commande ?");
+            String idMagasin = System.console().readLine();
+            System.out.println("Entrez l'identifiant du livre que vous souhaitez commander :");
+            String idLivre = System.console().readLine();
+            System.out.println("Entrez la quantité souhaitée :");
+            int quantite = Integer.parseInt(System.console().readLine());
+            
+
+
         
+        }catch (SQLException e) {
+                System.out.println("Erreur lors de la passation de la commande : " + e.getMessage());
+        } 
     }
     public void VoirlesStock(){
-       
-
-    }
+       try {
+            Statement st = this.co.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM Posseder");
+            while (rs.next()) {
+                System.out.println("Livre ID: " + rs.getString("isbn") + ", Quantité: " + rs.getInt("quantite")+ ", Magasin ID: " + rs.getString("idmag"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la récupération des stocks : " + e.getMessage());
+        }
 
     }
 
 }
+
+
 
 
 
