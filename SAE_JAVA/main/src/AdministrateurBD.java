@@ -202,4 +202,30 @@ public class AdministrateurBD {
         }
     }
 
+    public void livreLePlusVendu() {
+        try {
+            Statement st = this.laConnexion.createStatement();
+            System.out.println("De quelle année voulez-vous voir le livre le plus vendu ?");
+            String annee = System.console().readLine();
+            ResultSet rs = st.executeQuery(
+                "SELECT isbn, titre, SUM(qte) AS totalVentes " +
+                "FROM DETAILCOMMANDE NATURAL JOIN LIVRE NATURAL JOIN COMMANDE " +
+                "WHERE YEAR(datecom) = " + annee + " " +
+                "GROUP BY isbn, titre " +
+                "ORDER BY totalVentes DESC " +
+                "LIMIT 1"
+            );
+            if (rs.next()) {
+                String idLivre = rs.getString("isbn");
+                String titre = rs.getString("titre");
+                int totalVentes = rs.getInt("totalVentes");
+                System.out.println("Le livre le plus vendu en " + annee + " est : " + titre + " (ID: " + idLivre + ") avec " + totalVentes + " ventes.");
+            } else {
+                System.out.println("Aucun livre vendu pour l'année " + annee);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la récupération du livre le plus vendu : " + e.getMessage());
+        }
+    }
+
 }
