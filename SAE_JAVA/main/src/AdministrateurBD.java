@@ -144,7 +144,7 @@ public class AdministrateurBD {
                         vendeur.getString("identVendeur"),
                         vendeur.getString("motdepasseVendeur"),
                         vendeur.getString("email")));
-                        }
+            }
             for (Vendeur v : lvendeur) {
                 res += v + "\n";
             }
@@ -182,6 +182,49 @@ public class AdministrateurBD {
             System.out.println("Le vendeur " + keyVendeur + " a été affilié au magasin " + idmag + ".");
         } catch (SQLException e) {
             System.out.println("Erreur lors de l'affiliation du vendeur: " + e.getMessage());
+        }
+    }
+
+    public void ventesGlobales() {
+        try {
+            Statement st = this.laConnexion.createStatement();
+            System.out.println("De quelle année voulez-vous voir les ventes globales ?");
+            String annee = System.console().readLine();
+            ResultSet ps = st.executeQuery("SELECT IFNULL(SUM(prixvente), 0) AS ventes FROM DETAILCOMMANDE NATURAL JOIN COMMANDE WHERE YEAR(datecom) = " + annee);
+            if (ps.next()) {
+                int res = ps.getInt("ventes");
+                System.out.println("Les ventes globales de " + annee + " s'élèvent à " + res + '€');
+            } else {
+                System.out.println("Aucune vente trouvée pour l'année " + annee);
+            }
+        } catch (SQLException e) {
+            System.out.println("AIE");
+        }
+    }
+
+    public void livreLePlusVendu() {
+        try {
+            Statement st = this.laConnexion.createStatement();
+            System.out.println("De quelle année voulez-vous voir le livre le plus vendu ?");
+            String annee = System.console().readLine();
+            ResultSet rs = st.executeQuery(
+                "SELECT isbn, titre, SUM(qte) AS totalVentes " +
+                "FROM DETAILCOMMANDE NATURAL JOIN LIVRE NATURAL JOIN COMMANDE " +
+                "WHERE YEAR(datecom) = " + annee + " " +
+                "GROUP BY isbn, titre " +
+                "ORDER BY totalVentes DESC " +
+                "LIMIT 1"
+            );
+            if (rs.next()) {
+                String idLivre = rs.getString("isbn");
+                String titre = rs.getString("titre");
+                int totalVentes = rs.getInt("totalVentes");
+                System.out.println("Le livre le plus vendu en " + annee + " est : " + titre + " (ID: " + idLivre + ") avec " + totalVentes + " ventes.");
+            } else {
+                System.out.println("Aucun livre vendu pour l'année " + annee);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la récupération du livre le plus vendu : " + e.getMessage());
         }
     }
 

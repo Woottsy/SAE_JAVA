@@ -1,5 +1,4 @@
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -51,6 +50,7 @@ public class VendeurBD {
         }
         return false;
     }
+
     public void insererLivre(Livre l){
         try {
             ResultSet resultat=st.executeQuery("select idmag from  AFFLIATION where idVendeur="+vendeur);
@@ -59,11 +59,10 @@ public class VendeurBD {
             if(!verif.isBeforeFirst()){
                 PreparedStatement ps= this.laConnexion.prepareStatement("insert into POSSEDER (idmag,isbn,qte) values("+magasin+","+l.getIsbn()+","+1+")");
                 ps.executeQuery();
-            }
-
-        } catch (SQLException e) {
-            System.out.println("livre déjà éxistant");
-        }
+               }
+            } catch (SQLException e) {
+                System.out.println("livre déjà éxistant");
+              }
 
     }
     public void majQTELivre(Livre l ,int qte){
@@ -109,6 +108,7 @@ public class VendeurBD {
 		return res;
         
     }
+
 
 
 }
