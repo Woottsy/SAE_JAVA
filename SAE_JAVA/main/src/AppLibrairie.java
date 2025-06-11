@@ -199,7 +199,7 @@ public class AppLibrairie {
             } else if (commande.equals("c")){
                 //à implementer
             } else if (commande.equals("l")){
-                //à implementer
+                adminBD.livreLePlusVendu();
             }
         }
     }
