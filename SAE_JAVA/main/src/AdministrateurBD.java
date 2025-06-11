@@ -144,7 +144,7 @@ public class AdministrateurBD {
                         vendeur.getString("identVendeur"),
                         vendeur.getString("motdepasseVendeur"),
                         vendeur.getString("email")));
-                        }
+            }
             for (Vendeur v : lvendeur) {
                 res += v + "\n";
             }
@@ -182,6 +182,23 @@ public class AdministrateurBD {
             System.out.println("Le vendeur " + keyVendeur + " a été affilié au magasin " + idmag + ".");
         } catch (SQLException e) {
             System.out.println("Erreur lors de l'affiliation du vendeur: " + e.getMessage());
+        }
+    }
+
+    public void ventesGlobales() {
+        try {
+            Statement st = this.laConnexion.createStatement();
+            System.out.println("De quelle année voulez-vous voir les ventes globales ?");
+            String annee = System.console().readLine();
+            ResultSet ps = st.executeQuery("SELECT IFNULL(SUM(prixvente), 0) AS ventes FROM DETAILCOMMANDE NATURAL JOIN COMMANDE WHERE YEAR(datecom) = " + annee);
+            if (ps.next()) {
+                int res = ps.getInt("ventes");
+                System.out.println("Les ventes globales de " + annee + " s'élèvent à " + res + '€');
+            } else {
+                System.out.println("Aucune vente trouvée pour l'année " + annee);
+            }
+        } catch (SQLException e) {
+            System.out.println("AIE");
         }
     }
 
