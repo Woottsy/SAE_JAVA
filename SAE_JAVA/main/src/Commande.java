@@ -12,7 +12,7 @@ public class Commande {
   //
 
   private int idcommande;
-  private String datecommande;
+  private Date datecommande;
   private boolean enligne;
   private String typelivraison;
   private boolean estpayee;
@@ -22,7 +22,7 @@ public class Commande {
   //
   // Constructors
   //
-  public Commande (int idcommande,String datecommande,boolean enligne,String typelivraison,boolean estpayee,DetailCommande leDetail) {
+  public Commande (int idcommande,Date datecommande,boolean enligne,String typelivraison,boolean estpayee,DetailCommande leDetail) {
     this.idcommande = idcommande;
     this.datecommande = datecommande;
     this.enligne = enligne;
@@ -62,7 +62,7 @@ public class Commande {
    * Set the value of datecommande
    * @param newDate the new value of datecommande
    */
-  public void setDatecommande (String newDate) {
+  public void setDatecommande (Date newDate) {
     this.datecommande = newDate;
   }
 
@@ -70,7 +70,7 @@ public class Commande {
    * Get the value of datecommande
    * @return the value of datecommande
    */
-  public String getDatecommande () {
+  public Date getDatecommande () {
     return this.datecommande;
   }
 

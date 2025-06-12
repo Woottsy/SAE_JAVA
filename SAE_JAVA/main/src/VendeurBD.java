@@ -2,9 +2,11 @@
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.text.DateFormat;
 import java.util.List;
 import java.util.ArrayList;
+import java.sql.Date;
 public class VendeurBD {
 
     ConnexionMySQL laConnexion;
@@ -18,6 +20,16 @@ public class VendeurBD {
     public int maxnumVendeur() throws SQLException{
 		int maxNum=0;
 		this.st=this.laConnexion.createStatement();
+		ResultSet resultat=st.executeQuery("select ifnull(max(numcom), 0) maxn from COMMANDE");
+		if(resultat.next()){
+
+			maxNum=resultat.getInt("maxn");
+		}
+		return maxNum + 1 ;
+	}
+    public int maxnumCommande() throws SQLException{
+		int maxNum=0;
+		this.st=this.laConnexion.createStatement();
 		ResultSet resultat=st.executeQuery("select ifnull(max(keyVendeur), 0) maxn from VENDEUR");
 		if(resultat.next()){
 
@@ -25,8 +37,8 @@ public class VendeurBD {
 		}
 		return maxNum + 1 ;
 	}
-	public boolean seConnecter() {
-        try {
+	public boolean seConnecter()throws SQLException {
+  
             // Initialisation et récupération de l'id et du mdp
             Statement st = this.laConnexion.createStatement();
             System.out.println("Entrez votre identifiant");
@@ -45,14 +57,19 @@ public class VendeurBD {
                     throw new SQLException();
                 }
             }
-        } catch (SQLException e) {
-            System.out.println("Votre Identifiant ou mot de passe est incorrecte");
-        }
         return false;
     }
+    public String getidMagasin()throws SQLException{
+        String idmagasin="";
 
-    public void insererLivre(Livre l){
-        try {
+            ResultSet resultatset=st.executeQuery("select * from MAGASIN natural join AFFILIATION natural join VENDEUR where keyVendeur="+this.vendeur);
+            idmagasin= resultatset.getString("idmag");
+        return idmagasin;
+
+    }
+
+    public void insererLivre(Livre l)throws SQLException{
+
             ResultSet resultat=st.executeQuery("select idmag from  AFFLIATION where idVendeur="+vendeur);
             String magasin=resultat.getString("idmag");
             ResultSet verif=st.executeQuery("select isbn,qte from  AFFLIATION where idmag="+magasin);
@@ -60,13 +77,12 @@ public class VendeurBD {
                 PreparedStatement ps= this.laConnexion.prepareStatement("insert into POSSEDER (idmag,isbn,qte) values("+magasin+","+l.getIsbn()+","+1+")");
                 ps.executeQuery();
                }
-            } catch (SQLException e) {
-                System.out.println("livre déjà éxistant");
-              }
 
-    }
-    public void majQTELivre(Livre l ,int qte){
-        try {
+            }
+
+    
+    public void majQTELivre(Livre l ,int qte)throws SQLException{
+
             ResultSet resultat=st.executeQuery("select idmag from  AFFLIATION where idVendeur="+vendeur);
             String magasin=resultat.getString("idmag");
             ResultSet verif=st.executeQuery("select isbn,qte from  AFFLIATION where idmag="+magasin);
@@ -74,19 +90,11 @@ public class VendeurBD {
                 PreparedStatement ps= this.laConnexion.prepareStatement("update qte="+qte+" where isbn="+l.getIsbn()+" and idmag="+magasin);
                 ps.executeQuery();
             }
-        } catch (SQLException e) {
-            System.out.println("ne peut pas mettre à jour");
-        }
 
-
-    
-
-
-
+        
     }
-    public ArrayList<Livre> selectionLivreMagasin(){
+    public ArrayList<Livre> selectionLivreMagasin()throws SQLException{
         ArrayList<Livre> res= new  ArrayList<>();
-        try {
             this.st=laConnexion.createStatement();
             ResultSet resultat = st.executeQuery("Select isbn,titre,nbpages,datepubli,prix,iddewey,nomclass from Livre natural join POSSEDER natural join MAGASIN natural join AFFILIATION natural join THEMES natural join CLASSIFICATION where keyVendeur="+this.vendeur);
             while (resultat.next()) {
@@ -100,14 +108,31 @@ public class VendeurBD {
 
                 Livre ltmp=new Livre(id, titre, nbpages, datepubli,prix, new Classification(iddewey, theme));
                 res.add(ltmp);
-		    }
-        } catch (SQLException e) {
-            System.out.println("aucun livre");
-        }
-
+            }
 		return res;
         
     }
+public void nouvelleCommande(Commande c,Client client) throws SQLException {
+
+    int numcom = this.maxnumCommande();
+    char enligne = c.getEnligne() ? 'O' : 'N';
+    char livraison = (c.getTypelivraison() != null && !c.getTypelivraison().isEmpty()) ? 'O' : 'N';
+    int idcli = client.getIdclient(); 
+    String idmag = this.getidMagasin();
+
+    PreparedStatement ps = this.laConnexion.prepareStatement(
+        "INSERT INTO COMMANDE (numcom, datecom, enligne, livraison, idcli, idmag) VALUES (?, ?, ?, ?, ?, ?)"
+    );
+    ps.setInt(1, numcom);
+    ps.setDate(2, new java.sql.Date(c.getDatecommande().getTime()));
+    ps.setString(3, String.valueOf(enligne));
+    ps.setString(4, String.valueOf(livraison));
+    ps.setInt(5, idcli);
+    ps.setString(6, idmag);
+
+    ps.executeUpdate();
+    ps.close();
+}
 
 
 
