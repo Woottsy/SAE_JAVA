@@ -21,14 +21,26 @@ public class ClientBD{
             Statement st = this.co.createStatement();
             System.out.println("Entrez votre identifiant");
             String id = System.console().readLine();
-            System.out.println("Entrez votre mot de passe");
-            String mdp = System.console().readLine();
+            System.out.println("Entrez votre nom");
+            String nom = System.console().readLine();
+            System.out.println("Entrez votre prenom");
+            String prenom = System.console().readLine();
+            System.out.println("Entrez votre ville");
+            String ville = System.console().readLine();
+            System.out.println("Entrez votre code postal");
+            String codeP = System.console().readLine();
             
             ResultSet admins = st.executeQuery("select * from Client");
             if (admins.next()) {
                 if (id.equals(admins.getString("idCli"))) {
-                    if (mdp.equals(admins.getString("motdepasse"))) {
-                        return true;
+                    if (nom.equals(admins.getString("nomcli"))) {
+                        if (prenom.equals(admins.getString("prenomcli"))){
+                            if (ville.equals(admins.getString("villecli"))){
+                                if (codeP.equals(admins.getString("codepostal"))){
+                                    return true;
+                                }
+                            }
+                        }
                     }
                 } else {
                     throw new SQLException();
