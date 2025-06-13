@@ -1,7 +1,6 @@
 
 import java.sql.SQLException;
 import java.util.List;
-
 public class AppLibrairie {
 
     private boolean quitter_stat;
@@ -42,13 +41,13 @@ public class AppLibrairie {
 
     }
 
-    public void start() throws SQLException {
+    public void start()throws SQLException {
         while (!quitter) {
             menu();
         }
     }
 
-    public void menu() throws SQLException {
+    public void menu() throws SQLException{
         boolean commande_faite = false;
         while (!commande_faite) {
             System.out.println("╭──────────────────────────────────────────╮");
@@ -326,7 +325,7 @@ public class AppLibrairie {
         } // mettre une requete sql pour l'id
     }
 
-    public void connexion_vendeur() throws SQLException {
+    public void connexion_vendeur()throws SQLException {
         VendeurBD vendeurBD = new VendeurBD(this.connexionMySQL);
         boolean commande_faite = false;
         System.out.println("╭──────────────────────────────────────────╮");
@@ -347,7 +346,7 @@ public class AppLibrairie {
         }
     }
 
-    public void menu_vendeur() {
+    public void menu_vendeur()throws SQLException {
         VendeurBD vendeurBD = new VendeurBD(this.connexionMySQL);
         boolean commande_faite = false;
         System.out.println("╭──────────────────────────────────────────╮");
@@ -366,6 +365,9 @@ public class AppLibrairie {
             commande_faite = true;
         } else if (commande.equals("a")) {
         }
+
+
+        
     }
 
     public void quit() {
