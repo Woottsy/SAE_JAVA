@@ -120,8 +120,10 @@ public class ClientBD{
             int quantite = Integer.parseInt(System.console().readLine());
             System.out.println("Souhaitez-vous une livraison à domicile ? C (oui) ou M (non)");
             String typeLivraison = System.console().readLine();
-            int  idCommande =  + RandomInt(1000, 9999) + RandomInt(1000, 9999) + RandomInt(1000, 9999);
-            int idDetailCom = RandomInt(1000, 9999) + RandomInt(1000, 9999) + RandomInt(1000, 9999) + 555;
+            ResultSet rs2 = st.executeQuery("SELECT MAX(numcom) AS maxNumCom FROM Commande");
+            ResultSet rs3 = st.executeQuery("SELECT MAX(numlig) AS maxNumLig FROM DETAILCOMMANDE");
+            int  idCommande =  rs2.getInt("maxNumCom") + 1;
+            int idDetailCom = rs3.getInt("maxNumLig") + 1;
             ResultSet rs = st.executeQuery("SELECT prix FROM Livre WHERE isbn = '" + idLivre + "'");
             double prix = rs.getDouble("prix");
             Date dateCommande = new Date(System.currentTimeMillis());
@@ -129,6 +131,7 @@ public class ClientBD{
             if (typeLivraison.equalsIgnoreCase("M")) {
                 enli = "N";
             }
+
             PreparedStatement ps = this.co.prepareStatement("INSERT INTO Commande (numcom, datecom, enligne, livraison, idcli, idmag) VALUES (?, ?, ?, ?, ?,?)");
             ps.setInt(1, idCommande);
             ps.setDate(2,dateCommande);
@@ -139,7 +142,6 @@ public class ClientBD{
             ps.executeUpdate();
 
             PreparedStatement ps2 = this.co.prepareStatement("INSERT INTO DETAILCOMMANDE(numcom, numlig, isbn, qte, prixvente) values (?, ?, ?, ?, ?)");
-
             ps2.setInt(1, idCommande);
             ps2.setInt(2, idDetailCom);
             ps2.setString(3, idLivre);
@@ -147,7 +149,7 @@ public class ClientBD{
             ps2.setDouble(5, prix );
             ps2.executeUpdate();
 
-            
+
         }catch (SQLException e) {
                 System.out.println("Erreur lors de la passation de la commande : " + e.getMessage());
         } 
