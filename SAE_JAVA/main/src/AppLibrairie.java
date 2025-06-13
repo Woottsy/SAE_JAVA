@@ -1,7 +1,8 @@
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.List;
-
+import java.util.Date;
 public class AppLibrairie {
 
     private boolean quitter_stat;
@@ -42,13 +43,13 @@ public class AppLibrairie {
 
     }
 
-    public void start() {
+    public void start()throws SQLException {
         while (!quitter) {
             menu();
         }
     }
 
-    public void menu() {
+    public void menu() throws SQLException{
         boolean commande_faite = false;
         while (!commande_faite) {
             System.out.println("╭──────────────────────────────────────────╮");
@@ -326,7 +327,7 @@ public class AppLibrairie {
         } // mettre une requete sql pour l'id
     }
 
-    public void connexion_vendeur() {
+    public void connexion_vendeur()throws SQLException {
         VendeurBD vendeurBD = new VendeurBD(this.connexionMySQL);
         boolean commande_faite = false;
         System.out.println("╭──────────────────────────────────────────╮");
@@ -345,7 +346,7 @@ public class AppLibrairie {
         }
     }
 
-    public void menu_vendeur() {
+    public void menu_vendeur()throws SQLException {
         VendeurBD vendeurBD = new VendeurBD(this.connexionMySQL);
         boolean commande_faite = false;
         System.out.println("╭──────────────────────────────────────────╮");
@@ -362,8 +363,18 @@ public class AppLibrairie {
         if (commande.equals("q")) {
             quitter_vendeur = true;
             commande_faite = true;
-        } else if (commande.equals("s")) {
+        } else if (commande.equals("a")) {
+            vendeurBD.insererLivre();
+        }else if (commande.equals("m")) {
+            vendeurBD.majQTELivre();
+        }else if (commande.equals("v")) {
+            vendeurBD.verifierDispo();
+        }else if (commande.equals("p")) {
+            vendeurBD.nouvelleCommande();
         }
+
+
+        
     }
 
     public void quit() {

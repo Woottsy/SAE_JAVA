@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.ArrayList;
 import java.sql.Date;
@@ -31,6 +32,16 @@ public class VendeurBD {
 		int maxNum=0;
 		this.st=this.laConnexion.createStatement();
 		ResultSet resultat=st.executeQuery("select ifnull(max(keyVendeur), 0) maxn from VENDEUR");
+		if(resultat.next()){
+
+			maxNum=resultat.getInt("maxn");
+		}
+		return maxNum + 1 ;
+	}
+    public int maxnumDetailCommande() throws SQLException{
+		int maxNum=0;
+		this.st=this.laConnexion.createStatement();
+		ResultSet resultat=st.executeQuery("select ifnull(max(numlig), 0) maxn from DETAILCOMMANDE");
 		if(resultat.next()){
 
 			maxNum=resultat.getInt("maxn");
@@ -68,27 +79,49 @@ public class VendeurBD {
 
     }
 
-    public void insererLivre(Livre l)throws SQLException{
-
+    public void insererLivre()throws SQLException{
+            Statement st = this.laConnexion.createStatement();
+            System.out.println("Pour inserer un livre, entrez son isbn : ");
+            String isbn = System.console().readLine();
             ResultSet resultat=st.executeQuery("select idmag from  AFFLIATION where idVendeur="+vendeur);
             String magasin=resultat.getString("idmag");
-            ResultSet verif=st.executeQuery("select isbn,qte from  AFFLIATION where idmag="+magasin);
+            ResultSet verif=st.executeQuery("select isbn,qte from  POSSEDER where idmag="+magasin);
             if(!verif.isBeforeFirst()){
-                PreparedStatement ps= this.laConnexion.prepareStatement("insert into POSSEDER (idmag,isbn,qte) values("+magasin+","+l.getIsbn()+","+1+")");
-                ps.executeQuery();
+                PreparedStatement ps= this.laConnexion.prepareStatement("insert into POSSEDER (idmag,isbn,qte) values("+magasin+","+isbn+","+1+")");
+                ps.executeUpdate();
                }
 
             }
+    public String verifierDispo(){
+            System.out.println("Pour inserer un livre, entrez son isbn : ");
+            String isbn = System.console().readLine();
+            try {
+                ResultSet resultat=st.executeQuery("select idmag from  AFFLIATION where idVendeur="+vendeur);
+                String magasin=resultat.getString("idmag");
+                ResultSet verif=st.executeQuery("select isbn,qte from  POSSEDER where idmag="+magasin);
+            } catch (SQLException e) {
+                System.out.println("le livre "+isbn+"n'est pas diponible");
+            }
+            return "le livre "+isbn+"est disponible";
+
+    }
 
     
-    public void majQTELivre(Livre l ,int qte)throws SQLException{
+    public void majQTELivre()throws SQLException{
+
+            System.out.println("Pour mettre a jour un livre, entrez son isbn : ");
+            String isbn = System.console().readLine();
+
+            System.out.println("Pour mettre a jour sa quantité, entrez sa quantité : ");
+            String qtestring = System.console().readLine();
+            int qte=Integer.parseInt(qtestring);
 
             ResultSet resultat=st.executeQuery("select idmag from  AFFLIATION where idVendeur="+vendeur);
             String magasin=resultat.getString("idmag");
-            ResultSet verif=st.executeQuery("select isbn,qte from  AFFLIATION where idmag="+magasin);
+            ResultSet verif=st.executeQuery("select isbn,qte from  POSSEDER where idmag="+magasin);
             if(verif.isBeforeFirst()){
-                PreparedStatement ps= this.laConnexion.prepareStatement("update qte="+qte+" where isbn="+l.getIsbn()+" and idmag="+magasin);
-                ps.executeQuery();
+                PreparedStatement ps= this.laConnexion.prepareStatement("update qte="+qte+" where isbn="+isbn+" and idmag="+magasin);
+                ps.executeUpdate();
             }
 
         
@@ -112,27 +145,56 @@ public class VendeurBD {
 		return res;
         
     }
-public void nouvelleCommande(Commande c,Client client) throws SQLException {
+    public void nouvelleCommande() throws SQLException {
+        int numcom = this.maxnumCommande();
+            System.out.println("Pour commencer la commande, entrez l'id du client : ");
+            String idstrng = System.console().readLine();
+            int idclient=Integer.parseInt(idstrng);
 
-    int numcom = this.maxnumCommande();
-    char enligne = c.getEnligne() ? 'O' : 'N';
-    char livraison = (c.getTypelivraison() != null && !c.getTypelivraison().isEmpty()) ? 'O' : 'N';
-    int idcli = client.getIdclient(); 
-    String idmag = this.getidMagasin();
+            java.util.Date date= new java.util.Date();
 
-    PreparedStatement ps = this.laConnexion.prepareStatement(
-        "INSERT INTO COMMANDE (numcom, datecom, enligne, livraison, idcli, idmag) VALUES (?, ?, ?, ?, ?, ?)"
-    );
-    ps.setInt(1, numcom);
-    ps.setDate(2, new java.sql.Date(c.getDatecommande().getTime()));
-    ps.setString(3, String.valueOf(enligne));
-    ps.setString(4, String.valueOf(livraison));
-    ps.setInt(5, idcli);
-    ps.setString(6, idmag);
+            System.out.println("Commande en ligne ? (O/N) :");
+            String enligneStr = System.console().readLine();
+            boolean enligne = enligneStr.equalsIgnoreCase("O");
 
-    ps.executeUpdate();
-    ps.close();
-}
+            System.out.println("Type de livraison (M pour en magasin et C pour commander :");
+            String typelivraison = System.console().readLine();
+
+            System.out.println("Pour mettre a jour sa quantité, entrez sa quantité : ");
+            String qtestring = System.console().readLine();
+            int qte=Integer.parseInt(qtestring);
+
+            System.out.println("Pour bien commander, entrez l'isbn du livre : ");
+            String isbn = System.console().readLine();
+
+
+            Statement st = this.laConnexion.createStatement();
+            ResultSet res=st.executeQuery("select prix from LIVRE where isbn="+isbn);
+            Double prix= res.getDouble("prix")*qte;
+
+            PreparedStatement ps = this.laConnexion.prepareStatement(
+                "INSERT INTO COMMANDE (numcom, datecom, enligne, livraison, idcli, idmag) VALUES (?, ?, ?, ?, ?, ?)"
+            );
+            ps.setInt(1, numcom);
+            ps.setDate(2, new java.sql.Date(date.getTime()));
+            ps.setString(3, String.valueOf(enligne));
+            ps.setString(4, String.valueOf(typelivraison));
+            ps.setInt(5, idclient);
+            ps.setString(6, this.getidMagasin());
+
+            ps.executeUpdate();
+            ps.close();
+            PreparedStatement ps2 = this.laConnexion.prepareStatement(
+                "INSERT INTO DETAILCOMMANDE (numcom, numlig, qte, prixvente, isbn) VALUES (?, ?, ?, ?, ?)"
+            ); 
+            ps2.setInt(1, numcom);
+            ps2.setInt(2, maxnumDetailCommande());
+            ps2.setInt(3, qte);
+            ps2.setDouble(4, prix);
+            ps2.setString(5, isbn);
+            ps2.executeUpdate();
+            ps2.close();
+    }
 
 
 
