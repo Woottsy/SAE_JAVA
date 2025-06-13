@@ -1,8 +1,10 @@
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.List;
+import java.util.List
+
 import java.util.Date;
+
 public class AppLibrairie {
 
     private boolean quitter_stat;
@@ -342,7 +344,9 @@ public class AppLibrairie {
             quitter_vendeur = true;
             commande_faite = true;
         } else if (commande.equals("s")) {
-            menu_vendeur();
+            if(vendeurBD.seConnecter()){
+                menu_vendeur();
+            }
         }
     }
 
@@ -364,6 +368,7 @@ public class AppLibrairie {
             quitter_vendeur = true;
             commande_faite = true;
         } else if (commande.equals("a")) {
+
             vendeurBD.insererLivre();
         }else if (commande.equals("m")) {
             vendeurBD.majQTELivre();
@@ -371,6 +376,7 @@ public class AppLibrairie {
             vendeurBD.verifierDispo();
         }else if (commande.equals("p")) {
             vendeurBD.nouvelleCommande();
+
         }
 
 
