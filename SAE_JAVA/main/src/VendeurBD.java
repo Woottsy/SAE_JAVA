@@ -1,13 +1,9 @@
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.PreparedStatement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.ArrayList;
-import java.sql.Date;
 public class VendeurBD {
 
     ConnexionMySQL laConnexion;
@@ -80,12 +76,12 @@ public class VendeurBD {
     }
 
     public void insererLivre()throws SQLException{
-            Statement st = this.laConnexion.createStatement();
+            Statement localSt = this.laConnexion.createStatement();
             System.out.println("Pour inserer un livre, entrez son isbn : ");
             String isbn = System.console().readLine();
-            ResultSet resultat=st.executeQuery("select idmag from  AFFLIATION where idVendeur="+vendeur);
+            ResultSet resultat=localSt.executeQuery("select idmag from  AFFLIATION where idVendeur="+vendeur);
             String magasin=resultat.getString("idmag");
-            ResultSet verif=st.executeQuery("select isbn,qte from  POSSEDER where idmag="+magasin);
+            ResultSet verif=localSt.executeQuery("select isbn,qte from  POSSEDER where idmag="+magasin);
             if(!verif.isBeforeFirst()){
                 PreparedStatement ps= this.laConnexion.prepareStatement("insert into POSSEDER (idmag,isbn,qte) values("+magasin+","+isbn+","+1+")");
                 ps.executeUpdate();
