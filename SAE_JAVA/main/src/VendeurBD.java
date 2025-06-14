@@ -295,56 +295,101 @@ public List<Livre> selectionLivreMagasin(String idMagasin) throws SQLException {
 
     return res;
 }
-    public void nouvelleCommande() throws SQLException {
+public void nouvelleCommande() throws SQLException {
+    PreparedStatement psCommande = null;
+    PreparedStatement psDetailCommande = null;
+
+    try {
         int numcom = this.maxnumCommande();
-            System.out.println("Pour commencer la commande, entrez l'id du client : ");
-            String idstrng = System.console().readLine();
-            int idclient=Integer.parseInt(idstrng);
 
-            java.util.Date date= new java.util.Date();
+      
+        System.out.println("Pour commencer la commande, entrez l'ID du client : ");
+        String idstrng = System.console().readLine();
+        int idclient = Integer.parseInt(idstrng);
 
-            System.out.println("Commande en ligne ? (O/N) :");
-            String enligneStr = System.console().readLine();
-            boolean enligne = enligneStr.equalsIgnoreCase("O");
+        PreparedStatement psCheckClient = this.laConnexion.prepareStatement("SELECT idcli FROM CLIENT WHERE idcli = ?");
+        psCheckClient.setInt(1, idclient);
+        ResultSet rsClient = psCheckClient.executeQuery();
+        if (!rsClient.next()) {
+            throw new SQLException("Le client avec l'ID " + idclient + " n'existe pas.");
+        }
+        rsClient.close();
+        psCheckClient.close();
 
-            System.out.println("Type de livraison (M pour en magasin et C pour commander :");
-            String typelivraison = System.console().readLine();
+        java.util.Date date = new java.util.Date();
 
-            System.out.println("Pour mettre a jour sa quantité, entrez sa quantité : ");
-            String qtestring = System.console().readLine();
-            int qte=Integer.parseInt(qtestring);
+        System.out.println("Commande en ligne ? (O/N) :");
+        String enligneStr = System.console().readLine();
+        char enligne = enligneStr.equalsIgnoreCase("O") ? 'Y' : 'N';
 
-            System.out.println("Pour bien commander, entrez l'isbn du livre : ");
-            String isbn = System.console().readLine();
+        System.out.println("Type de livraison (M pour en magasin et C pour commander) :");
+        String typelivraisonStr = System.console().readLine();
 
+        String idMagasin = this.getidMagasin();
+        PreparedStatement psCheckMagasin = this.laConnexion.prepareStatement("SELECT idmag FROM MAGASIN WHERE idmag = ?");
+        psCheckMagasin.setString(1, idMagasin);
+        ResultSet rsMagasin = psCheckMagasin.executeQuery();
+        if (!rsMagasin.next()) {
+            throw new SQLException("Le magasin avec l'ID " + idMagasin + " n'existe pas.");
+        }
+        rsMagasin.close();
+        psCheckMagasin.close();
 
-            Statement st = this.laConnexion.createStatement();
-            ResultSet res=st.executeQuery("select prix from LIVRE where isbn="+isbn);
-            Double prix= res.getDouble("prix")*qte;
+        System.out.println("Entrez l'ISBN du livre : ");
+        String isbn = System.console().readLine();
 
-            PreparedStatement ps = this.laConnexion.prepareStatement(
-                "INSERT INTO COMMANDE (numcom, datecom, enligne, livraison, idcli, idmag) VALUES (?, ?, ?, ?, ?, ?)"
-            );
-            ps.setInt(1, numcom);
-            ps.setDate(2, new java.sql.Date(date.getTime()));
-            ps.setString(3, String.valueOf(enligne));
-            ps.setString(4, String.valueOf(typelivraison));
-            ps.setInt(5, idclient);
-            ps.setString(6, this.getidMagasin());
+        PreparedStatement psCheckLivre = this.laConnexion.prepareStatement("SELECT isbn FROM LIVRE WHERE isbn = ?");
+        psCheckLivre.setString(1, isbn);
+        ResultSet rsLivre = psCheckLivre.executeQuery();
+        if (!rsLivre.next()) {
+            throw new SQLException("Le livre avec l'ISBN " + isbn + " n'existe pas.");
+        }
+        rsLivre.close();
+        psCheckLivre.close();
 
-            ps.executeUpdate();
-            ps.close();
-            PreparedStatement ps2 = this.laConnexion.prepareStatement(
-                "INSERT INTO DETAILCOMMANDE (numcom, numlig, qte, prixvente, isbn) VALUES (?, ?, ?, ?, ?)"
-            ); 
-            ps2.setInt(1, numcom);
-            ps2.setInt(2, maxnumDetailCommande());
-            ps2.setInt(3, qte);
-            ps2.setDouble(4, prix);
-            ps2.setString(5, isbn);
-            ps2.executeUpdate();
-            ps2.close();
+        System.out.println("Entrez la quantité : ");
+        String qteStr = System.console().readLine();
+        int qte = Integer.parseInt(qteStr);
+
+        System.out.println("Entrez le prix de vente : ");
+        String prixStr = System.console().readLine();
+        double prix = Double.parseDouble(prixStr);
+
+        psCommande = this.laConnexion.prepareStatement(
+            "INSERT INTO COMMANDE (numcom, datecom, enligne, livraison, idcli, idmag) VALUES (?, ?, ?, ?, ?, ?)"
+        );
+        psCommande.setInt(1, numcom);
+        psCommande.setDate(2, new java.sql.Date(date.getTime()));
+        psCommande.setString(3, String.valueOf(enligne));
+        psCommande.setString(4, typelivraisonStr);
+        psCommande.setInt(5, idclient);
+        psCommande.setString(6, idMagasin);
+        psCommande.executeUpdate();
+
+        psDetailCommande = this.laConnexion.prepareStatement(
+            "INSERT INTO DETAILCOMMANDE (numcom, numlig, qte, prixvente, isbn) VALUES (?, ?, ?, ?, ?)"
+        );
+        psDetailCommande.setInt(1, numcom);
+        psDetailCommande.setInt(2, this.maxnumDetailCommande()); 
+        psDetailCommande.setInt(3, qte);
+        psDetailCommande.setDouble(4, prix);
+        psDetailCommande.setString(5, isbn);
+        psDetailCommande.executeUpdate();
+
+        System.out.println("La commande a été créée avec succès.");
+    } catch (SQLException e) {
+        if (this.laConnexion != null) {
+        }
+        throw e;
+    } finally {
+        if (psCommande != null) {
+            psCommande.close();
+        }
+        if (psDetailCommande != null) {
+            psDetailCommande.close();
+        }
     }
+}
 
 
 
