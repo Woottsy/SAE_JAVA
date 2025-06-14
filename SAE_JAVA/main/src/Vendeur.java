@@ -15,11 +15,12 @@ public class Vendeur {
     //
     // Constructors
     //
-    public Vendeur(int keyVendeur, String idvendeur, String email, String MDP) {
+    public Vendeur(int keyVendeur, String idvendeur, String MDP, String email) {
         this.keyVendeur = keyVendeur;
         this.idvendeur = idvendeur;
-        this.email = email;
         this.MDP = MDP;
+        this.email = email;
+        
     }
 
     //
