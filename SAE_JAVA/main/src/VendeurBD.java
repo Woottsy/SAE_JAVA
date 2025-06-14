@@ -14,7 +14,7 @@ public class VendeurBD {
         this.laConnexion = co;
     }
 
-    public int maxnumVendeur() throws SQLException{
+    public int maxnumCommande() throws SQLException{
 		int maxNum=0;
 		this.st=this.laConnexion.createStatement();
 		ResultSet resultat=st.executeQuery("select ifnull(max(numcom), 0) maxn from COMMANDE");
@@ -24,7 +24,7 @@ public class VendeurBD {
 		}
 		return maxNum + 1 ;
 	}
-    public int maxnumCommande() throws SQLException{
+    public int maxnumVendeur() throws SQLException{
 		int maxNum=0;
 		this.st=this.laConnexion.createStatement();
 		ResultSet resultat=st.executeQuery("select ifnull(max(keyVendeur), 0) maxn from VENDEUR");
@@ -44,25 +44,28 @@ public class VendeurBD {
 		}
 		return maxNum + 1 ;
 	}
-	public boolean seConnecter()throws SQLException {
-  
+	public boolean seConnecter(){
+        try{
             // Initialisation et récupération de l'id et du mdp
             Statement st = this.laConnexion.createStatement();
             System.out.println("Entrez votre identifiant");
             String id = System.console().readLine();
             System.out.println("Entrez votre mot de passe");
             String mdp = System.console().readLine();
-            //Pour afficher le magasin supprimée
-            ResultSet vendeurs = st.executeQuery("select * from VENDEUR");
-            if (vendeurs.next()) {
-                if (id.equals(vendeurs.getString("identVendeur"))) {
-                    vendeur=vendeurs.getInt("keyvendeur");
-                    if (mdp.equals(vendeurs.getString("motdepasseVendeur"))) {
-                        return true;
-                    }
-                } else {
-                    throw new SQLException();
-                }
+            PreparedStatement ps = this.laConnexion.prepareStatement("SELECT * FROM VENDEUR WHERE identVendeur = ? AND motdepasseVendeur = ?");
+            ps.setString(1, id);
+            ps.setString(2, mdp);
+            ResultSet resultat = ps.executeQuery();
+            if (resultat.next()) {
+                this.vendeur = resultat.getInt("keyVendeur");
+                System.out.println("Connexion réussie en tant que vendeur avec l'id : " + this.vendeur);
+                return true;
+            } else {
+                System.out.println("Identifiant ou mot de passe incorrect.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur de connexion : " + e.getMessage());
+            
             }
         return false;
     }
@@ -79,7 +82,7 @@ public class VendeurBD {
             Statement localSt = this.laConnexion.createStatement();
             System.out.println("Pour inserer un livre, entrez son isbn : ");
             String isbn = System.console().readLine();
-            ResultSet resultat=localSt.executeQuery("select idmag from  AFFLIATION where idVendeur="+vendeur);
+            ResultSet resultat=localSt.executeQuery("select idmag from  AFFILIATION where idVendeur="+vendeur);
             String magasin=resultat.getString("idmag");
             ResultSet verif=localSt.executeQuery("select isbn,qte from  POSSEDER where idmag="+magasin);
             if(!verif.isBeforeFirst()){
