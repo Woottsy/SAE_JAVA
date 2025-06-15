@@ -79,6 +79,8 @@ public class AdministrateurBD {
             if (admins.next()) {
                 if (id.equals(admins.getString("identAdmin"))) {
                     if (mdp.equals(admins.getString("motdepasseAdmin"))) {
+                        System.out.println("Connexion réussie !");
+                        System.out.println("Bienvenue " + admins.getString("identAdmin"));
                         return true;
                     }
                 } else {

@@ -30,7 +30,13 @@ public class AppLibrairie {
     public AppLibrairie() throws SQLException, ClassNotFoundException {
         this.connexionMySQL = new ConnexionMySQL();
         try {
-            connexionMySQL.connecter("servinfo-maria", "DBlacroix", "lacroix", "lacroix");
+            System.out.println("Quel est le serveur de la base de données ?");
+            String nomServeur = System.console().readLine();
+            System.out.println("Quel est votre nom d'utilisateur ?");
+            String nomLogin = System.console().readLine();
+            System.out.println("Quel est votre mot de passe ?");
+            String motDePasse = System.console().readLine();
+            connexionMySQL.connecter(nomServeur, nomLogin, motDePasse);
         } catch (SQLException e) {
         }
     }
@@ -46,10 +52,35 @@ public class AppLibrairie {
     }
 
     public void start()throws SQLException {
+        afficherEcranChargement();
         while (!quitter) {
+            
             menu();
         }
     }
+
+    public static void afficherEcranChargement() {
+        System.out.println("\n\n");
+        System.out.println("" +
+        "\n" + //
+                        "\n" + //
+                        "  _     _ _               _      _        _____                              \n" + //
+                        " | |   (_) |__  _ __ __ _(_)_ __(_) ___  | ____|_  ___ __  _ __ ___  ___ ___ \n" + //
+                        " | |   | | '_ \\| '__/ _` | | '__| |/ _ \\ |  _| \\ \\/ / '_ \\| '__/ _ \\/ __/ __|\n" + //
+                        " | |___| | |_) | | | (_| | | |  | |  __/ | |___ >  <| |_) | | |  __/\\__ \\__ \\\n" + //
+                        " |_____|_|_.__/|_|  \\__,_|_|_|  |_|\\___| |_____/_/\\_\\ .__/|_|  \\___||___/___/\n" + //
+                        "                                                    |_|                      \n" + //
+                        "\n" + //
+                        ""
+         +"");
+    
+        try {
+            Thread.sleep(2000); // Pause de 2 secondes
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+    
 
     public void menu() throws SQLException{
         boolean commande_faite = false;
@@ -187,7 +218,6 @@ public class AppLibrairie {
             System.out.println("|             Menu Statistique             |");
             System.out.println("|──────────────────────────────────────────|");
             System.out.println("| V : Voir les ventes globales             |");
-            System.out.println("| C : Voir le CA par Clients               |");
             System.out.println("| L : Voir le livre le plus vendu          |");
             System.out.println("| Q : Se déconnecter                       |");
             System.out.println("╰──────────────────────────────────────────╯" + '\n');
@@ -198,8 +228,6 @@ public class AppLibrairie {
                 commande_faite = true;
             } else if (commande.equals("v")){
                 adminBD.ventesGlobales();
-            } else if (commande.equals("c")){
-                //à implementer
             } else if (commande.equals("l")){
                 adminBD.livreLePlusVendu();
             }
