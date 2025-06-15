@@ -1,4 +1,9 @@
+/**
+ * Classe principale de l'application de gestion de librairie.
+ * Gère les menus, la navigation et l'interaction avec l'utilisateur.
+ */
 
+ 
 import java.sql.SQLException;
 import java.util.List;
 
@@ -15,8 +20,10 @@ public class AppLibrairie {
     private Client clientConnect;
     private int vendeurLogKey;
 
-
-// séparer en Personne/PersonneBD
+    /**
+     * Point d'entrée de l'application.
+     * @param args arguments de la ligne de commande
+     */
     public static void main(String[] args) {
         try {
             AppLibrairie app = new AppLibrairie();
@@ -24,9 +31,14 @@ public class AppLibrairie {
         } catch (ClassNotFoundException e) {
         } catch (SQLException e) {
         }
-
     }
 
+    /**
+     * Constructeur de la classe AppLibrairie.
+     * Initialise la connexion à la base de données en demandant les informations à l'utilisateur.
+     * @throws SQLException en cas d'erreur SQL
+     * @throws ClassNotFoundException si le driver MySQL n'est pas trouvé
+     */
     public AppLibrairie() throws SQLException, ClassNotFoundException {
         this.connexionMySQL = new ConnexionMySQL();
         try {
@@ -41,6 +53,10 @@ public class AppLibrairie {
         }
     }
 
+    /**
+     * Initialise la connexion MySQL.
+     * Affiche un message d'erreur et quitte si le driver n'est pas trouvé.
+     */
     public void init() {
         try {
             this.connexionMySQL = new ConnexionMySQL();
@@ -48,17 +64,22 @@ public class AppLibrairie {
             System.out.println("Driver MySQL non trouvé!!!");
             System.exit(1);
         }
-
     }
 
-    public void start()throws SQLException {
+    /**
+     * Lance la boucle principale de l'application après l'écran de chargement.
+     * @throws SQLException en cas d'erreur SQL
+     */
+    public void start() throws SQLException {
         afficherEcranChargement();
         while (!quitter) {
-            
             menu();
         }
     }
 
+    /**
+     * Affiche un écran de chargement stylisé au démarrage de l'application.
+     */
     public static void afficherEcranChargement() {
         System.out.println("\n\n");
         System.out.println("" +
@@ -80,9 +101,12 @@ public class AppLibrairie {
             Thread.currentThread().interrupt();
         }
     }
-    
 
-    public void menu() throws SQLException{
+    /**
+     * Affiche le menu principal et gère la navigation vers les autres menus.
+     * @throws SQLException en cas d'erreur SQL
+     */
+    public void menu() throws SQLException {
         boolean commande_faite = false;
         while (!commande_faite) {
             System.out.println("╭──────────────────────────────────────────╮");
@@ -119,10 +143,12 @@ public class AppLibrairie {
             } else {
                 System.out.println("Commande '" + commande_brute + "' invalide.");
             }
-
         }
     }
 
+    /**
+     * Affiche le menu de connexion administrateur et gère la connexion.
+     */
     public void connexion_admin() {
         boolean commande_faite = false;
         AdministrateurBD administrateurBD = new AdministrateurBD(this.connexionMySQL);
@@ -147,6 +173,9 @@ public class AppLibrairie {
         }
     }
 
+    /**
+     * Affiche le menu administrateur et gère les actions administrateur.
+     */
     public void menu_Admin() {
         boolean commande_faite = false;
         String idMag = "";
@@ -207,9 +236,11 @@ public class AppLibrairie {
                 System.out.println("Commande '" + commande_brute + "' invalide.");
             }
         }
-
     }
 
+    /**
+     * Affiche le menu des statistiques et gère les actions statistiques.
+     */
     public void menu_stat() {
         boolean commande_faite = false;
         AdministrateurBD adminBD = new AdministrateurBD(this.connexionMySQL);
@@ -234,6 +265,9 @@ public class AppLibrairie {
         }
     }
 
+    /**
+     * Affiche le menu de choix du magasin et permet de sélectionner un magasin pour la gestion des stocks.
+     */
     public void menu_choisirMagasin() {
         boolean commande_faite = false;
         try {
@@ -282,6 +316,9 @@ public class AppLibrairie {
         }
     }
 
+    /**
+     * Affiche le menu de gestion des stocks pour le magasin sélectionné.
+     */
     public void menu_gererStock() {
         boolean commande_faite = false;
         MagasinBD magBD = new MagasinBD(this.connexionMySQL);
@@ -313,6 +350,9 @@ public class AppLibrairie {
         }
     }
 
+    /**
+     * Affiche le menu de connexion client et gère la création ou la connexion d'un compte client.
+     */
     public void connexion_Client() {
         boolean commande_faite = false;
         ClientBD clientBD = new ClientBD(this.connexionMySQL);
@@ -351,10 +391,12 @@ public class AppLibrairie {
                 clientBD.creerCompte(identifiant, nom, prenom, adresse, codepostal, ville);
                 commande_faite = true;
             }
-
         }
     }
 
+    /**
+     * Affiche le menu client et gère les actions disponibles pour le client connecté.
+     */
     public void menu_client(){
         boolean commande_faite = false;
         ClientBD clientBD = new ClientBD(this.connexionMySQL);
@@ -384,7 +426,11 @@ public class AppLibrairie {
         }
     }
 
-    public void connexion_vendeur()throws SQLException {
+    /**
+     * Affiche le menu de connexion vendeur et gère la connexion.
+     * @throws SQLException en cas d'erreur SQL
+     */
+    public void connexion_vendeur() throws SQLException {
         VendeurBD vendeurBD = new VendeurBD(this.connexionMySQL);
         boolean commande_faite = false;
         while(!commande_faite){
@@ -408,7 +454,11 @@ public class AppLibrairie {
     }
 }
 
-    public void menu_vendeur()throws SQLException {
+    /**
+     * Affiche le menu vendeur et gère les actions disponibles pour le vendeur connecté.
+     * @throws SQLException en cas d'erreur SQL
+     */
+    public void menu_vendeur() throws SQLException {
         VendeurBD vendeurBD = new VendeurBD(this.connexionMySQL);
         boolean commande_faite = false;
         while (!commande_faite) {
@@ -437,11 +487,11 @@ public class AppLibrairie {
 
         }
     }
+}
 
-
-        
-    }
-
+    /**
+     * Affiche un message de fin lors de la fermeture de l'application.
+     */
     public void quit() {
         System.out.println("╭────────────╮");
         System.out.println("│ Au revoir !│");

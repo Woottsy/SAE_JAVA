@@ -1,4 +1,3 @@
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -6,16 +5,28 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe permettant de gérer les opérations liées aux magasins et à leur stock de livres dans la base de données.
+ */
 public class MagasinBD {
 
     private ConnexionMySQL laConnexion;
     private List<Magasin> magasins;
 
+    /**
+     * Constructeur de la classe MagasinBD.
+     * @param connexion la connexion MySQL à utiliser
+     */
     public MagasinBD(ConnexionMySQL connexion) {
         this.laConnexion = connexion;
         this.magasins = new ArrayList<>();
     }
 
+    /**
+     * Récupère la liste de tous les magasins présents dans la base de données.
+     * @return une liste d'objets Magasin
+     * @throws SQLException en cas d'erreur SQL lors de la récupération
+     */
     public List<Magasin> getAllMagasins() throws SQLException {
         Statement st = this.laConnexion.createStatement();
         ResultSet res = st.executeQuery("SELECT * FROM MAGASIN");
@@ -25,6 +36,11 @@ public class MagasinBD {
         return magasins;
     }
 
+    /**
+     * Ajoute un livre dans la base de données et l'associe à un magasin avec une quantité donnée.
+     * Demande les informations du livre à l'utilisateur.
+     * @param magChoisi le magasin dans lequel ajouter le livre
+     */
     public void ajouterLivre(Magasin magChoisi) {
         try {
             LivreBD livreBD = new LivreBD(this.laConnexion);
@@ -61,7 +77,11 @@ public class MagasinBD {
         }
     }
 
-
+    /**
+     * Supprime un livre du stock d'un magasin donné.
+     * Demande l'ISBN du livre à supprimer à l'utilisateur.
+     * @param magChoisi le magasin concerné
+     */
     public void supprimerLivre(Magasin magChoisi) {
         try {
             LivreBD livreBD = new LivreBD(this.laConnexion);
@@ -78,6 +98,10 @@ public class MagasinBD {
         }
     }
 
+    /**
+     * Affiche la liste des livres présents dans un magasin donné.
+     * @param magChoisi le magasin dont on veut afficher les livres
+     */
     public void listeLivres(Magasin magChoisi) {
         try {
             Statement st = this.laConnexion.createStatement();
@@ -91,6 +115,11 @@ public class MagasinBD {
         }
     }
 
+    /**
+     * Modifie la quantité d'un livre dans le stock d'un magasin donné.
+     * Demande l'ISBN du livre et la nouvelle quantité à l'utilisateur.
+     * @param magChoisi le magasin concerné
+     */
     public void modifierQuantiteLivre(Magasin magChoisi) {
         try {
             Statement st = this.laConnexion.createStatement();
@@ -108,7 +137,6 @@ public class MagasinBD {
             System.out.println("Erreur lors de la modification de la quantité : " + e.getMessage());
         }
     }
-
 
     //À implémenter : ListeLivres et Modifier la quantité d'un livre
 }
