@@ -289,6 +289,7 @@ public class AppLibrairie {
         boolean id = false;
         boolean mdp = false;
         boolean commande_faite = false;
+        ClientBD clientBD = new ClientBD(this.connexionMySQL);
         while (!commande_faite) {
             System.out.println("╭──────────────────────────────────────────╮");
             System.out.println("|               Menu Client                |");
@@ -303,23 +304,8 @@ public class AppLibrairie {
                 quitter_Client = true;
                 commande_faite = true;
             } else if (commande.equals("s")) {
-                System.out.println("Veuillez entrer votre Identifiant :");
-                while (!id) {
-                    String input = System.console().readLine();
-                    if (!input.isEmpty()) {
-                        id = true;
-                        identifiant = input;
-                        commande_faite = true;
-                    }
-                }
-                System.out.println("Veuillez entrer votre mot de passe :");
-                while (!mdp) {
-                    String input = System.console().readLine();
-                    if (!input.isEmpty()) {
-                        mdp = true;
-                        motDePasse = input;
-                        commande_faite = true;
-                    }
+                if (clientBD.seConnecter()){
+                    System.out.println("YES");
                 }
             }
 
