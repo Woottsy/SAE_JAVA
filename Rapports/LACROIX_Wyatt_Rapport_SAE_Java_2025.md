@@ -36,9 +36,12 @@ La communication technique a été une partie très difficile dans notre projet,
 
 ### Implémenter des conceptions simples
 
-Afin de ne pas répéter ce que j'ai dis précédemment dans ce rapport, je joint ci-dessous un image d'une partie de ce que j'ai réaliser.
+Afin de ne pas répéter ce que j'ai dis précédemment dans ce rapport, je joint ci-dessous des images d'une partie de ce que j'ai réaliser.
 
-![]() A mettre.
+![](./img/screen_dev1.png)
+AppLibrairie.java
+
+![](./img/screen_dev2.png)
 
 ### Élaborer des conceptions simples
 
