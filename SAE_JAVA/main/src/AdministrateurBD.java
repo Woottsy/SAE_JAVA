@@ -1,3 +1,6 @@
+/**
+ * Classe permettant de gérer les opérations administrateur sur la base de données.
+ */
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,10 +14,21 @@ public class AdministrateurBD {
     ConnexionMySQL laConnexion;
     Statement st;
 
+    /**
+     * Constructeur de la classe AdministrateurBD.
+     * @param co la connexion MySQL à utiliser
+     */
     public AdministrateurBD(ConnexionMySQL co) {
         this.laConnexion = co;
     }
 
+    /**
+     * Ajoute une nouvelle librairie (magasin) dans la base de données.
+     * Demande les informations à l'utilisateur puis insère le magasin.
+     * @param idMag l'identifiant du magasin
+     * @param NomMag le nom du magasin
+     * @param VilleMag la ville du magasin
+     */
     public void ajouterLibrairie(String idMag, String NomMag, String VilleMag) {
         try {
             System.out.println("Pour ajouter une Librairie, écrivez les informations de celle-ci au format (idMag, NomMag, VilleMag)"); // mettre une requete sql pour l'id 
@@ -43,6 +57,11 @@ public class AdministrateurBD {
         }
     }
 
+    /**
+     * Supprime une librairie (magasin) de la base de données selon son identifiant.
+     * Affiche les informations du magasin supprimé.
+     * @param idMag l'identifiant du magasin à supprimer
+     */
     public void supprimerLibrairie(String idMag) {
         try {
             Statement st = this.laConnexion.createStatement();
@@ -66,6 +85,10 @@ public class AdministrateurBD {
         }
     }
 
+    /**
+     * Permet à un administrateur de se connecter en vérifiant l'identifiant et le mot de passe.
+     * @return true si la connexion est réussie, false sinon
+     */
     public boolean seConnecter() {
         try {
             // Initialisation et récupération de l'id et du mdp
@@ -93,6 +116,9 @@ public class AdministrateurBD {
         return false;
     }
 
+    /**
+     * Affiche la liste de tous les magasins présents dans la base de données.
+     */
     public void listeMagasins() {
         try {
             Statement st = this.laConnexion.createStatement();
@@ -111,6 +137,10 @@ public class AdministrateurBD {
         }
     }
 
+    /**
+     * Crée un nouveau vendeur dans la base de données.
+     * Demande les informations à l'utilisateur puis insère le vendeur.
+     */
     public void creerVendeur() {
         try {
             VendeurBD vendeur = new VendeurBD(this.laConnexion);
@@ -135,6 +165,9 @@ public class AdministrateurBD {
         }
     }
 
+    /**
+     * Affiche la liste de tous les vendeurs présents dans la base de données.
+     */
     public void listeVendeurs() {
         try {
             Statement st = this.laConnexion.createStatement();
@@ -156,6 +189,10 @@ public class AdministrateurBD {
         }
     }
 
+    /**
+     * Supprime un vendeur de la base de données selon sa clé unique.
+     * Demande la clé à l'utilisateur.
+     */
     public void supprimerVendeur() {
         try {
             Statement st = this.laConnexion.createStatement();
@@ -173,6 +210,10 @@ public class AdministrateurBD {
         }
     }
 
+    /**
+     * Affilie un vendeur à un magasin dans la base de données.
+     * Demande les identifiants à l'utilisateur.
+     */
     public void affilierVendeur() {
         try {
             Statement st = this.laConnexion.createStatement();
@@ -190,6 +231,10 @@ public class AdministrateurBD {
         }
     }
 
+    /**
+     * Affiche le montant total des ventes pour une année donnée.
+     * Demande l'année à l'utilisateur.
+     */
     public void ventesGlobales() {
         try {
             Statement st = this.laConnexion.createStatement();
@@ -207,6 +252,10 @@ public class AdministrateurBD {
         }
     }
 
+    /**
+     * Affiche le livre le plus vendu pour une année donnée.
+     * Demande l'année à l'utilisateur.
+     */
     public void livreLePlusVendu() {
         try {
             Statement st = this.laConnexion.createStatement();
