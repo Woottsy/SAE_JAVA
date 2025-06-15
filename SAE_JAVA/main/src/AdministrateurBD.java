@@ -161,8 +161,11 @@ public class AdministrateurBD {
             Statement st = this.laConnexion.createStatement();
             System.out.println("Pour supprimer un vendeur, entrez sa clé unique vendeur : ");
             String key = System.console().readLine();
-            PreparedStatement resultat = this.laConnexion.prepareStatement("DELETE from VENDEUR where keyVendeur = ?");
+            PreparedStatement vendeurAff = this.laConnexion.prepareStatement("DELETE IGNORE from AFFILIATION where keyVendeur = ?");
+            PreparedStatement resultat = this.laConnexion.prepareStatement("DELETE IGNORE from VENDEUR where keyVendeur = ?");
             resultat.setString(1, key);
+            vendeurAff.setString(1, key);
+            vendeurAff.executeUpdate();
             resultat.executeUpdate();
             System.out.println("Le vendeur avec l'identifiant " + key + " a été supprimé.");
         } catch (SQLException e) {
