@@ -17,23 +17,20 @@ public class Client {
   private String adresse;
   private String ville;
   private String codepostal;
-  private String email;
-  private String mdp;
+
   private List<Livre> livres ;
   private List<Commande> commandes;
   
   //
   // Constructors
   //
-  public Client (int idclient,String nom,String prenom,String adresse,String ville,String codepostal,String email,String mdp) {
+  public Client (int idclient,String nom,String prenom,String adresse,String codepostal,String ville) {
     this.idclient = idclient;
     this.nom = nom;
     this.prenom = prenom;
     this.adresse = adresse;
-    this.ville = ville;
     this.codepostal = codepostal;
-    this.email = email;
-    this.mdp = mdp;
+    this.ville = ville;
     this.livres = new ArrayList<Livre>();
     this.commandes = new ArrayList<Commande>();
    };
@@ -52,7 +49,7 @@ public class Client {
    * @param newId the new value of idclient
    */
   public void setIdclient (int newId) {
-    idclient = newId;
+    this.idclient = newId;
   }
 
   /**
@@ -143,41 +140,14 @@ public class Client {
     return this.codepostal;
   }
 
-  /**
-   * Set the value of email
-   * @param newEmail the new value of email
-   */
-  public void setEmail (String newEmail) {
-    this.email = newEmail;
-  }
 
-  /**
-   * Get the value of email
-   * @return the value of email
-   */
-  public String getEmail () {
-    return this.email;
-  }
 
-  /**
-   * Set the value of mdp
-   * @param newMdp the new value of mdp
-   */
-  public void setMdp (String newMdp) {
-    this.mdp = newMdp;
-  }
 
-  /**
-   * Get the value of mdp
-   * @return the value of mdp
-   */
-  public String getMdp () {
-    return this.mdp;
-  }
+
+
+
   
-  public void ajouteLivresClient (){
-    // TODO - il faut faire une boucle pour recuperer les livres des commande du client pour les ajouter dans la liste de ses livres  
-  } 
+
 
   public List<Livre> getLivre() {
     return this.livres;
@@ -267,79 +237,83 @@ public TypeDeLivraison.TypeLivraison choisirLivraison(){
     return this.livres.get(i);
   }
 
+// les méthoes suivantes sont commentées car elles ne servent que d'aide pour ClientBD
 
-
-   public void onVousRecommande(){
-    Set<Livre> livresReco = new HashSet<Livre>();
-    // for (Client c : ) {
-    //   if (c.getIdclient() != this.idclient) {
-    //     livresReco.addAll(lesLivresRecommandable(this, c));
-    //   }
-    // }
+  //  public void onVousRecommande(){
+  //   Set<Livre> livresReco = new HashSet<Livre>();
+  //   // for (Client c : ) {
+  //   //   if (c.getIdclient() != this.idclient) {
+  //   //     livresReco.addAll(lesLivresRecommandable(this, c));
+  //   //   }
+  //   // }
     
     
-    if (livresReco.isEmpty()) {
-      System.out.println("Aucune recommandation disponible pour le moment.");
-    } else {
-      System.out.println("Livres recommandés pour vous :");
-      for (Livre l : livresReco) {
-        System.out.println("- " + l.getTitre());
-      }
-    }
-  }
+  //   if (livresReco.isEmpty()) {
+  //     System.out.println("Aucune recommandation disponible pour le moment.");
+  //   } else {
+  //     System.out.println("Livres recommandés pour vous :");
+  //     for (Livre l : livresReco) {
+  //       System.out.println("- " + l.getTitre());
+  //     }
+  //   }
+  // }
 
-  //les methode en dessous seront utile pour la fonction onVousRecommande
+  // //les methode en dessous seront utile pour la fonction onVousRecommande
 
-  /**
-   * Une des fonction nécessaire pour onVousRecommande
-   * @param c1 un client
-   * @param c2 un client différent de c1
-   * @return int
-   */
-  private int livreEncommuns(Client c1,Client c2){
-    int nbLivreEnCommuns = 0;
-    for (int i = 0; i < c1.getNbLivresCommander(); i++) {
-      for (int j = 0; j < c2.getNbLivresCommander(); j++) {
-        if (c1.getLivre(i).getClassification().getIdclass()==(c2.getLivre(j).getClassification().getIdclass())) {
-          nbLivreEnCommuns++;
-        }
-      }
-    }
-    return nbLivreEnCommuns;
-  }
-  private boolean compatible(Client c1,Client c2){
-    if (livreEncommuns(c1, c2)>=5){
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
-  private Set<Livre> lesLivresRecommandable(Client c1,Client c2){
-    Set<Livre> reco = new HashSet<Livre>();
-    if (compatible(c1, c2)){
+  // /**
+  //  * Une des fonction nécessaire pour onVousRecommande
+  //  * @param c1 un client
+  //  * @param c2 un client différent de c1
+  //  * @return int
+  //  */
+  // private int livreEncommuns(Client c1,Client c2){
+  //   int nbLivreEnCommuns = 0;
+  //   for (int i = 0; i < c1.getNbLivresCommander(); i++) {
+  //     for (int j = 0; j < c2.getNbLivresCommander(); j++) {
+  //       if (c1.getLivre(i).getClassification().getIdclass()==(c2.getLivre(j).getClassification().getIdclass())) {
+  //         nbLivreEnCommuns++;
+  //       }
+  //     }
+  //   }
+  //   return nbLivreEnCommuns;
+  // }
+  // private boolean compatible(Client c1,Client c2){
+  //   if (livreEncommuns(c1, c2)>=5){
+  //     return true;
+  //   }
+  //   else {
+  //     return false;
+  //   }
+  // }
+  // private Set<Livre> lesLivresRecommandable(Client c1,Client c2){
+  //   Set<Livre> reco = new HashSet<Livre>();
+  //   if (compatible(c1, c2)){
       
-      for(Livre l : c1.livres){
-        if (!c2.livres.contains(l)){
-          reco.add(l);
-        }
-      }
+  //     for(Livre l : c1.livres){
+  //       if (!c2.livres.contains(l)){
+  //         reco.add(l);
+  //       }
+  //     }
       
-    }
-    return reco; 
-  }
+  //   }
+  //   return reco; 
+  // }
 
-  /**
-   * @return       String
-   */
-  public String modifierProfil(){
-    return null;
-  }
+  // /**
+  //  * @return       String
+  //  */
+  // public String modifierProfil(){
+  //   return null;
+  // }
 
-  /**
-   * @return       String
-   */
-  public String seDeconnecter(){
-    return null;
-  }
+  // /**
+  //  * @return       String
+  //  */
+  // public String seDeconnecter(){
+  //   return null;
+  // }
+
+  @Override
+  public String toString() {
+    return "Le Client " + nom + " " + prenom + " (" + idclient + ") vit à l'adresse " + adresse + " dans la ville " + ville + " (" + codepostal + ")";}
 }

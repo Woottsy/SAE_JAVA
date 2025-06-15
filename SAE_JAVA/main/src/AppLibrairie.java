@@ -12,6 +12,8 @@ public class AppLibrairie {
     private Librairie librairie;
     private ConnexionMySQL connexionMySQL;
     private Magasin magChoisi;
+    private Client clientConnect;
+
 
 // séparer en Personne/PersonneBD
     public static void main(String[] args) {
@@ -66,7 +68,7 @@ public class AppLibrairie {
                 commande_faite = true;
             } else if (commande.equals("c")) {
                 while (!quitter_Client) {
-                    menu_Client();
+                    connexion_Client();
                 }
                 quitter_Client = false;
                 commande_faite = true;
@@ -283,11 +285,7 @@ public class AppLibrairie {
         }
     }
 
-    public void menu_Client() {
-        String motDePasse = "";
-        String identifiant = "";
-        boolean id = false;
-        boolean mdp = false;
+    public void connexion_Client() {
         boolean commande_faite = false;
         ClientBD clientBD = new ClientBD(this.connexionMySQL);
         while (!commande_faite) {
@@ -305,11 +303,57 @@ public class AppLibrairie {
                 commande_faite = true;
             } else if (commande.equals("s")) {
                 if (clientBD.seConnecter()){
-                    System.out.println("YES");
+                    clientConnect = clientBD.clientConnecte;
+                    menu_client();
                 }
+            } else if (commande.equals("c")){
+                System.out.println("Veuillez entrer les informations suivantes pour créer un compte :");
+                System.out.println("Identifiant : ");
+                int identifiant = Integer.parseInt(System.console().readLine());
+                System.out.println("Votre nom : ");
+                String nom = System.console().readLine();
+                System.out.println("Votre prénom : ");
+                String prenom = System.console().readLine();
+                System.out.println("Votre adresse : ");
+                String adresse = System.console().readLine();
+                System.out.println("Votre code postal : ");
+                String codepostal = System.console().readLine();
+                System.out.println("Votre ville : ");
+                String ville = System.console().readLine();
+                clientBD.creerCompte(identifiant, nom, prenom, adresse, codepostal, ville);
+                commande_faite = true;
             }
 
-        } // mettre une requete sql pour l'id
+        }
+    }
+
+    public void menu_client(){
+        boolean commande_faite = false;
+        ClientBD clientBD = new ClientBD(this.connexionMySQL);
+        while (!commande_faite) {
+            System.out.println("╭──────────────────────────────────────────╮");
+            System.out.println("|               Menu Client                |");
+            System.out.println("|──────────────────────────────────────────|");
+            System.out.println("| R : Voir les recommendations             |");
+            System.out.println("| P : Passer une commande                  |");
+            System.out.println("| L : Voir les stocks                      |");
+            System.out.println("| Q : Se déconnecter                       |");
+            System.out.println("╰──────────────────────────────────────────╯" + '\n');
+            String commande_brute = System.console().readLine();
+            String commande = commande_brute.strip().toLowerCase();
+            if (commande.equals("q")) {
+                quitter_Client = true;
+                commande_faite = true;
+            } else if (commande.equals("l")) {
+                clientBD.VoirlesStock();
+            } else if (commande.equals("p")) {
+                clientBD.passerCommande();
+            } else if (commande.equals("r")){
+                clientBD.onVousRecommande(this.clientConnect);
+            } else {
+                System.out.println("Commande '" + commande_brute + "' invalide.");
+            }
+        }
     }
 
     public void connexion_vendeur()throws SQLException {
