@@ -1,10 +1,11 @@
 public class Administrateur {
+    private final int KeyAdmin;
     private final String identifiant;
     private final String motDePasse;
     private final String email;
-    // attributs à rajouter peut-être
 
-    public Administrateur(String id, String mdp, String em) {
+    public Administrateur(String id, String mdp, String em, int keyAdmin) {
+        this.KeyAdmin = keyAdmin;
         this.identifiant = id;
         this.motDePasse = mdp;
         this.email = em;
