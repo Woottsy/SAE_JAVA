@@ -7,12 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 public class VendeurBD {
 
-    ConnexionMySQL laConnexion;
-    Statement st;
-    int vendeur;
+    private ConnexionMySQL laConnexion;
+    private Statement st;
+    public int vendeur;
 
     public VendeurBD(ConnexionMySQL co) {
         this.laConnexion = co;
+        this.vendeur = 0;
     }
 
     public int maxnumCommande() throws SQLException{
@@ -71,14 +72,13 @@ public class VendeurBD {
     }
     public String getidMagasin()throws SQLException{
         String idmagasin="";
-
-            ResultSet resultatset=st.executeQuery("select * from MAGASIN natural join AFFILIATION natural join VENDEUR where keyVendeur="+this.vendeur);
-            idmagasin= resultatset.getString("idmag");
+        ResultSet resultatset=st.executeQuery("select * from MAGASIN natural join AFFILIATION natural join VENDEUR where keyVendeur="+this.vendeur);
+        idmagasin= resultatset.getString("idmag");
         return idmagasin;
 
     }
 
-    public void insererLivre() throws SQLException {
+    public void insererLivre(int vendeurKey) throws SQLException {
         try {
             System.out.println("Pour insérer un livre, entrez son ISBN : ");
             String isbn = System.console().readLine();
@@ -99,14 +99,13 @@ public class VendeurBD {
             }
             rsLivre.close();
             psVerifLivre.close();
-    
             PreparedStatement psMagasin = this.laConnexion.prepareStatement(
                 "SELECT idmag FROM AFFILIATION WHERE keyVendeur = ?"
             );
-            psMagasin.setInt(1, this.vendeur);
+            psMagasin.setInt(1, vendeurKey);
             ResultSet rsMagasin = psMagasin.executeQuery();
     
-            if (!rsMagasin.next()) {
+            if (!(rsMagasin.next())) {
                 System.out.println("Aucun magasin trouvé pour ce vendeur.");
                 rsMagasin.close();
                 psMagasin.close();
@@ -145,22 +144,42 @@ public class VendeurBD {
             e.printStackTrace();
         }
     }
-    public String verifierDispo(){
-            System.out.println("Pour inserer un livre, entrez son isbn : ");
+    public String verifierDispo(int keyVendeur){
+            System.out.println("Pour vérifier le stock d'un livre, entrez son isbn : ");
             String isbn = System.console().readLine();
             try {
-                ResultSet resultat=st.executeQuery("select idmag from  AFFLIATION where idVendeur="+vendeur);
-                String magasin=resultat.getString("idmag");
-                ResultSet verif=st.executeQuery("select isbn,qte from  POSSEDER where idmag="+magasin);
+                PreparedStatement psAffiliation = this.laConnexion.prepareStatement(
+                    "SELECT idmag FROM AFFILIATION WHERE keyVendeur = ?"
+                );
+                psAffiliation.setInt(1, keyVendeur);
+                ResultSet resultat = psAffiliation.executeQuery();
+
+                if (resultat.next()) {
+                    String magasin = resultat.getString("idmag");
+
+                    PreparedStatement psPosseder = this.laConnexion.prepareStatement(
+                        "SELECT isbn, qte FROM POSSEDER WHERE idmag = ?"
+                    );
+                    psPosseder.setString(1, magasin);
+                    ResultSet verif = psPosseder.executeQuery();
+
+                    
+                    verif.close();
+                    psPosseder.close();
+                    System.out.println( "le livre "+isbn+" est disponible");
+                }
+
+                resultat.close();
+                psAffiliation.close();
             } catch (SQLException e) {
-                System.out.println("le livre "+isbn+"n'est pas diponible");
+                System.out.println("le livre "+isbn+" n'est pas diponible");
             }
-            return "le livre "+isbn+"est disponible";
+            return null;
 
     }
 
     
-    public void majQTELivre() throws SQLException {
+    public void majQTELivre(int vendeurKey) throws SQLException {
         try {
 
             System.out.println("Pour mettre à jour un livre, entrez son ISBN : ");
@@ -189,7 +208,7 @@ public class VendeurBD {
             PreparedStatement psMagasin = laConnexion.prepareStatement(
                 "SELECT idmag FROM AFFILIATION WHERE keyVendeur = ?"
             );
-            psMagasin.setInt(1, vendeur); 
+            psMagasin.setInt(1, vendeurKey); 
             ResultSet resultat = psMagasin.executeQuery();
     
             if (!resultat.next()) {
@@ -380,14 +399,7 @@ public void nouvelleCommande() throws SQLException {
     } catch (SQLException e) {
         if (this.laConnexion != null) {
         }
-        throw e;
-    } finally {
-        if (psCommande != null) {
-            psCommande.close();
-        }
-        if (psDetailCommande != null) {
-            psDetailCommande.close();
-        }
+        System.out.println(e.getMessage());
     }
 }
 

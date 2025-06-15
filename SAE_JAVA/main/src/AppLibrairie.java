@@ -13,6 +13,7 @@ public class AppLibrairie {
     private ConnexionMySQL connexionMySQL;
     private Magasin magChoisi;
     private Client clientConnect;
+    private int vendeurLogKey;
 
 
 // séparer en Personne/PersonneBD
@@ -79,12 +80,11 @@ public class AppLibrairie {
                 commande_faite = true;
                 quitter_admin = false;
             } else if (commande.equals("v")) {
-                connexion_vendeur();
+                while (!quitter_vendeur) {
+                    connexion_vendeur();
+                }
                 commande_faite = true;
-            } else if (commande.equals("m")) {
-                System.out.println("\n");
-                commande_faite = true;
-
+                quitter_vendeur = false;
             } else {
                 System.out.println("Commande '" + commande_brute + "' invalide.");
             }
@@ -359,6 +359,7 @@ public class AppLibrairie {
     public void connexion_vendeur()throws SQLException {
         VendeurBD vendeurBD = new VendeurBD(this.connexionMySQL);
         boolean commande_faite = false;
+        while(!commande_faite){
         System.out.println("╭──────────────────────────────────────────╮");
         System.out.println("|               Menu Vendeur               |");
         System.out.println("|──────────────────────────────────────────|");
@@ -372,14 +373,17 @@ public class AppLibrairie {
             commande_faite = true;
         } else if (commande.equals("s")) {
             if(vendeurBD.seConnecter()){
+            this.vendeurLogKey = vendeurBD.vendeur;
                 menu_vendeur();
             }
         }
     }
+}
 
     public void menu_vendeur()throws SQLException {
         VendeurBD vendeurBD = new VendeurBD(this.connexionMySQL);
         boolean commande_faite = false;
+        while (!commande_faite) {
         System.out.println("╭──────────────────────────────────────────╮");
         System.out.println("|               Menu Vendeur               |");
         System.out.println("|──────────────────────────────────────────|");
@@ -395,16 +399,16 @@ public class AppLibrairie {
             quitter_vendeur = true;
             commande_faite = true;
         } else if (commande.equals("a")) {
-
-            vendeurBD.insererLivre();
+            vendeurBD.insererLivre(this.vendeurLogKey);
         }else if (commande.equals("m")) {
-            vendeurBD.majQTELivre();
+            vendeurBD.majQTELivre(this.vendeurLogKey);
         }else if (commande.equals("v")) {
-            vendeurBD.verifierDispo();
+            vendeurBD.verifierDispo(this.vendeurLogKey);
         }else if (commande.equals("p")) {
             vendeurBD.nouvelleCommande();
 
         }
+    }
 
 
         
