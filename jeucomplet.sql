@@ -1,3 +1,17 @@
+--un administrateur
+insert into ADMINISTRATEUR(keyAdmin, identAdmin, motdepasseAdmin, email) values
+	   (1, 'Alizia', 'alizia12', 'alizia12@gmail.com');
+
+-- trois vendeurs
+insert into VENDEUR(keyVendeur, identVendeur, motdepasseVendeur, email) values
+	   (1, 'Alice', 'alice12', 'alice12@gmail.com'),
+	   (2, 'Bob', 'bob12', 'bob12@gmail.com'),
+	   (3, 'Charlie', 'charlie12', 'charlie12@gmail.com');
+
+-- un vendeur affilier à un magasin
+insert into AFFILIATION(keyVendeur, idmag) values
+	   (1, 2);
+
 -- les magasins
 insert into MAGASIN(idmag, nommag, villemag) values
        (1,'La librairie parisienne','Paris'),
