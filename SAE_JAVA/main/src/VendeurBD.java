@@ -337,10 +337,6 @@ public void nouvelleCommande() throws SQLException {
 
         java.util.Date date = new java.util.Date();
 
-        System.out.println("Commande en ligne ? (O/N) :");
-        String enligneStr = System.console().readLine();
-        char enligne = enligneStr.equalsIgnoreCase("O") ? 'Y' : 'N';
-
         System.out.println("Type de livraison (M pour en magasin et C pour commander) :");
         String typelivraisonStr = System.console().readLine();
 
@@ -370,16 +366,21 @@ public void nouvelleCommande() throws SQLException {
         String qteStr = System.console().readLine();
         int qte = Integer.parseInt(qteStr);
 
-        System.out.println("Entrez le prix de vente : ");
-        String prixStr = System.console().readLine();
-        double prix = Double.parseDouble(prixStr);
+        ResultSet rs = st.executeQuery("SELECT prix FROM LIVRE WHERE isbn = '" + isbn + "'");
+        double prix;
+        if (rs.next()) {
+            prix = rs.getDouble("prix");
+        } else {
+            System.out.println("Livre introuvable !");
+            return;
+        }
 
         psCommande = this.laConnexion.prepareStatement(
             "INSERT INTO COMMANDE (numcom, datecom, enligne, livraison, idcli, idmag) VALUES (?, ?, ?, ?, ?, ?)"
         );
         psCommande.setInt(1, numcom);
         psCommande.setDate(2, new java.sql.Date(date.getTime()));
-        psCommande.setString(3, String.valueOf(enligne));
+        psCommande.setString(3, "N");
         psCommande.setString(4, typelivraisonStr);
         psCommande.setInt(5, idclient);
         psCommande.setString(6, idMagasin);
@@ -402,7 +403,4 @@ public void nouvelleCommande() throws SQLException {
         System.out.println(e.getMessage());
     }
 }
-
-
-
 }
