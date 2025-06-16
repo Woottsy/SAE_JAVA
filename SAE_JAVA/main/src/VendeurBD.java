@@ -392,7 +392,7 @@ public void nouvelleCommande() throws SQLException {
         psDetailCommande.setInt(1, numcom);
         psDetailCommande.setInt(2, this.maxnumDetailCommande()); 
         psDetailCommande.setInt(3, qte);
-        psDetailCommande.setDouble(4, prix);
+        psDetailCommande.setDouble(4, prix*qte);
         psDetailCommande.setString(5, isbn);
         psDetailCommande.executeUpdate();
 
