@@ -22,9 +22,9 @@ public class ConnexionMySQL {
 	 * @param motDePasse le mot de passe
 	 * @throws SQLException en cas d'échec de connexion
 	 */
-	public void connecter(String nomServeur, String nomLogin, String motDePasse) throws SQLException {
+	public void connecter(String nomServeur, String nomLogin, String motDePasse, String bd) throws SQLException {
 		this.mysql=DriverManager.getConnection(
-			"jdbc:mysql://"+nomServeur+"/LibrairieExpress", nomLogin, motDePasse);
+			"jdbc:mysql://"+nomServeur+"/"+bd, nomLogin, motDePasse);
 		// si tout s'est bien passé la connexion n'est plus nulle
 		this.connecte=this.mysql!=null;
 	}

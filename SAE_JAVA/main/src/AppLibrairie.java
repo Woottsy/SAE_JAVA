@@ -44,11 +44,13 @@ public class AppLibrairie {
         try {
             System.out.println("Quel est le serveur de la base de données ?");
             String nomServeur = System.console().readLine();
+            System.out.println("Quel est le nom de la base de données à utiliser ? Par défaut tappez LibrairieExpress");
+            String bd = System.console().readLine();
             System.out.println("Quel est votre nom d'utilisateur ?");
             String nomLogin = System.console().readLine();
             System.out.println("Quel est votre mot de passe ?");
             String motDePasse = System.console().readLine();
-            connexionMySQL.connecter(nomServeur, nomLogin, motDePasse);
+            connexionMySQL.connecter(nomServeur, nomLogin, motDePasse,bd);
         } catch (SQLException e) {
         }
     }
