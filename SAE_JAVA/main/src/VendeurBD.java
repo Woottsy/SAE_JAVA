@@ -162,17 +162,18 @@ public class VendeurBD {
                     );
                     psPosseder.setString(1, magasin);
                     ResultSet verif = psPosseder.executeQuery();
+                        System.out.println("Le livre : " + isbn + "est disponible (stock : + " + verif.getString("qte") + ")");
 
-                    
+
                     verif.close();
                     psPosseder.close();
-                    System.out.println( "le livre "+isbn+" est disponible");
+                    
                 }
 
                 resultat.close();
                 psAffiliation.close();
             } catch (SQLException e) {
-                System.out.println("le livre "+isbn+" n'est pas diponible");
+                System.out.println("Le livre n'est pas disponible");
             }
             return null;
 
