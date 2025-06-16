@@ -483,9 +483,15 @@ public class AppLibrairie {
         }else if (commande.equals("m")) {
             vendeurBD.majQTELivre(this.vendeurLogKey);
         }else if (commande.equals("v")) {
-            vendeurBD.verifierDispo(this.vendeurLogKey);
+            System.out.println("Pour vérifier le stock d'un livre, entrez son isbn : ");
+            String isbn = System.console().readLine();
+            vendeurBD.verifierDispo(this.vendeurLogKey,isbn);
         }else if (commande.equals("p")) {
-            vendeurBD.nouvelleCommande();
+            vendeurBD.passerCommande(this.vendeurLogKey);
+
+        }
+        else if (commande.equals(".")) {
+            System.out.println(vendeurBD.getidMagasin(this.vendeurLogKey));
 
         }
     }
