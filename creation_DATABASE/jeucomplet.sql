@@ -1,19 +1,16 @@
 --un administrateur
-insert into ADMINISTRATEUR(keyAdmin, identAdmin, motdepasseAdmin, email) values
+insert into administrateur(keyAdmin, identAdmin, motdepasseAdmin, email) values
 	   (1, 'Alizia', 'alizia12', 'alizia12@gmail.com');
 
 -- trois vendeurs
-insert into VENDEUR(keyVendeur, identVendeur, motdepasseVendeur, email) values
+insert into vendeur(keyVendeur, identVendeur, motdepasseVendeur, email) values
 	   (1, 'Alice', 'alice12', 'alice12@gmail.com'),
 	   (2, 'Bob', 'bob12', 'bob12@gmail.com'),
 	   (3, 'Charlie', 'charlie12', 'charlie12@gmail.com');
 
--- un vendeur affilier à un magasin
-insert into AFFILIATION(keyVendeur, idmag) values
-	   (1, 2);
 
 -- les magasins
-insert into MAGASIN(idmag, nommag, villemag) values
+insert into magasin(idmag, nommag, villemag) values
        (1,'La librairie parisienne','Paris'),
        (2,'Cap au Sud','Marseilles'),
        (3,'Ty Li-Breizh-rie','Rennes'),
@@ -22,8 +19,12 @@ insert into MAGASIN(idmag, nommag, villemag) values
        (6,'Rhône à lire','Lyon'),
        (7,'Loire et livres','Orléans');
 
+
+-- un vendeur affilier à un magasin
+insert into affiliation(keyVendeur, idmag) values(1, 2);
+
 -- La classification
-insert into CLASSIFICATION(iddewey, nomclass) values
+insert into classification(iddewey, nomclass) values
 	(000, 'Informatique, généralités'),
 	(010, 'Bibliographie'),
 	(020, 'Bibliothéconomie et sciences de l''information'),
@@ -127,7 +128,7 @@ insert into CLASSIFICATION(iddewey, nomclass) values
 
 
 -- les clients
-insert into CLIENT (idcli, nomcli, prenomcli, adressecli, codepostal, villecli) values
+insert into client(idcli, nomcli, prenomcli, adressecli, codepostal, villecli) values
        (1, 'Rodriguez', 'Fatima', '188 chemin de la Forêt', '45000', 'Orléans'),
        (2, 'Garcia', 'Hugo', '167 avenue de la Forêt', '06000', 'Nice'),
        (3, 'Martin', 'Julie', '133 boulevard de l''Université', '45000', 'Orléans'),
@@ -630,7 +631,7 @@ insert into CLIENT (idcli, nomcli, prenomcli, adressecli, codepostal, villecli) 
        (500, 'Garcia', 'Elodie', '10 quai de la Paix', '33000', 'Bordeaux');
 
 -- les éditeurs
-insert into EDITEUR(nomedit,idedit) values
+insert into editeur(nomedit,idedit) values
 	('Dargaud', 1),
 	('Hachette', 2),
 	('Asterix-Hachette (Educa Books)', 3),
@@ -866,7 +867,7 @@ insert into EDITEUR(nomedit,idedit) values
 	--('First Interactive',)
 
 -- Les auteurs
-insert into AUTEUR(idauteur, nomauteur,anneenais,anneedeces) values
+insert into auteur(idauteur, nomauteur,anneenais,anneedeces) values
 	('OL6786683A', 'Juliette Saumande', NULL, NULL),
 	('OL260385A', 'Georges Vigarello', 1941, NULL),
 	('OL78133A', 'Noëlle Châtelet', 1944, NULL),
@@ -2706,7 +2707,7 @@ insert into AUTEUR(idauteur, nomauteur,anneenais,anneedeces) values
 	('OL4283104A', 'Pierre Huard', 1901, NULL);
 
 -- Les livres
-insert into LIVRE(isbn, titre,nbpages,datepubli,prix) values
+insert into livre(isbn, titre,nbpages,datepubli,prix) values
 	('9782205054750', 'Les cavernes', 48, 2003, 8.81),
 	('9782012101425', 'Astérix légionnaire', 48, 2008, 7.85),
 	('9782205054996', 'Aberrations', 48, 2005, 29.2),
@@ -4764,7 +4765,7 @@ insert into LIVRE(isbn, titre,nbpages,datepubli,prix) values
 	-- ('9782844273765', 'SQL pour les Nuls', 292, 2002, 33.5);
 
 -- Les thèmes des livres
-insert into THEMES(isbn,iddewey) values
+insert into themes(isbn,iddewey) values
 	('9782070633708', 840),
 	('9782080300782', 700),
 	('9782818500132', 150),
@@ -6764,7 +6765,7 @@ insert into THEMES(isbn,iddewey) values
 	('9782742703159', 840);
 
 -- Les éditeurs des livres
-insert into EDITER(isbn,idedit) values
+insert into editer(isbn,idedit) values
 	('9782011801333', 43),
 	('9782080280961', 144),
 	('9782080672407', 6),
@@ -8965,7 +8966,7 @@ insert into EDITER(isbn,idedit) values
 	('9782227300149',239);
 
 -- les auteurs des livres
-insert into ECRIRE(isbn,idauteur) values
+insert into ecrire(isbn,idauteur) values
 	('9782205054750', 'OL7572575A'),
 	('9782012101425', 'OL863535A'),
 	('9782012101425', 'OL934457A'),
@@ -11090,7 +11091,7 @@ insert into ECRIRE(isbn,idauteur) values
 	--('9782844273765', 'OL7670824A')
 
 -- les stocks de livres
-insert into POSSEDER(idmag, isbn, qte) values
+insert into posseder(idmag, isbn, qte) values
 	(7, '9782081295711', 2),
 	(5, '9782330001797', 3),
 	(4, '9782010144356', 7),
@@ -13068,7 +13069,7 @@ insert into POSSEDER(idmag, isbn, qte) values
 	(7, '9782070570669', 6);
 	--(7, '9782844273765', 3)
 
-insert into COMMANDE(numcom, datecom, enligne, livraison, idcli, idmag) values
+insert into commande(numcom, datecom, enligne, livraison, idcli, idmag) values
 	(1,str_to_date('1/1/2020','%d/%m/%Y'),'N','M',356,5),
 	(2,str_to_date('1/1/2020','%d/%m/%Y'),'O','C',130,6),
 	(3,str_to_date('2/1/2020','%d/%m/%Y'),'O','C',36,1),
@@ -18096,7 +18097,7 @@ insert into COMMANDE(numcom, datecom, enligne, livraison, idcli, idmag) values
 	(5025,str_to_date('28/2/2025','%d/%m/%Y'),'N','M',462,7);
 
 -- detail commande
-insert into DETAILCOMMANDE(numcom, numlig, isbn, qte, prixvente) values
+insert into detailcommande(numcom, numlig, isbn, qte, prixvente) values
 	(1,1,9782742414871,2, 22.1),
 	(2,1,9782010010811,1,6.8),
 	(3,1,9782081220775,1, 9.0),
