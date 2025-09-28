@@ -76,8 +76,8 @@ CREATE TABLE IF NOT EXISTS DETAILCOMMANDE (
   PRIMARY KEY (numcom, numlig),
   numcom    int NOT NULL,
   numlig    int NOT NULL,
-  qte       int,
-  prixvente decimal(6,2),
+  qte       int, NOT NULL
+  prixvente decimal(6,2) NOT NULL,
   isbn      varchar(13) NOT NULL
 );
 
@@ -96,16 +96,16 @@ CREATE TABLE IF NOT EXISTS EDITER (
 CREATE TABLE IF NOT EXISTS EDITEUR (
   PRIMARY KEY (idedit),
   idedit  int NOT NULL,
-  nomedit varchar(100)
+  nomedit varchar(100) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS LIVRE (
   PRIMARY KEY (isbn),
   isbn      varchar(13) NOT NULL,
   titre     varchar(200) NOT NULL,
-  nbpages   int,
+  nbpages   int NOT NULL,
   datepubli int,
-  prix      decimal(6,2)
+  prix      decimal(6,2) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS MAGASIN (
@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS POSSEDER (
   PRIMARY KEY (idmag, isbn),
   idmag VARCHAR(42) NOT NULL,
   isbn  varchar(13) NOT NULL,
-  qte   int
+  qte   int NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS THEMES (
