@@ -1,7 +1,4 @@
 
-import java.util.*;
-
-
 /**
  * Class Editeur
  */
@@ -13,19 +10,18 @@ public class Editeur {
 
   private int idediteur;
   private String nom;
-  
+
   //
   // Constructors
   //
-  public Editeur (int idediteur, String nom) {
+  public Editeur(int idediteur, String nom) {
     this.idediteur = idediteur;
     this.nom = nom;
-   };
-  
+  };
+
   //
   // Methods
   //
-
 
   //
   // Accessor methods
@@ -33,33 +29,37 @@ public class Editeur {
 
   /**
    * Set the value of idediteur
+   * 
    * @param newVar the new value of idediteur
    */
-  public void setIdediteur (int newVar) {
+  public void setIdediteur(int newVar) {
     idediteur = newVar;
   }
 
   /**
    * Get the value of idediteur
+   * 
    * @return the value of idediteur
    */
-  public int getIdediteur () {
+  public int getIdediteur() {
     return idediteur;
   }
 
   /**
    * Set the value of nom
+   * 
    * @param newVar the new value of nom
    */
-  public void setNom (String newVar) {
+  public void setNom(String newVar) {
     nom = newVar;
   }
 
   /**
    * Get the value of nom
+   * 
    * @return the value of nom
    */
-  public String getNom () {
+  public String getNom() {
     return nom;
   }
 

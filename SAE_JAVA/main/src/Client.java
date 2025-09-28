@@ -1,6 +1,6 @@
-
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  * Class Client
@@ -18,13 +18,13 @@ public class Client {
   private String ville;
   private String codepostal;
 
-  private List<Livre> livres ;
+  private List<Livre> livres;
   private List<Commande> commandes;
-  
+
   //
   // Constructors
   //
-  public Client (int idclient,String nom,String prenom,String adresse,String codepostal,String ville) {
+  public Client(int idclient, String nom, String prenom, String adresse, String codepostal, String ville) {
     this.idclient = idclient;
     this.nom = nom;
     this.prenom = prenom;
@@ -33,12 +33,11 @@ public class Client {
     this.ville = ville;
     this.livres = new ArrayList<Livre>();
     this.commandes = new ArrayList<Commande>();
-   };
-  
+  };
+
   //
   // Methods
   //
-
 
   //
   // Accessor methods
@@ -46,108 +45,111 @@ public class Client {
 
   /**
    * Set the value of idclient
+   * 
    * @param newId the new value of idclient
    */
-  public void setIdclient (int newId) {
+  public void setIdclient(int newId) {
     this.idclient = newId;
   }
 
   /**
    * Get the value of idclient
+   * 
    * @return the value of idclient
    */
-  public int getIdclient () {
+  public int getIdclient() {
     return this.idclient;
   }
 
   /**
    * Set the value of nom
+   * 
    * @param newNom the new value of nom
    */
-  public void setNom (String newNom) {
+  public void setNom(String newNom) {
     this.nom = newNom;
   }
 
   /**
    * Get the value of nom
+   * 
    * @return the value of nom
    */
-  public String getNom () {
+  public String getNom() {
     return this.nom;
   }
 
   /**
    * Set the value of prenom
+   * 
    * @param newPrenom the new value of prenom
    */
-  public void setPrenom (String newPrenom) {
+  public void setPrenom(String newPrenom) {
     this.prenom = newPrenom;
   }
 
   /**
    * Get the value of prenom
+   * 
    * @return the value of prenom
    */
-  public String getPrenom () {
+  public String getPrenom() {
     return this.prenom;
   }
 
   /**
    * Set the value of adresse
+   * 
    * @param newAdresse the new value of adresse
    */
-  public void setAdresse (String newAdresse) {
+  public void setAdresse(String newAdresse) {
     adresse = newAdresse;
   }
 
   /**
    * Get the value of adresse
+   * 
    * @return the value of adresse
    */
-  public String getAdresse () {
+  public String getAdresse() {
     return this.adresse;
   }
 
   /**
    * Set the value of ville
+   * 
    * @param newVille the new value of ville
    */
-  public void setVille (String newVille) {
+  public void setVille(String newVille) {
     this.ville = newVille;
   }
 
   /**
    * Get the value of ville
+   * 
    * @return the value of ville
    */
-  public String getVille () {
+  public String getVille() {
     return this.ville;
   }
 
   /**
    * Set the value of codepostal
+   * 
    * @param newCodePostal the new value of codepostal
    */
-  public void setCodepostal (String newCodePostal) {
+  public void setCodepostal(String newCodePostal) {
     this.codepostal = newCodePostal;
   }
 
   /**
    * Get the value of codepostal
+   * 
    * @return the value of codepostal
    */
-  public String getCodepostal () {
+  public String getCodepostal() {
     return this.codepostal;
   }
-
-
-
-
-
-
-
-  
-
 
   public List<Livre> getLivre() {
     return this.livres;
@@ -156,6 +158,7 @@ public class Client {
   public void ajouteCommande(Commande commande) {
     this.commandes.add(commande);
   }
+
   public List<Commande> getCommandes() {
     return this.commandes;
   }
@@ -166,154 +169,154 @@ public class Client {
 
   /**
    */
-  public void consulterCatalogue()
-  {
+  public void consulterCatalogue() {
   }
 
-
   /**
-   * @return       Commande
+   * @return Commande
    */
-  public Commande passerCommande(){
+  public Commande passerCommande() {
     return null;
   }
 
+  /**
+   * Permet au client de choisir un type de livraison.
+   * 
+   * @return TypeDeLivraison
+   */
+  public TypeDeLivraison.TypeLivraison choisirLivraison() {
+    Scanner scanner = new Scanner(System.in);
+    int choix = 0;
+    TypeDeLivraison.TypeLivraison typeLivraison = null;
 
-/**
- * Permet au client de choisir un type de livraison.
- * @return TypeDeLivraison
- */
-public TypeDeLivraison.TypeLivraison choisirLivraison(){
-  Scanner scanner = new Scanner(System.in);
-  int choix = 0;
-  TypeDeLivraison.TypeLivraison typeLivraison = null;
-
-  while (choix != 1 && choix != 2){
+    while (choix != 1 && choix != 2) {
       System.out.println("Choisissez votre mode de livraison :");
       System.out.println("1 - Retrait en magasin");
       System.out.println("2 - Livraison à domicile");
       System.out.print("Votre choix : ");
-      
+
       try {
-          choix = scanner.nextInt();
-          if (choix == 1){
-              typeLivraison = TypeDeLivraison.TypeLivraison.MAGASIN;
-          }
-          else if (choix == 2){
-              typeLivraison = TypeDeLivraison.TypeLivraison.DOMICILE;
-          }
-          else{
-              System.out.println("Veuillez entrer 1 ou 2.");
-          }
-      } 
-      catch (Exception e){
-          System.out.println("Erreur de saisie. Veuillez entrer un nombre.");
-          scanner.nextLine();
+        choix = scanner.nextInt();
+        if (choix == 1) {
+          typeLivraison = TypeDeLivraison.TypeLivraison.MAGASIN;
+        } else if (choix == 2) {
+          typeLivraison = TypeDeLivraison.TypeLivraison.DOMICILE;
+        } else {
+          System.out.println("Veuillez entrer 1 ou 2.");
+        }
+      } catch (Exception e) {
+        System.out.println("Erreur de saisie. Veuillez entrer un nombre.");
+        scanner.nextLine();
       }
+    }
+    scanner.close();
+
+    return typeLivraison;
   }
 
-  return typeLivraison;
-}
-
   /**
-   * @return       String
+   * @return String
    */
-  public String editerFacture(){
+  public String editerFacture() {
     return null;
   }
 
   /**
-   * @return       String
+   * @return String
    */
-  public String consulterHistorique(){
+  public String consulterHistorique() {
     return null;
   }
 
-  private int getNbLivresCommander() {
-    return this.livres.size();
-  }
+  // private int getNbLivresCommander() {
+  // return this.livres.size();
+  // }
 
-  private Livre getLivre(int i) {
-    return this.livres.get(i);
-  }
+  // private Livre getLivre(int i) {
+  // return this.livres.get(i);
+  // }
 
-// les méthoes suivantes sont commentées car elles ne servent que d'aide pour ClientBD
+  // les méthoes suivantes sont commentées car elles ne servent que d'aide pour
+  // ClientBD
 
-  //  public void onVousRecommande(){
-  //   Set<Livre> livresReco = new HashSet<Livre>();
-  //   // for (Client c : ) {
-  //   //   if (c.getIdclient() != this.idclient) {
-  //   //     livresReco.addAll(lesLivresRecommandable(this, c));
-  //   //   }
-  //   // }
-    
-    
-  //   if (livresReco.isEmpty()) {
-  //     System.out.println("Aucune recommandation disponible pour le moment.");
-  //   } else {
-  //     System.out.println("Livres recommandés pour vous :");
-  //     for (Livre l : livresReco) {
-  //       System.out.println("- " + l.getTitre());
-  //     }
-  //   }
+  // public void onVousRecommande(){
+  // Set<Livre> livresReco = new HashSet<Livre>();
+  // // for (Client c : ) {
+  // // if (c.getIdclient() != this.idclient) {
+  // // livresReco.addAll(lesLivresRecommandable(this, c));
+  // // }
+  // // }
+
+  // if (livresReco.isEmpty()) {
+  // System.out.println("Aucune recommandation disponible pour le moment.");
+  // } else {
+  // System.out.println("Livres recommandés pour vous :");
+  // for (Livre l : livresReco) {
+  // System.out.println("- " + l.getTitre());
+  // }
+  // }
   // }
 
   // //les methode en dessous seront utile pour la fonction onVousRecommande
 
   // /**
-  //  * Une des fonction nécessaire pour onVousRecommande
-  //  * @param c1 un client
-  //  * @param c2 un client différent de c1
-  //  * @return int
-  //  */
+  // * Une des fonction nécessaire pour onVousRecommande
+  // * @param c1 un client
+  // * @param c2 un client différent de c1
+  // * @return int
+  // */
   // private int livreEncommuns(Client c1,Client c2){
-  //   int nbLivreEnCommuns = 0;
-  //   for (int i = 0; i < c1.getNbLivresCommander(); i++) {
-  //     for (int j = 0; j < c2.getNbLivresCommander(); j++) {
-  //       if (c1.getLivre(i).getClassification().getIdclass()==(c2.getLivre(j).getClassification().getIdclass())) {
-  //         nbLivreEnCommuns++;
-  //       }
-  //     }
-  //   }
-  //   return nbLivreEnCommuns;
+  // int nbLivreEnCommuns = 0;
+  // for (int i = 0; i < c1.getNbLivresCommander(); i++) {
+  // for (int j = 0; j < c2.getNbLivresCommander(); j++) {
+  // if
+  // (c1.getLivre(i).getClassification().getIdclass()==(c2.getLivre(j).getClassification().getIdclass()))
+  // {
+  // nbLivreEnCommuns++;
+  // }
+  // }
+  // }
+  // return nbLivreEnCommuns;
   // }
   // private boolean compatible(Client c1,Client c2){
-  //   if (livreEncommuns(c1, c2)>=5){
-  //     return true;
-  //   }
-  //   else {
-  //     return false;
-  //   }
+  // if (livreEncommuns(c1, c2)>=5){
+  // return true;
+  // }
+  // else {
+  // return false;
+  // }
   // }
   // private Set<Livre> lesLivresRecommandable(Client c1,Client c2){
-  //   Set<Livre> reco = new HashSet<Livre>();
-  //   if (compatible(c1, c2)){
-      
-  //     for(Livre l : c1.livres){
-  //       if (!c2.livres.contains(l)){
-  //         reco.add(l);
-  //       }
-  //     }
-      
-  //   }
-  //   return reco; 
+  // Set<Livre> reco = new HashSet<Livre>();
+  // if (compatible(c1, c2)){
+
+  // for(Livre l : c1.livres){
+  // if (!c2.livres.contains(l)){
+  // reco.add(l);
+  // }
+  // }
+
+  // }
+  // return reco;
   // }
 
   // /**
-  //  * @return       String
-  //  */
+  // * @return String
+  // */
   // public String modifierProfil(){
-  //   return null;
+  // return null;
   // }
 
   // /**
-  //  * @return       String
-  //  */
+  // * @return String
+  // */
   // public String seDeconnecter(){
-  //   return null;
+  // return null;
   // }
 
   @Override
   public String toString() {
-    return "Le Client " + nom + " " + prenom + " (" + idclient + ") vit à l'adresse " + adresse + " dans la ville " + ville + " (" + codepostal + ")";}
+    return "Le Client " + nom + " " + prenom + " (" + idclient + ") vit à l'adresse " + adresse + " dans la ville "
+        + ville + " (" + codepostal + ")";
+  }
 }

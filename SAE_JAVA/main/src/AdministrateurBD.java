@@ -1,3 +1,4 @@
+
 /**
  * Classe permettant de gérer les opérations administrateur sur la base de données.
  */
@@ -16,6 +17,7 @@ public class AdministrateurBD {
 
     /**
      * Constructeur de la classe AdministrateurBD.
+     * 
      * @param co la connexion MySQL à utiliser
      */
     public AdministrateurBD(ConnexionMySQL co) {
@@ -25,13 +27,20 @@ public class AdministrateurBD {
     /**
      * Ajoute une nouvelle librairie (magasin) dans la base de données.
      * Demande les informations à l'utilisateur puis insère le magasin.
-     * @param idMag l'identifiant du magasin
-     * @param NomMag le nom du magasin
+     * 
+     * @param idMag    l'identifiant du magasin
+     * @param NomMag   le nom du magasin
      * @param VilleMag la ville du magasin
      */
     public void ajouterLibrairie(String idMag, String NomMag, String VilleMag) {
         try {
-            System.out.println("Pour ajouter une Librairie, écrivez les informations de celle-ci au format (idMag, NomMag, VilleMag)"); // mettre une requete sql pour l'id 
+            System.out.println(
+                    "Pour ajouter une Librairie, écrivez les informations de celle-ci au format (idMag, NomMag, VilleMag)"); // mettre
+                                                                                                                             // une
+                                                                                                                             // requete
+                                                                                                                             // sql
+                                                                                                                             // pour
+                                                                                                                             // l'id
             String input = System.console().readLine();
             String[] parts = input.split(",");
             if (parts.length == 3) {
@@ -41,12 +50,13 @@ public class AdministrateurBD {
                 System.out.println("Librairie ajoutée : ID= " + idMag + ", Nom= " + NomMag + ", Ville= " + VilleMag);
             }
         } catch (NumberFormatException e) {
-            System.out.println("Format invalide. Veuillez entrer les informations au format (idMag, NomMag, VilleMag).");
+            System.out
+                    .println("Format invalide. Veuillez entrer les informations au format (idMag, NomMag, VilleMag).");
         }
 
         try {
-            Statement st = this.laConnexion.createStatement();
-            PreparedStatement resultat = this.laConnexion.prepareStatement("INSERT INTO MAGASIN(idmag, nommag, villemag) values (?, ?, ?)");
+            PreparedStatement resultat = this.laConnexion
+                    .prepareStatement("INSERT INTO MAGASIN(idmag, nommag, villemag) values (?, ?, ?)");
             resultat.setString(1, idMag);
             resultat.setString(2, NomMag);
             resultat.setString(3, VilleMag);
@@ -60,14 +70,14 @@ public class AdministrateurBD {
     /**
      * Supprime une librairie (magasin) de la base de données selon son identifiant.
      * Affiche les informations du magasin supprimé.
+     * 
      * @param idMag l'identifiant du magasin à supprimer
      */
     public void supprimerLibrairie(String idMag) {
         try {
-            Statement st = this.laConnexion.createStatement();
             Statement af = this.laConnexion.createStatement();
             String magasinSelect = "Vous avez supprimer le magasin qui a pour identifiant : ";
-            //Pour afficher le magasin supprimée
+            // Pour afficher le magasin supprimée
             ResultSet magasin = af.executeQuery("select * from MAGASIN where idmag = " + "'" + idMag + "'");
             if (magasin.next()) {
                 magasinSelect += magasin.getString("idmag") + ", ";
@@ -77,7 +87,8 @@ public class AdministrateurBD {
 
             System.out.println(magasinSelect);
             // Pour supprimer
-            PreparedStatement resultat = this.laConnexion.prepareStatement("DELETE from MAGASIN where idmag = " + "'" + idMag + "'");
+            PreparedStatement resultat = this.laConnexion
+                    .prepareStatement("DELETE from MAGASIN where idmag = " + "'" + idMag + "'");
             resultat.executeUpdate();
 
         } catch (SQLException e) {
@@ -86,7 +97,9 @@ public class AdministrateurBD {
     }
 
     /**
-     * Permet à un administrateur de se connecter en vérifiant l'identifiant et le mot de passe.
+     * Permet à un administrateur de se connecter en vérifiant l'identifiant et le
+     * mot de passe.
+     * 
      * @return true si la connexion est réussie, false sinon
      */
     public boolean seConnecter() {
@@ -97,7 +110,7 @@ public class AdministrateurBD {
             String id = System.console().readLine();
             System.out.println("Entrez votre mot de passe");
             String mdp = System.console().readLine();
-            //Pour afficher le magasin supprimée
+            // Pour afficher le magasin supprimée
             ResultSet admins = st.executeQuery("select * from ADMINISTRATEUR");
             if (admins.next()) {
                 if (id.equals(admins.getString("identAdmin"))) {
@@ -126,7 +139,8 @@ public class AdministrateurBD {
             String res = "";
             ResultSet magasin = st.executeQuery("select * from MAGASIN");
             while (magasin.next()) {
-                lmag.add(new Magasin(magasin.getString("idmag"), magasin.getString("nommag"), magasin.getString("villemag")));
+                lmag.add(new Magasin(magasin.getString("idmag"), magasin.getString("nommag"),
+                        magasin.getString("villemag")));
             }
             for (Magasin m : lmag) {
                 res += m + "\n";
@@ -151,8 +165,7 @@ public class AdministrateurBD {
             System.out.println("Quelle est son adresse email ?");
             String email = System.console().readLine();
             PreparedStatement ps = this.laConnexion.prepareStatement(
-                    "INSERT INTO VENDEUR(keyVendeur, identVendeur, motdepasseVendeur, email) VALUES (?, ?, ?, ?)"
-            );
+                    "INSERT INTO VENDEUR(keyVendeur, identVendeur, motdepasseVendeur, email) VALUES (?, ?, ?, ?)");
             ps.setInt(1, vendeur.maxnumVendeur());
             ps.setString(2, id);
             ps.setString(3, mdp);
@@ -195,11 +208,12 @@ public class AdministrateurBD {
      */
     public void supprimerVendeur() {
         try {
-            Statement st = this.laConnexion.createStatement();
             System.out.println("Pour supprimer un vendeur, entrez sa clé unique vendeur : ");
             String key = System.console().readLine();
-            PreparedStatement vendeurAff = this.laConnexion.prepareStatement("DELETE IGNORE from AFFILIATION where keyVendeur = ?");
-            PreparedStatement resultat = this.laConnexion.prepareStatement("DELETE IGNORE from VENDEUR where keyVendeur = ?");
+            PreparedStatement vendeurAff = this.laConnexion
+                    .prepareStatement("DELETE IGNORE from AFFILIATION where keyVendeur = ?");
+            PreparedStatement resultat = this.laConnexion
+                    .prepareStatement("DELETE IGNORE from VENDEUR where keyVendeur = ?");
             resultat.setString(1, key);
             vendeurAff.setString(1, key);
             vendeurAff.executeUpdate();
@@ -216,12 +230,12 @@ public class AdministrateurBD {
      */
     public void affilierVendeur() {
         try {
-            Statement st = this.laConnexion.createStatement();
             System.out.println("Pour affilier un vendeur, entrez sa clé vendeur : ");
             String keyVendeur = System.console().readLine();
             System.out.println("Pour affilier un magasin, entrez son identifiant : ");
             String idmag = System.console().readLine();
-            PreparedStatement resultat = this.laConnexion.prepareStatement("INSERT INTO AFFILIATION(keyVendeur, idmag) VALUES (?, ?)");
+            PreparedStatement resultat = this.laConnexion
+                    .prepareStatement("INSERT INTO AFFILIATION(keyVendeur, idmag) VALUES (?, ?)");
             resultat.setString(1, keyVendeur);
             resultat.setString(2, idmag);
             resultat.executeUpdate();
@@ -240,7 +254,9 @@ public class AdministrateurBD {
             Statement st = this.laConnexion.createStatement();
             System.out.println("De quelle année voulez-vous voir les ventes globales ?");
             String annee = System.console().readLine();
-            ResultSet ps = st.executeQuery("SELECT IFNULL(SUM(prixvente), 0) AS ventes FROM DETAILCOMMANDE NATURAL JOIN COMMANDE WHERE YEAR(datecom) = " + annee);
+            ResultSet ps = st.executeQuery(
+                    "SELECT IFNULL(SUM(prixvente), 0) AS ventes FROM DETAILCOMMANDE NATURAL JOIN COMMANDE WHERE YEAR(datecom) = "
+                            + annee);
             if (ps.next()) {
                 int res = ps.getInt("ventes");
                 System.out.println("Les ventes globales de " + annee + " s'élèvent à " + res + '€');
@@ -262,18 +278,18 @@ public class AdministrateurBD {
             System.out.println("De quelle année voulez-vous voir le livre le plus vendu ?");
             String annee = System.console().readLine();
             ResultSet rs = st.executeQuery(
-                "SELECT isbn, titre, SUM(qte) AS totalVentes " +
-                "FROM DETAILCOMMANDE NATURAL JOIN LIVRE NATURAL JOIN COMMANDE " +
-                "WHERE YEAR(datecom) = " + annee + " " +
-                "GROUP BY isbn, titre " +
-                "ORDER BY totalVentes DESC " +
-                "LIMIT 1"
-            );
+                    "SELECT isbn, titre, SUM(qte) AS totalVentes " +
+                            "FROM DETAILCOMMANDE NATURAL JOIN LIVRE NATURAL JOIN COMMANDE " +
+                            "WHERE YEAR(datecom) = " + annee + " " +
+                            "GROUP BY isbn, titre " +
+                            "ORDER BY totalVentes DESC " +
+                            "LIMIT 1");
             if (rs.next()) {
                 String idLivre = rs.getString("isbn");
                 String titre = rs.getString("titre");
                 int totalVentes = rs.getInt("totalVentes");
-                System.out.println("Le livre le plus vendu en " + annee + " est : " + titre + " (ID: " + idLivre + ") avec " + totalVentes + " ventes.");
+                System.out.println("Le livre le plus vendu en " + annee + " est : " + titre + " (ID: " + idLivre
+                        + ") avec " + totalVentes + " ventes.");
             } else {
                 System.out.println("Aucun livre vendu pour l'année " + annee);
             }

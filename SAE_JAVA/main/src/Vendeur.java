@@ -20,7 +20,7 @@ public class Vendeur {
         this.idvendeur = idvendeur;
         this.MDP = MDP;
         this.email = email;
-        
+
     }
 
     //
@@ -60,6 +60,7 @@ public class Vendeur {
 
     @Override
     public String toString() {
-        return "Le vendeur " + this.idvendeur + " a pour clé unique : " + this.keyVendeur + " et a pour email " + this.email + " et son mot de passe est " + this.MDP + ".";
+        return "Le vendeur " + this.idvendeur + " a pour clé unique : " + this.keyVendeur + " et a pour email "
+                + this.email + " et son mot de passe est " + this.MDP + ".";
     }
 }

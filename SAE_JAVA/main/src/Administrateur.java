@@ -22,4 +22,8 @@ public class Administrateur {
     public String getEmail() {
         return this.email;
     }
+
+    public int getKeyAdmin() {
+        return this.KeyAdmin;
+    }
 }
