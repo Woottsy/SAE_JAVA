@@ -53,3 +53,17 @@ En utilisant l'application :
 			38000
 			sont les informations nécessaire pour se connecter en tant qu'un client de la base de données, qui a déjà des commandes effectuées.
 	
+
+--EDIT-- made by Woottsy
+
+J'ai décider de réarranger les fichiers et dossiers et de faire un formatage
+sur la plupart d'entre eux afin de pouvoir partager ce projet, j'ai également 
+supprimé les fichers de SAE qui n'ont rien à voir avec l'application, 
+comme les comptes-rendus, UML, etc.
+
+toutefois une branche local contient les archives de ses fichiers pour les retrouver.
+
+Si vous êtes passez par là et que vous avez tester l'application, je vous remercierait
+si vous pouviez m'envoyer par mail ce qu'il y a à améliorer et optimiser.
+
+woottsygithub@gmail.com
