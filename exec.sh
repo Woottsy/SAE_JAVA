@@ -2,16 +2,16 @@
 clear
 
 # Compilation
-javac --source-path SAE_JAVA/main/src -d bin \
+javac --source-path app/main/src -d bin \
   --module-path /usr/share/openjfx/lib/ \
   --add-modules javafx.controls \
-  SAE_JAVA/main/src/*.java
+  app/main/src/*.java
 
 # Génération de la javadoc
-javadoc --source-path SAE_JAVA/main/src -d doc \
+javadoc --source-path app/main/src -d doc \
   --module-path /usr/share/openjfx/lib/ \
   --add-modules javafx.controls \
-  SAE_JAVA/main/src/*.java
+  app/main/src/*.java
 
 clear
 
