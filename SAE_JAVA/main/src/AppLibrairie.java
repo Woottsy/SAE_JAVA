@@ -1,9 +1,9 @@
+
 /**
  * Classe principale de l'application de gestion de librairie.
  * Gère les menus, la navigation et l'interaction avec l'utilisateur.
  */
 
- 
 import java.sql.SQLException;
 import java.util.List;
 
@@ -14,7 +14,6 @@ public class AppLibrairie {
     private boolean quitter_Client;
     private boolean quitter_admin;
     private boolean quitter;
-    private Librairie librairie;
     private ConnexionMySQL connexionMySQL;
     private Magasin magChoisi;
     private Client clientConnect;
@@ -22,6 +21,7 @@ public class AppLibrairie {
 
     /**
      * Point d'entrée de l'application.
+     * 
      * @param args arguments de la ligne de commande
      */
     public static void main(String[] args) {
@@ -35,8 +35,10 @@ public class AppLibrairie {
 
     /**
      * Constructeur de la classe AppLibrairie.
-     * Initialise la connexion à la base de données en demandant les informations à l'utilisateur.
-     * @throws SQLException en cas d'erreur SQL
+     * Initialise la connexion à la base de données en demandant les informations à
+     * l'utilisateur.
+     * 
+     * @throws SQLException           en cas d'erreur SQL
      * @throws ClassNotFoundException si le driver MySQL n'est pas trouvé
      */
     public AppLibrairie() throws SQLException, ClassNotFoundException {
@@ -50,7 +52,7 @@ public class AppLibrairie {
             String nomLogin = System.console().readLine();
             System.out.println("Quel est votre mot de passe ?");
             String motDePasse = System.console().readLine();
-            connexionMySQL.connecter(nomServeur, nomLogin, motDePasse,bd);
+            connexionMySQL.connecter(nomServeur, nomLogin, motDePasse, bd);
         } catch (SQLException e) {
         }
     }
@@ -70,6 +72,7 @@ public class AppLibrairie {
 
     /**
      * Lance la boucle principale de l'application après l'écran de chargement.
+     * 
      * @throws SQLException en cas d'erreur SQL
      */
     public void start() throws SQLException {
@@ -85,18 +88,18 @@ public class AppLibrairie {
     public static void afficherEcranChargement() {
         System.out.println("\n\n");
         System.out.println("" +
-        "\n" + //
-                        "\n" + //
-                        "  _     _ _               _      _        _____                              \n" + //
-                        " | |   (_) |__  _ __ __ _(_)_ __(_) ___  | ____|_  ___ __  _ __ ___  ___ ___ \n" + //
-                        " | |   | | '_ \\| '__/ _` | | '__| |/ _ \\ |  _| \\ \\/ / '_ \\| '__/ _ \\/ __/ __|\n" + //
-                        " | |___| | |_) | | | (_| | | |  | |  __/ | |___ >  <| |_) | | |  __/\\__ \\__ \\\n" + //
-                        " |_____|_|_.__/|_|  \\__,_|_|_|  |_|\\___| |_____/_/\\_\\ .__/|_|  \\___||___/___/\n" + //
-                        "                                                    |_|                      \n" + //
-                        "\n" + //
-                        ""
-         +"");
-    
+                "\n" + //
+                "\n" + //
+                "  _     _ _               _      _        _____                              \n" + //
+                " | |   (_) |__  _ __ __ _(_)_ __(_) ___  | ____|_  ___ __  _ __ ___  ___ ___ \n" + //
+                " | |   | | '_ \\| '__/ _` | | '__| |/ _ \\ |  _| \\ \\/ / '_ \\| '__/ _ \\/ __/ __|\n" + //
+                " | |___| | |_) | | | (_| | | |  | |  __/ | |___ >  <| |_) | | |  __/\\__ \\__ \\\n" + //
+                " |_____|_|_.__/|_|  \\__,_|_|_|  |_|\\___| |_____/_/\\_\\ .__/|_|  \\___||___/___/\n" + //
+                "                                                    |_|                      \n" + //
+                "\n" + //
+                ""
+                + "");
+
         try {
             Thread.sleep(2000); // Pause de 2 secondes
         } catch (InterruptedException e) {
@@ -106,6 +109,7 @@ public class AppLibrairie {
 
     /**
      * Affiche le menu principal et gère la navigation vers les autres menus.
+     * 
      * @throws SQLException en cas d'erreur SQL
      */
     public void menu() throws SQLException {
@@ -189,7 +193,8 @@ public class AppLibrairie {
             System.out.println("|         Menu Administrateur              |");
             System.out.println("|──────────────────────────────────────────|");
             System.out.println("| A : Ajouter un magasin                   |");
-            System.out.println("| S : Supprimer un magasin                 |"); // ajouter une partie gerer les stock (lire le sujet)
+            System.out.println("| S : Supprimer un magasin                 |"); // ajouter une partie gerer les stock
+                                                                                // (lire le sujet)
             System.out.println("| Z : Accéder au menu statistique          |");
             System.out.println("| L : Liste des magasins                   |");
             System.out.println("| M : Gérer les stocks                     |");
@@ -213,7 +218,8 @@ public class AppLibrairie {
                     idMag = input;
 
                 } catch (NumberFormatException e) {
-                    System.out.println("Format invalide. Veuillez entrer les informations au format (idMag, NomMag, VilleMag).");
+                    System.out.println(
+                            "Format invalide. Veuillez entrer les informations au format (idMag, NomMag, VilleMag).");
                 }
                 administrateurBD.supprimerLibrairie(idMag);
 
@@ -230,10 +236,10 @@ public class AppLibrairie {
             } else if (commande.equals("m")) {
                 menu_choisirMagasin();
             } else if (commande.equals("z")) {
-                while(!quitter_stat){
+                while (!quitter_stat) {
                     menu_stat();
                 }
-                
+
             } else {
                 System.out.println("Commande '" + commande_brute + "' invalide.");
             }
@@ -259,58 +265,63 @@ public class AppLibrairie {
             if (commande.equals("q")) {
                 quitter_stat = true;
                 commande_faite = true;
-            } else if (commande.equals("v")){
+            } else if (commande.equals("v")) {
                 adminBD.ventesGlobales();
-            } else if (commande.equals("l")){
+            } else if (commande.equals("l")) {
                 adminBD.livreLePlusVendu();
             }
         }
     }
 
     /**
-     * Affiche le menu de choix du magasin et permet de sélectionner un magasin pour la gestion des stocks.
+     * Affiche le menu de choix du magasin et permet de sélectionner un magasin pour
+     * la gestion des stocks.
      */
     public void menu_choisirMagasin() {
         boolean commande_faite = false;
         try {
-            MagasinBD magasinBD = new MagasinBD(this.connexionMySQL);
-            List<Magasin> magasins = magasinBD.getAllMagasins();
-            if (magasins.isEmpty()) {
-                System.out.println("Aucun magasin existant.");
-            }
-            StringBuilder res = new StringBuilder();
-            res.append("╭──────────────────────────────────────────╮\n");
-            res.append("|         Choisissez un magasin            |\n");
-            res.append("|──────────────────────────────────────────|\n");
-            for (int i = 0; i < magasins.size(); i++) {
-                int longeurNom = magasins.get(i).getNom().length();
-                int espaces = 37 - longeurNom; // Calculer le nombre d'espaces à ajouter
-                res.append("| ").append(i + 1).append(" : ").append(magasins.get(i).getNom());
-                for (int j = 0; j < espaces; j++) {
-                    res.append(" "); // Ajouter les espaces
+            while (!commande_faite) {
+                MagasinBD magasinBD = new MagasinBD(this.connexionMySQL);
+                List<Magasin> magasins = magasinBD.getAllMagasins();
+                if (magasins.isEmpty()) {
+                    System.out.println("Aucun magasin existant.");
                 }
-                res.append("|\n");
-            }
-            res.append("| Q : Retour                               |\n");
-            res.append("╰──────────────────────────────────────────╯\n");
-            System.out.println(res.toString());
-            String commande_brute = System.console().readLine();
-            String commande = commande_brute.strip().toLowerCase();
-            if (commande.equals("q")) {
-                commande_faite = true;
-            } else {
-                try {
-                    int choix = Integer.parseInt(commande);
-                    if (choix > 0 && choix <= magasins.size()) {
-                        Magasin magasinChoisi = magasins.get(choix - 1);
-                        this.magChoisi = magasinChoisi;
-                        System.out.println("Vous avez choisi le magasin : " + magasinChoisi.getNom() + " (" + magasinChoisi.getVille() + ")");
-                        menu_gererStock(); // Appeler le menu de gestion des stocks pour ce magasin
-                    } else {
-                        System.out.println("Choix invalide. Veuillez réessayer.");
+                StringBuilder res = new StringBuilder();
+                res.append("╭──────────────────────────────────────────╮\n");
+                res.append("|         Choisissez un magasin            |\n");
+                res.append("|──────────────────────────────────────────|\n");
+                for (int i = 0; i < magasins.size(); i++) {
+                    int longeurNom = magasins.get(i).getNom().length();
+                    int espaces = 37 - longeurNom; // Calculer le nombre d'espaces à ajouter
+                    res.append("| ").append(i + 1).append(" : ").append(magasins.get(i).getNom());
+                    for (int j = 0; j < espaces; j++) {
+                        res.append(" "); // Ajouter les espaces
                     }
-                } catch (NumberFormatException e) {
-                    System.out.println("Format invalide. Veuillez entrer un numéro valide.");
+                    res.append("|\n");
+                }
+                res.append("| Q : Retour                               |\n");
+                res.append("╰──────────────────────────────────────────╯\n");
+                System.out.println(res.toString());
+                String commande_brute = System.console().readLine();
+                String commande = commande_brute.strip().toLowerCase();
+                if (commande.equals("q")) {
+                    commande_faite = true;
+                } else {
+                    try {
+                        int choix = Integer.parseInt(commande);
+                        if (choix > 0 && choix <= magasins.size()) {
+                            Magasin magasinChoisi = magasins.get(choix - 1);
+                            this.magChoisi = magasinChoisi;
+                            System.out.println("Vous avez choisi le magasin : " + magasinChoisi.getNom() + " ("
+                                    + magasinChoisi.getVille() + ")");
+                            menu_gererStock(); // Appeler le menu de gestion des stocks pour ce magasin
+                        } else {
+                            System.out.println("Choix invalide. Veuillez réessayer.");
+                        }
+
+                    } catch (NumberFormatException e) {
+                        System.out.println("Format invalide. Veuillez entrer un numéro valide.");
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -353,7 +364,8 @@ public class AppLibrairie {
     }
 
     /**
-     * Affiche le menu de connexion client et gère la création ou la connexion d'un compte client.
+     * Affiche le menu de connexion client et gère la création ou la connexion d'un
+     * compte client.
      */
     public void connexion_Client() {
         boolean commande_faite = false;
@@ -372,11 +384,11 @@ public class AppLibrairie {
                 quitter_Client = true;
                 commande_faite = true;
             } else if (commande.equals("s")) {
-                if (clientBD.seConnecter()){
+                if (clientBD.seConnecter()) {
                     clientConnect = clientBD.clientConnecte;
                     menu_client();
                 }
-            } else if (commande.equals("c")){
+            } else if (commande.equals("c")) {
                 System.out.println("Veuillez entrer les informations suivantes pour créer un compte :");
                 System.out.println("Identifiant : ");
                 int identifiant = Integer.parseInt(System.console().readLine());
@@ -397,9 +409,10 @@ public class AppLibrairie {
     }
 
     /**
-     * Affiche le menu client et gère les actions disponibles pour le client connecté.
+     * Affiche le menu client et gère les actions disponibles pour le client
+     * connecté.
      */
-    public void menu_client(){
+    public void menu_client() {
         boolean commande_faite = false;
         ClientBD clientBD = new ClientBD(this.connexionMySQL);
         while (!commande_faite) {
@@ -420,7 +433,7 @@ public class AppLibrairie {
                 clientBD.VoirlesStock();
             } else if (commande.equals("p")) {
                 clientBD.passerCommande();
-            } else if (commande.equals("r")){
+            } else if (commande.equals("r")) {
                 clientBD.onVousRecommande(this.clientConnect);
             } else {
                 System.out.println("Commande '" + commande_brute + "' invalide.");
@@ -430,72 +443,74 @@ public class AppLibrairie {
 
     /**
      * Affiche le menu de connexion vendeur et gère la connexion.
+     * 
      * @throws SQLException en cas d'erreur SQL
      */
     public void connexion_vendeur() throws SQLException {
         VendeurBD vendeurBD = new VendeurBD(this.connexionMySQL);
         boolean commande_faite = false;
-        while(!commande_faite){
-        System.out.println("╭──────────────────────────────────────────╮");
-        System.out.println("|               Menu Vendeur               |");
-        System.out.println("|──────────────────────────────────────────|");
-        System.out.println("| S : Se connecter                         |");
-        System.out.println("| Q : Revenir au menu précédent            |");
-        System.out.println("╰──────────────────────────────────────────╯" + '\n');
-        String commande_brute = System.console().readLine();
-        String commande = commande_brute.strip().toLowerCase();
-        if (commande.equals("q")) {
-            quitter_vendeur = true;
-            commande_faite = true;
-        } else if (commande.equals("s")) {
-            if(vendeurBD.seConnecter()){
-            this.vendeurLogKey = vendeurBD.vendeur;
-                menu_vendeur();
+        while (!commande_faite) {
+            System.out.println("╭──────────────────────────────────────────╮");
+            System.out.println("|               Menu Vendeur               |");
+            System.out.println("|──────────────────────────────────────────|");
+            System.out.println("| S : Se connecter                         |");
+            System.out.println("| Q : Revenir au menu précédent            |");
+            System.out.println("╰──────────────────────────────────────────╯" + '\n');
+            String commande_brute = System.console().readLine();
+            String commande = commande_brute.strip().toLowerCase();
+            if (commande.equals("q")) {
+                quitter_vendeur = true;
+                commande_faite = true;
+            } else if (commande.equals("s")) {
+                if (vendeurBD.seConnecter()) {
+                    this.vendeurLogKey = vendeurBD.vendeur;
+                    menu_vendeur();
+                }
             }
         }
     }
-}
 
     /**
-     * Affiche le menu vendeur et gère les actions disponibles pour le vendeur connecté.
+     * Affiche le menu vendeur et gère les actions disponibles pour le vendeur
+     * connecté.
+     * 
      * @throws SQLException en cas d'erreur SQL
      */
     public void menu_vendeur() throws SQLException {
         VendeurBD vendeurBD = new VendeurBD(this.connexionMySQL);
         boolean commande_faite = false;
         while (!commande_faite) {
-        System.out.println("╭──────────────────────────────────────────╮");
-        System.out.println("|               Menu Vendeur               |");
-        System.out.println("|──────────────────────────────────────────|");
-        System.out.println("| A : Ajouter un livre au stock            |");
-        System.out.println("| M : Mettre à jour le stock               |");
-        System.out.println("| V : Vérifier la disponibilité            |");
-        System.out.println("| P : Passer une commande pour un client   |");
-        System.out.println("| Q : Revenir au menu précédent            |");
-        System.out.println("╰──────────────────────────────────────────╯" + '\n');
-        String commande_brute = System.console().readLine();
-        String commande = commande_brute.strip().toLowerCase();
-        if (commande.equals("q")) {
-            quitter_vendeur = true;
-            commande_faite = true;
-        } else if (commande.equals("a")) {
-            vendeurBD.insererLivre(this.vendeurLogKey);
-        }else if (commande.equals("m")) {
-            vendeurBD.majQTELivre(this.vendeurLogKey);
-        }else if (commande.equals("v")) {
-            System.out.println("Pour vérifier le stock d'un livre, entrez son isbn : ");
-            String isbn = System.console().readLine();
-            vendeurBD.verifierDispo(this.vendeurLogKey,isbn);
-        }else if (commande.equals("p")) {
-            vendeurBD.passerCommande(this.vendeurLogKey);
+            System.out.println("╭──────────────────────────────────────────╮");
+            System.out.println("|               Menu Vendeur               |");
+            System.out.println("|──────────────────────────────────────────|");
+            System.out.println("| A : Ajouter un livre au stock            |");
+            System.out.println("| M : Mettre à jour le stock               |");
+            System.out.println("| V : Vérifier la disponibilité            |");
+            System.out.println("| P : Passer une commande pour un client   |");
+            System.out.println("| Q : Revenir au menu précédent            |");
+            System.out.println("╰──────────────────────────────────────────╯" + '\n');
+            String commande_brute = System.console().readLine();
+            String commande = commande_brute.strip().toLowerCase();
+            if (commande.equals("q")) {
+                quitter_vendeur = true;
+                commande_faite = true;
+            } else if (commande.equals("a")) {
+                vendeurBD.insererLivre(this.vendeurLogKey);
+            } else if (commande.equals("m")) {
+                vendeurBD.majQTELivre(this.vendeurLogKey);
+            } else if (commande.equals("v")) {
+                System.out.println("Pour vérifier le stock d'un livre, entrez son isbn : ");
+                String isbn = System.console().readLine();
+                vendeurBD.verifierDispo(this.vendeurLogKey, isbn);
+            } else if (commande.equals("p")) {
+                vendeurBD.passerCommande(this.vendeurLogKey);
 
-        }
-        else if (commande.equals(".")) {
-            System.out.println(vendeurBD.getidMagasin(this.vendeurLogKey));
+            } else if (commande.equals(".")) {
+                System.out.println(vendeurBD.getidMagasin(this.vendeurLogKey));
 
+            }
         }
     }
-}
 
     /**
      * Affiche un message de fin lors de la fermeture de l'application.
