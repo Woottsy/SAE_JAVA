@@ -4,11 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashSet;
-// import java.util.Random;
 import java.util.Set;
 
 public class ClientBD {
-    private ConnexionMySQL co;
+    private final ConnexionMySQL co;
     public Client clientConnecte;
 
     public ClientBD(ConnexionMySQL co) {

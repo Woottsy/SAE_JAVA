@@ -1,8 +1,8 @@
-import java.util.Set;
 import java.util.HashSet;
+import java.util.Set;
 
 public class Librairie {
-    private Set<Magasin> magasins;
+    private final Set<Magasin> magasins;
 
     public Librairie() {
         this.magasins = new HashSet<>();
@@ -12,6 +12,7 @@ public class Librairie {
         this.magasins.add(magasin);
     }
 
+    @Override
     public String toString() {
         String res = "";
         for (Magasin magasin : magasins) {

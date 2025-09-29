@@ -13,7 +13,6 @@ import java.util.List;
 public class AdministrateurBD {
 
     ConnexionMySQL laConnexion;
-    Statement st;
 
     /**
      * Constructeur de la classe AdministrateurBD.
