@@ -11,8 +11,8 @@ import java.util.List;
  */
 public class MagasinBD {
 
-    private ConnexionMySQL laConnexion;
-    private List<Magasin> magasins;
+    private final ConnexionMySQL laConnexion;
+    private final List<Magasin> magasins;
 
     /**
      * Constructeur de la classe MagasinBD.

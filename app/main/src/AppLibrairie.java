@@ -28,8 +28,7 @@ public class AppLibrairie {
         try {
             AppLibrairie app = new AppLibrairie();
             app.start();
-        } catch (ClassNotFoundException e) {
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
         }
     }
 
@@ -87,18 +86,26 @@ public class AppLibrairie {
      */
     public static void afficherEcranChargement() {
         System.out.println("\n\n");
-        System.out.println("" +
-                "\n" + //
-                "\n" + //
-                "  _     _ _               _      _        _____                              \n" + //
-                " | |   (_) |__  _ __ __ _(_)_ __(_) ___  | ____|_  ___ __  _ __ ___  ___ ___ \n" + //
-                " | |   | | '_ \\| '__/ _` | | '__| |/ _ \\ |  _| \\ \\/ / '_ \\| '__/ _ \\/ __/ __|\n" + //
-                " | |___| | |_) | | | (_| | | |  | |  __/ | |___ >  <| |_) | | |  __/\\__ \\__ \\\n" + //
-                " |_____|_|_.__/|_|  \\__,_|_|_|  |_|\\___| |_____/_/\\_\\ .__/|_|  \\___||___/___/\n" + //
-                "                                                    |_|                      \n" + //
-                "\n" + //
-                ""
-                + "");
+        System.out.println("""
+                           
+                           
+                             _     _ _               _      _        _____                              
+                            | |   (_) |__  _ __ __ _(_)_ __(_) ___  | ____|_  ___ __  _ __ ___  ___ ___ 
+                            | |   | | '_ \\| '__/ _` | | '__| |/ _ \\ |  _| \\ \\/ / '_ \\| '__/ _ \\/ __/ __|
+                            | |___| | |_) | | | (_| | | |  | |  __/ | |___ >  <| |_) | | |  __/\\__ \\__ \\
+                            |_____|_|_.__/|_|  \\__,_|_|_|  |_|\\___| |_____/_/\\_\\ .__/|_|  \\___||___/___/
+                                                                               |_|                      
+                           
+                           """ //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        );
 
         try {
             Thread.sleep(2000); // Pause de 2 secondes
@@ -125,29 +132,30 @@ public class AppLibrairie {
             System.out.println("╰──────────────────────────────────────────╯" + '\n');
             String commande_brute = System.console().readLine();
             String commande = commande_brute.strip().toLowerCase();
-            if (commande.equals("q")) {
-                this.quitter = true;
-                commande_faite = true;
-            } else if (commande.equals("c")) {
-                while (!quitter_Client) {
-                    connexion_Client();
+            switch (commande) {
+                case "q" -> {
+                    this.quitter = true;
+                    commande_faite = true;
                 }
-                quitter_Client = false;
-                commande_faite = true;
-            } else if (commande.equals("a")) {
-                while (!quitter_admin) {
-                    connexion_admin();
+                case "c" -> {
+                    while (!quitter_Client) {
+                        connexion_Client();
+                    }   quitter_Client = false;
+                    commande_faite = true;
                 }
-                commande_faite = true;
-                quitter_admin = false;
-            } else if (commande.equals("v")) {
-                while (!quitter_vendeur) {
-                    connexion_vendeur();
+                case "a" -> {
+                    while (!quitter_admin) {
+                        connexion_admin();
+                    }   commande_faite = true;
+                    quitter_admin = false;
                 }
-                commande_faite = true;
-                quitter_vendeur = false;
-            } else {
-                System.out.println("Commande '" + commande_brute + "' invalide.");
+                case "v" -> {
+                    while (!quitter_vendeur) {
+                        connexion_vendeur();
+                    }   commande_faite = true;
+                    quitter_vendeur = false;
+                }
+                default -> System.out.println("Commande '" + commande_brute + "' invalide.");
             }
         }
     }
@@ -206,42 +214,35 @@ public class AppLibrairie {
             System.out.println("╰──────────────────────────────────────────╯" + '\n');
             String commande_brute = System.console().readLine();
             String commande = commande_brute.strip().toLowerCase();
-            if (commande.equals("q")) {
-                quitter_admin = true;
-                commande_faite = true;
-            } else if (commande.equals("a")) {
-                administrateurBD.ajouterLibrairie(idMag, nomMag, villeMag);
-            } else if (commande.equals("s")) {
-                System.out.println("Pour supprimer une Librairie, entrez son Identifiant : ");
-                try {
-                    String input = System.console().readLine();
-                    idMag = input;
-
-                } catch (NumberFormatException e) {
-                    System.out.println(
-                            "Format invalide. Veuillez entrer les informations au format (idMag, NomMag, VilleMag).");
+            switch (commande) {
+                case "q" -> {
+                    quitter_admin = true;
+                    commande_faite = true;
                 }
-                administrateurBD.supprimerLibrairie(idMag);
-
-            } else if (commande.equals("l")) {
-                administrateurBD.listeMagasins();
-            } else if (commande.equals("c")) {
-                administrateurBD.creerVendeur();
-            } else if (commande.equals("v")) {
-                administrateurBD.listeVendeurs();
-            } else if (commande.equals("d")) {
-                administrateurBD.supprimerVendeur();
-            } else if (commande.equals("g")) {
-                administrateurBD.affilierVendeur();
-            } else if (commande.equals("m")) {
-                menu_choisirMagasin();
-            } else if (commande.equals("z")) {
-                while (!quitter_stat) {
-                    menu_stat();
+                case "a" -> administrateurBD.ajouterLibrairie(idMag, nomMag, villeMag);
+                case "s" -> {
+                    System.out.println("Pour supprimer une Librairie, entrez son Identifiant : ");
+                    try {
+                        String input = System.console().readLine();
+                        idMag = input;
+                        
+                    } catch (NumberFormatException e) {
+                        System.out.println(
+                                "Format invalide. Veuillez entrer les informations au format (idMag, NomMag, VilleMag).");
+                    }   administrateurBD.supprimerLibrairie(idMag);
                 }
-
-            } else {
-                System.out.println("Commande '" + commande_brute + "' invalide.");
+                case "l" -> administrateurBD.listeMagasins();
+                case "c" -> administrateurBD.creerVendeur();
+                case "v" -> administrateurBD.listeVendeurs();
+                case "d" -> administrateurBD.supprimerVendeur();
+                case "g" -> administrateurBD.affilierVendeur();
+                case "m" -> menu_choisirMagasin();
+                case "z" -> {
+                    while (!quitter_stat) {
+                        menu_stat();
+                    }
+                }
+                default -> System.out.println("Commande '" + commande_brute + "' invalide.");
             }
         }
     }
@@ -262,13 +263,15 @@ public class AppLibrairie {
             System.out.println("╰──────────────────────────────────────────╯" + '\n');
             String commande_brute = System.console().readLine();
             String commande = commande_brute.strip().toLowerCase();
-            if (commande.equals("q")) {
-                quitter_stat = true;
-                commande_faite = true;
-            } else if (commande.equals("v")) {
-                adminBD.ventesGlobales();
-            } else if (commande.equals("l")) {
-                adminBD.livreLePlusVendu();
+            switch (commande) {
+                case "q" -> {
+                    quitter_stat = true;
+                    commande_faite = true;
+                }
+                case "v" -> adminBD.ventesGlobales();
+                case "l" -> adminBD.livreLePlusVendu();
+                default -> {
+                }
             }
         }
     }
@@ -347,18 +350,13 @@ public class AppLibrairie {
             System.out.println("╰──────────────────────────────────────────╯" + '\n');
             String commande_brute = System.console().readLine();
             String commande = commande_brute.strip().toLowerCase();
-            if (commande.equals("q")) {
-                commande_faite = true;
-            } else if (commande.equals("a")) {
-                magBD.ajouterLivre(this.magChoisi);
-            } else if (commande.equals("s")) {
-                magBD.supprimerLivre(this.magChoisi);
-            } else if (commande.equals("l")) {
-                magBD.listeLivres(this.magChoisi);
-            } else if (commande.equals("m")) {
-                magBD.modifierQuantiteLivre(this.magChoisi);
-            } else {
-                System.out.println("Commande '" + commande_brute + "' invalide.");
+            switch (commande) {
+                case "q" -> commande_faite = true;
+                case "a" -> magBD.ajouterLivre(this.magChoisi);
+                case "s" -> magBD.supprimerLivre(this.magChoisi);
+                case "l" -> magBD.listeLivres(this.magChoisi);
+                case "m" -> magBD.modifierQuantiteLivre(this.magChoisi);
+                default -> System.out.println("Commande '" + commande_brute + "' invalide.");
             }
         }
     }
@@ -380,30 +378,36 @@ public class AppLibrairie {
             System.out.println("╰──────────────────────────────────────────╯" + '\n');
             String commande_brute = System.console().readLine();
             String commande = commande_brute.strip().toLowerCase();
-            if (commande.equals("q")) {
-                quitter_Client = true;
-                commande_faite = true;
-            } else if (commande.equals("s")) {
-                if (clientBD.seConnecter()) {
-                    clientConnect = clientBD.clientConnecte;
-                    menu_client();
+            switch (commande) {
+                case "q" -> {
+                    quitter_Client = true;
+                    commande_faite = true;
                 }
-            } else if (commande.equals("c")) {
-                System.out.println("Veuillez entrer les informations suivantes pour créer un compte :");
-                System.out.println("Identifiant : ");
-                int identifiant = Integer.parseInt(System.console().readLine());
-                System.out.println("Votre nom : ");
-                String nom = System.console().readLine();
-                System.out.println("Votre prénom : ");
-                String prenom = System.console().readLine();
-                System.out.println("Votre adresse : ");
-                String adresse = System.console().readLine();
-                System.out.println("Votre code postal : ");
-                String codepostal = System.console().readLine();
-                System.out.println("Votre ville : ");
-                String ville = System.console().readLine();
-                clientBD.creerCompte(identifiant, nom, prenom, adresse, codepostal, ville);
-                commande_faite = true;
+                case "s" -> {
+                    if (clientBD.seConnecter()) {
+                        clientConnect = clientBD.clientConnecte;
+                        menu_client();
+                    }
+                }
+                case "c" -> {
+                    System.out.println("Veuillez entrer les informations suivantes pour créer un compte :");
+                    System.out.println("Identifiant : ");
+                    int identifiant = Integer.parseInt(System.console().readLine());
+                    System.out.println("Votre nom : ");
+                    String nom = System.console().readLine();
+                    System.out.println("Votre prénom : ");
+                    String prenom = System.console().readLine();
+                    System.out.println("Votre adresse : ");
+                    String adresse = System.console().readLine();
+                    System.out.println("Votre code postal : ");
+                    String codepostal = System.console().readLine();
+                    System.out.println("Votre ville : ");
+                    String ville = System.console().readLine();
+                    clientBD.creerCompte(identifiant, nom, prenom, adresse, codepostal, ville);
+                    commande_faite = true;
+                }
+                default -> {
+                }
             }
         }
     }
@@ -426,17 +430,15 @@ public class AppLibrairie {
             System.out.println("╰──────────────────────────────────────────╯" + '\n');
             String commande_brute = System.console().readLine();
             String commande = commande_brute.strip().toLowerCase();
-            if (commande.equals("q")) {
-                quitter_Client = true;
-                commande_faite = true;
-            } else if (commande.equals("l")) {
-                clientBD.VoirlesStock();
-            } else if (commande.equals("p")) {
-                clientBD.passerCommande();
-            } else if (commande.equals("r")) {
-                clientBD.onVousRecommande(this.clientConnect);
-            } else {
-                System.out.println("Commande '" + commande_brute + "' invalide.");
+            switch (commande) {
+                case "q" -> {
+                    quitter_Client = true;
+                    commande_faite = true;
+                }
+                case "l" -> clientBD.VoirlesStock();
+                case "p" -> clientBD.passerCommande();
+                case "r" -> clientBD.onVousRecommande(this.clientConnect);
+                default -> System.out.println("Commande '" + commande_brute + "' invalide.");
             }
         }
     }
@@ -491,23 +493,22 @@ public class AppLibrairie {
             System.out.println("╰──────────────────────────────────────────╯" + '\n');
             String commande_brute = System.console().readLine();
             String commande = commande_brute.strip().toLowerCase();
-            if (commande.equals("q")) {
-                quitter_vendeur = true;
-                commande_faite = true;
-            } else if (commande.equals("a")) {
-                vendeurBD.insererLivre(this.vendeurLogKey);
-            } else if (commande.equals("m")) {
-                vendeurBD.majQTELivre(this.vendeurLogKey);
-            } else if (commande.equals("v")) {
-                System.out.println("Pour vérifier le stock d'un livre, entrez son isbn : ");
-                String isbn = System.console().readLine();
-                vendeurBD.verifierDispo(this.vendeurLogKey, isbn);
-            } else if (commande.equals("p")) {
-                vendeurBD.passerCommande(this.vendeurLogKey);
-
-            } else if (commande.equals(".")) {
-                System.out.println(vendeurBD.getidMagasin(this.vendeurLogKey));
-
+            switch (commande) {
+                case "q" -> {
+                    quitter_vendeur = true;
+                    commande_faite = true;
+                }
+                case "a" -> vendeurBD.insererLivre(this.vendeurLogKey);
+                case "m" -> vendeurBD.majQTELivre(this.vendeurLogKey);
+                case "v" -> {
+                    System.out.println("Pour vérifier le stock d'un livre, entrez son isbn : ");
+                    String isbn = System.console().readLine();
+                    vendeurBD.verifierDispo(this.vendeurLogKey, isbn);
+                }
+                case "p" -> vendeurBD.passerCommande(this.vendeurLogKey);
+                case "." -> System.out.println(vendeurBD.getidMagasin(this.vendeurLogKey));
+                default -> {
+                }
             }
         }
     }

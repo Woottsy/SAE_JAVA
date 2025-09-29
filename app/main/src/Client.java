@@ -18,8 +18,8 @@ public class Client {
   private String ville;
   private String codepostal;
 
-  private List<Livre> livres;
-  private List<Commande> commandes;
+  private final List<Livre> livres;
+  private final List<Commande> commandes;
 
   //
   // Constructors
@@ -31,8 +31,8 @@ public class Client {
     this.adresse = adresse;
     this.codepostal = codepostal;
     this.ville = ville;
-    this.livres = new ArrayList<Livre>();
-    this.commandes = new ArrayList<Commande>();
+    this.livres = new ArrayList<>();
+    this.commandes = new ArrayList<>();
   };
 
   //
@@ -185,31 +185,28 @@ public class Client {
    * @return TypeDeLivraison
    */
   public TypeDeLivraison.TypeLivraison choisirLivraison() {
-    Scanner scanner = new Scanner(System.in);
-    int choix = 0;
-    TypeDeLivraison.TypeLivraison typeLivraison = null;
-
-    while (choix != 1 && choix != 2) {
-      System.out.println("Choisissez votre mode de livraison :");
-      System.out.println("1 - Retrait en magasin");
-      System.out.println("2 - Livraison à domicile");
-      System.out.print("Votre choix : ");
-
-      try {
-        choix = scanner.nextInt();
-        if (choix == 1) {
-          typeLivraison = TypeDeLivraison.TypeLivraison.MAGASIN;
-        } else if (choix == 2) {
-          typeLivraison = TypeDeLivraison.TypeLivraison.DOMICILE;
-        } else {
-          System.out.println("Veuillez entrer 1 ou 2.");
-        }
-      } catch (Exception e) {
-        System.out.println("Erreur de saisie. Veuillez entrer un nombre.");
-        scanner.nextLine();
-      }
-    }
-    scanner.close();
+      TypeDeLivraison.TypeLivraison typeLivraison;
+      try (Scanner scanner = new Scanner(System.in)) {
+          int choix = 0;
+          typeLivraison = null;
+          while (choix != 1 && choix != 2) {
+              System.out.println("Choisissez votre mode de livraison :");
+              System.out.println("1 - Retrait en magasin");
+              System.out.println("2 - Livraison à domicile");
+              System.out.print("Votre choix : ");
+              
+              try {
+                  choix = scanner.nextInt();
+                  switch (choix) {
+                      case 1 -> typeLivraison = TypeDeLivraison.TypeLivraison.MAGASIN;
+                      case 2 -> typeLivraison = TypeDeLivraison.TypeLivraison.DOMICILE;
+                      default -> System.out.println("Veuillez entrer 1 ou 2.");
+                  }
+              } catch (Exception e) {
+                  System.out.println("Erreur de saisie. Veuillez entrer un nombre.");
+                  scanner.nextLine();
+              }
+          } }
 
     return typeLivraison;
   }

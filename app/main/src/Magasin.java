@@ -9,7 +9,7 @@ public class Magasin {
   private String idmagasin;
   private String nom;
   private String ville;
-  private Map<Livre, Stock> stockMagasin;
+  private final Map<Livre, Stock> stockMagasin;
 
   /**
    * Constructeur de la classe Magasin.
@@ -122,7 +122,7 @@ public class Magasin {
     if (!(o instanceof Magasin))
       return false;
     Magasin magasin = (Magasin) o;
-    return this.idmagasin == magasin.idmagasin && Objects.equals(this.nom, magasin.nom)
+    return (this.idmagasin == null ? magasin.idmagasin == null : this.idmagasin.equals(magasin.idmagasin)) && Objects.equals(this.nom, magasin.nom)
         && Objects.equals(this.ville, magasin.ville);
   }
 
