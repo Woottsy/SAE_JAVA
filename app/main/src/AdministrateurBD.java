@@ -10,6 +10,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import models.ConnexionMySQL;
+import models.Magasin;
+import models.Vendeur;
 
 public class AdministrateurBD {
 
