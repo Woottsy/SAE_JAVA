@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import models.ConnexionMySQL;
+import models.Magasin;
 
 /**
  * Classe permettant de gérer les opérations liées aux magasins et à leur stock

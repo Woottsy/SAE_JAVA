@@ -1,4 +1,6 @@
 
+package models;
+
 /**
  * Class Vendeur
  */
