@@ -6,6 +6,9 @@
 
 import java.sql.SQLException;
 import java.util.List;
+import models.ConnexionMySQL;
+import models.Magasin;
+import models.Client;
 
 public class AppLibrairie {
 

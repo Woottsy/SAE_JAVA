@@ -4,6 +4,9 @@
  * donnees.
  */
 // a delete
+
+import models.ConnexionMySQL;
+
 public class LivreBD {
 
     /**

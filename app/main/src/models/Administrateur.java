@@ -1,3 +1,5 @@
+package models;
+
 public class Administrateur {
     private final int KeyAdmin;
     private final String identifiant;

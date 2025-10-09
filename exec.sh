@@ -5,13 +5,13 @@ clear
 javac --source-path app/main/src -d bin \
   --module-path /usr/share/openjfx/lib/ \
   --add-modules javafx.controls \
-  app/main/src/*.java
+  app/main/src/*.java app/main/src/models/*.java
 
 # Génération de la javadoc
 javadoc --source-path app/main/src -d doc \
   --module-path /usr/share/openjfx/lib/ \
   --add-modules javafx.controls \
-  app/main/src/*.java
+  app/main/src/*.java app/main/src/models/*.java
 
 clear
 

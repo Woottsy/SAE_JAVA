@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Set;
+import models.ConnexionMySQL;
+import models.Client;
 
 public class ClientBD {
     private final ConnexionMySQL co;
