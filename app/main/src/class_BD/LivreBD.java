@@ -1,4 +1,4 @@
-
+package class_BD;
 /**
  * Classe permettant de gerer les operations liees aux livres dans la base de
  * donnees.

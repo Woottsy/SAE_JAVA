@@ -1,3 +1,5 @@
+package class_BD;
+
 
 /**
  * Classe permettant de gérer les opérations administrateur sur la base de données.
