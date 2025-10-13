@@ -114,19 +114,17 @@ public class AdministrateurBD {
             String id = System.console().readLine();
             System.out.println("Entrez votre mot de passe");
             String mdp = System.console().readLine();
-            // Pour afficher le magasin supprimée
             ResultSet admins = st.executeQuery("select * from ADMINISTRATEUR");
-            if (admins.next()) {
+            while (admins.next()) {
                 if (id.equals(admins.getString("identAdmin"))) {
                     if (mdp.equals(admins.getString("motdepasseAdmin"))) {
                         System.out.println("Connexion réussie !");
                         System.out.println("Bienvenue " + admins.getString("identAdmin"));
                         return true;
                     }
-                } else {
-                    throw new SQLException();
                 }
             }
+            throw new SQLException();
         } catch (SQLException e) {
             System.out.println("Votre Identifiant ou mot de passe est incorrecte");
         }
