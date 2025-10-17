@@ -4,12 +4,12 @@
  * Gère les menus, la navigation et l'interaction avec l'utilisateur.
  */
 
+import class_BD.*;
 import java.sql.SQLException;
 import java.util.List;
+import models.Client;
 import models.ConnexionMySQL;
 import models.Magasin;
-import models.Client;
-import class_BD.*;
 
 public class AppLibrairie {
 
@@ -245,6 +245,7 @@ public class AppLibrairie {
                     while (!quitter_stat) {
                         menu_stat();
                     }
+                    this.quitter_stat = false;
                 }
                 default -> System.out.println("Commande '" + commande_brute + "' invalide.");
             }
