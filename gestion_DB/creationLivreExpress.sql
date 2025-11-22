@@ -75,9 +75,9 @@ CREATE TABLE IF NOT EXISTS COMMANDE (
 CREATE TABLE IF NOT EXISTS DETAILCOMMANDE (
   PRIMARY KEY (numcom, numlig),
   numcom    int NOT NULL,
-  numlig    int NOT NULL,
-  qte       int NOT NULL,   
+  numlig    int NOT NULL,  
   isbn      varchar(13) NOT NULL,
+  qte       int NOT NULL, 
   prixvente decimal(6,2) NOT NULL
 
 );
