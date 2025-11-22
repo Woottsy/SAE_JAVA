@@ -153,7 +153,7 @@ public class VendeurBD {
         }
     }
 
-    public String verifierDispo(int keyVendeur, String isbn) throws SQLException {
+    public void verifierDispo(int keyVendeur, String isbn) throws SQLException {
         try {
             try (PreparedStatement psAffiliation = this.laConnexion.prepareStatement(
                     "SELECT idmag FROM AFFILIATION WHERE keyVendeur = ?")) {
@@ -169,10 +169,8 @@ public class VendeurBD {
                             try (ResultSet verif = psPosseder.executeQuery()) {
                                 if (verif.next()) {
                                     System.out.println("Le livre : " + isbn + " est disponible (stock : " + verif.getInt("qte") + ")");
-                                    return "Le livre : " + isbn + " est disponible";
                                 } else {
                                     System.out.println("Le livre n'est pas disponible");
-                                    return "Le livre n'est pas disponible";
                                 }
                             }
                         }
@@ -182,7 +180,6 @@ public class VendeurBD {
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-        return "Le livre n'est pas disponible";
     }
 
     public void majQTELivre(int vendeurKey) throws SQLException {
