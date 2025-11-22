@@ -155,33 +155,34 @@ public class VendeurBD {
 
     public String verifierDispo(int keyVendeur, String isbn) throws SQLException {
         try {
-            PreparedStatement pr = this.laConnexion.prepareStatement(
-                    "select idmag from AFFILIATION where keyVendeur = ?"
-            );
-            pr.setInt(1, keyVendeur);
-            ResultSet rs = pr.executeQuery();
-            while (rs.next()) {
-                String idmag = rs.getString("idmag");
+            try (PreparedStatement psAffiliation = this.laConnexion.prepareStatement(
+                    "SELECT idmag FROM AFFILIATION WHERE keyVendeur = ?")) {
+                psAffiliation.setInt(1, keyVendeur);
+                try (ResultSet resultat = psAffiliation.executeQuery()) {
+                    if (resultat.next()) {
+                        String magasin = resultat.getString("idmag");
 
-                PreparedStatement rp = this.laConnexion.prepareStatement("select qte from POSSEDER where idmag = ? and isbn = ?");
-                rp.setString(1, idmag);
-                rp.setString(2, isbn);
-                ResultSet rd = rp.executeQuery();
-                while (rd.next()) {
-                    if (INTEGER.parseInt(rd.getString("qte"))>0) {
-                        String res = "le livre qui a pour isbn : " + isbn + " est disponible en " + rd.getString("qte") + " exemplaire";
-                        System.out.println(res);
+                        try (PreparedStatement psPosseder = this.laConnexion.prepareStatement(
+                                "SELECT isbn, qte FROM POSSEDER WHERE idmag = ? AND isbn = ?")) {
+                            psPosseder.setString(1, magasin);
+                            psPosseder.setString(2, isbn);
+                            try (ResultSet verif = psPosseder.executeQuery()) {
+                                if (verif.next()) {
+                                    System.out.println("Le livre : " + isbn + " est disponible (stock : " + verif.getInt("qte") + ")");
+                                    return "Le livre : " + isbn + " est disponible";
+                                } else {
+                                    System.out.println("Le livre n'est pas disponible");
+                                    return "Le livre n'est pas disponible";
+                                }
+                            }
+                        }
                     }
-
                 }
-
             }
-
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
         return "Le livre n'est pas disponible";
-
     }
 
     public void majQTELivre(int vendeurKey) throws SQLException {
