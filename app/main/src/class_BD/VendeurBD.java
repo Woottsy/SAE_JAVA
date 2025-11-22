@@ -1,6 +1,5 @@
 package class_BD;
 
-
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,9 +7,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import models.Classification;
 import models.ConnexionMySQL;
 import models.Livre;
-import models.Classification;
 
 public class VendeurBD {
 
@@ -125,7 +124,8 @@ public class VendeurBD {
                         rsMagasin.close();
                         psMagasin.close();
                         return;
-                    }   idMagasin = rsMagasin.getString("idmag");
+                    }
+                    idMagasin = rsMagasin.getString("idmag");
                 }
             }
 
@@ -153,8 +153,7 @@ public class VendeurBD {
         }
     }
 
-    public String verifierDispo(int keyVendeur, String isbn) {
-
+    public void verifierDispo(int keyVendeur, String isbn) throws SQLException {
         try {
             try (PreparedStatement psAffiliation = this.laConnexion.prepareStatement(
                     "SELECT idmag FROM AFFILIATION WHERE keyVendeur = ?")) {
@@ -162,23 +161,25 @@ public class VendeurBD {
                 try (ResultSet resultat = psAffiliation.executeQuery()) {
                     if (resultat.next()) {
                         String magasin = resultat.getString("idmag");
-                        
+
                         try (PreparedStatement psPosseder = this.laConnexion.prepareStatement(
-                                "SELECT isbn, qte FROM POSSEDER WHERE idmag = ?")) {
+                                "SELECT isbn, qte FROM POSSEDER WHERE idmag = ? AND isbn = ?")) {
                             psPosseder.setString(1, magasin);
+                            psPosseder.setString(2, isbn);
                             try (ResultSet verif = psPosseder.executeQuery()) {
-                                System.out.println("Le livre : " + isbn + "est disponible (stock : + " + verif.getString("qte") + ")");
+                                if (verif.next()) {
+                                    System.out.println("Le livre : " + isbn + " est disponible (stock : " + verif.getInt("qte") + ")");
+                                } else {
+                                    System.out.println("Le livre n'est pas disponible");
+                                }
                             }
                         }
-                        
                     }
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Le livre n'est pas disponible");
+            System.err.println(e.getMessage());
         }
-        return "Le livre : " + isbn + "est disponible";
-
     }
 
     public void majQTELivre(int vendeurKey) throws SQLException {
@@ -214,9 +215,9 @@ public class VendeurBD {
                         System.out.println("Aucun magasin trouvé pour ce vendeur.");
                         return;
                     }
-                    
+
                     String magasin = resultat.getString("idmag");
-                    
+
                     PreparedStatement psUpdate;
                     try (PreparedStatement psVerif = laConnexion.prepareStatement(
                             "SELECT qte FROM POSSEDER WHERE idmag = ? AND isbn = ?")) {
@@ -226,7 +227,8 @@ public class VendeurBD {
                             if (!verif.next()) {
                                 System.out.println("Le livre avec cet ISBN n'existe pas dans ce magasin.");
                                 return;
-                            }   psUpdate = laConnexion.prepareStatement(
+                            }
+                            psUpdate = laConnexion.prepareStatement(
                                     "UPDATE POSSEDER SET qte = ? WHERE idmag = ? AND isbn = ?");
                             psUpdate.setInt(1, qte);
                             psUpdate.setString(2, magasin);
@@ -306,7 +308,7 @@ public class VendeurBD {
 
     public void passerCommande(int vendeurKey) {
         try {
-             this.st = this.laConnexion.createStatement();
+            this.st = this.laConnexion.createStatement();
 
             System.out.println("Entrez l'identifiant client :");
             String idcli = System.console().readLine();
