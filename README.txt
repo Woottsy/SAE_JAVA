@@ -1,6 +1,6 @@
 SAE_Java
 Groupe TD 4
-Chef de projet : PAWLOWICZ Valentin
+Chef de projet : LACROIX Wyatt
 
 Membres du groupe :
 
